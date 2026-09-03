@@ -1,0 +1,73 @@
+@import "tailwindcss";
+@import "@portal-edu/ui/src/index.css";
+
+* {
+  box-sizing: border-box;
+}
+
+/* 1. Hide the up/down and left/right arrows */
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 2. Main scrollbar track sizing */
+*::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px;
+}
+
+/* 3. Scrollbar track configuration */
+*::-webkit-scrollbar-track {
+  /* background: var(--background); */
+  background: transparent;
+}
+
+/* 4. Scrollbar thumb configuration */
+*::-webkit-scrollbar-thumb {
+  border: 2px solid var(--background);
+  border-radius: 999px;
+  background: var(--secondary);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-dark);
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--background);
+}
+
+/* 5. Safe Firefox Fallback (Firefox natively hides arrows when using thin) */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary) var(--background);
+  }
+}
+
+
+@font-face {
+  font-family: 'Tajawal';
+  src: url('/fonts/Tajawal.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter.ttf') format('truetype');
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Tajawal', sans-serif;
+  background: var(--background); 
+  color: var(--ink);
+  direction: rtl;
+}
+
+
+::selection {
+  background: #686970;
+  color: #fff;
+
+}

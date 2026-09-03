@@ -4,21 +4,32 @@
     "outDir": "dist",
     "rootDir": "src",
     /* Change these to match your modern setup */
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-
+    "target": "ESNext",
+    "module": "ESNext", 
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "noImplicitAny": true,
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
-    "paths": {
-      "@portal-edu/types": ["../../packages/types/src/index.ts"]
-    }
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "noEmit": true,
   },
-  "include": ["src/**/*", "**/*.d.ts"],
-  "exclude": ["node_modules", "dist"],
-  "references": [{ 
-    "path": "../../packages/types"
-  }]
+  "include": [
+    "src/**/*",
+    "**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "references": [
+    {
+      "path": "../../packages/types",
+    },
+    {
+      "path": "../../packages/utils"
+    }
+  ]
 }

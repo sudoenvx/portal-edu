@@ -2,10 +2,13 @@
   "name": "@portal-edu/api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "dev": "tsx watch index.ts",
-    "postinstall": "prisma skills sync || exit 0"
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "type-check": "tsc --noEmit",
+    "build": "tsc --noEmit && esbuild src/server.ts --bundle --platform=node --format=esm --packages=external --outdir=dist",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
@@ -22,15 +25,30 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.4.1",
+    "esbuild": "^0.28.2",
     "prisma": "7.10.0",
-    "typescript": "^7.0.2"
+    "tsup": "^8.5.1",
+    "typescript": "^7.0.2",
+    "winston-transport": "^4.9.0"
   },
   "dependencies": {
     "@portal-edu/types": "workspace:*",
+    "@portal-edu/utils": "workspace:*",
     "@prisma/adapter-mariadb": "^7.10.0",
     "@prisma/client": "7.10.0",
+    "argon2": "^0.45.1",
+    "body-parser": "^2.3.0",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "tsx": "^4.23.13"
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "tsx": "^4.23.13",
+    "winston": "^3.19.0",
+    "zod": "^4.5.4"
   }
 }

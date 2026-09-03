@@ -1,6 +1,6 @@
 {
   "name": "@portal-edu/ui",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Shared React UI components for portal-edu",
   "private": true,
   "type": "module",
@@ -40,6 +40,8 @@
   },
   "dependencies": {
     "@portal-edu/types": "workspace:*",
-    "lucide-react": "^1.39.0"
+    "lucide-react": "^1.39.0",
+    "motion": "^13.1.1",
+    "tailwind-merge": "^3.6.0"
   }
 }
