@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    /* Change these to match your modern setup */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    "noImplicitAny": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "paths": {
+      "@portal-edu/types": ["../../packages/types/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "**/*.d.ts"],
+  "exclude": ["node_modules", "dist"],
+  "references": [{ 
+    "path": "../../packages/types"
+  }]
+}

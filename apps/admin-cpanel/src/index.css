@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+@import '@portal-edu/ui/index.css';
+
+@source "../../../packages/ui/src/**/*. {ts,tsx,js,jsx}";
