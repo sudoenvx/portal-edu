@@ -16,7 +16,7 @@ export function StatisticCard({ label, value, icon: Icon, iconClassName, descrip
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col gap-1">
           <p className="text-[11px] font-medium text-text-muted">{label}</p>
-          <p className="text-2xl font-bold leading-none tracking-tight text-text tabular-nums">{value}</p>
+          <p className="text-xl font-medium leading-none tracking-tight text-text tabular-nums">{value}</p>
         </div>
 
         <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-sm ${iconClassName}`}>

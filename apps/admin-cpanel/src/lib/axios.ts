@@ -6,18 +6,19 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 
 export const apiClient = axios.create({
   baseURL: API_URL,
+  withCredentials: true,
   headers: {
     "Accept": "application/json",
-    "lang": "en",
+    "locale": "ar"
   },
 });
 
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('access_token')
-    
+
     if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = token;
     }
     return config;
   },

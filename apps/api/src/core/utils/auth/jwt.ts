@@ -2,14 +2,10 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JwtConfig } from "../../config/server.config";
 
-export function generateToken(payload: object, expiresIn: string | number = JwtConfig.expiresIn) {
+export function generateToken(payload: object) {
   return jwt.sign(
     payload,
-    JwtConfig.secret as string,
-    { expiresIn: expiresIn as any },
-    (error) => {
-      return error?.message
-    }
+    JwtConfig.secret as string
   );
 }
 

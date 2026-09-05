@@ -13,6 +13,7 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 import { Input } from './input'
+import { cn } from '../utils/cn'
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ type DropdownMenuProps = {
 	align?: Align
 	offset?: number
 	triggerClassName?: string
+	menuClassName?: string
 
 	// ── Search ──
 	// Turns on a search input pinned to the top of the menu. The menu has no
@@ -50,6 +52,7 @@ type DropdownMenuItemProps = {
 	selected?: boolean
 	disabled?: boolean
 	onSelect?: () => void
+	className?: string
 	children: ReactNode
 }
 
@@ -57,6 +60,8 @@ type DropdownMenuCheckItemProps = {
 	checked: boolean
 	onCheckedChange: (v: boolean) => void
 	children: ReactNode
+	className?: string
+	iconClassName?: string
 	group?: string // pass the same group string for radioyle single-select
 }
 
@@ -124,6 +129,7 @@ export function DropdownMenu({
 	onSearchChange,
 	filterItems = true,
 	noResultsLabel = 'No results',
+	menuClassName
 }: DropdownMenuProps) {
 	const [open, setOpen] = useState(false)
 	const [pos, setPos] = useState({ top: 0, left: 0 })
@@ -269,7 +275,12 @@ export function DropdownMenu({
 								role="menu"
 								tabIndex={-1}
 								style={{ top: pos.top, left: pos.left }}
-								className="fixed max-h-60 overflow-hidden z-50 min-w-50 p-1 outline-none bg-surface  border-border rounded-sm flex flex-col gap-1 shadow-sm shadow-secondary/80"
+								className={
+									cn(
+										'fixed max-h-60 overflow-hidden z-50 min-w-50 p-1 outline-none bg-surface  border-border rounded-md flex flex-col gap-1 shadow-sm shadow-secondary/60',
+										menuClassName
+									)
+								}
 							>
 								{searchable && (
 									<div>
@@ -368,7 +379,7 @@ export function DropdownMenuItem({
 // ── DropdownMenuCheckItem ──────────────────────────────────────────
 // Works as both a toggle (no group) and radio (with group).
 
-export function DropdownMenuCheckItem({ checked, onCheckedChange, children }: DropdownMenuCheckItemProps) {
+export function DropdownMenuCheckItem({ checked, onCheckedChange, className, iconClassName, children }: DropdownMenuCheckItemProps) {
 	const close = useContext(CloseCtx)
 
 	return (
@@ -387,11 +398,12 @@ export function DropdownMenuCheckItem({ checked, onCheckedChange, children }: Dr
         hover:bg-surface-raised focus:bg-surface-raised
         transition-colors duration-100
 		${checked ? 'bg-primary text-primary-text' : 'text-text hover:bg-card-hover hover:text-primary-tint-text focus:bg-surface-raised'}
+		${className}
       `}
 		>
 			{/* checkmark — takes up space even when unchecked to keep alignment */}
 			<span
-				className={`w-3.5 h-3.5 flex items-center justify-center shrink-0 ${checked ? 'text-primary-text' : 'text-text-muted'} transition-opacity ${checked ? 'opacity-100' : 'opacity-0'}`}
+				className={`w-3.5 h-3.5 flex items-center justify-center shrink-0 ${checked ? 'text-primary-text' : 'text-text-muted'} transition-opacity ${checked ? 'opacity-100' : 'opacity-0'} ${iconClassName}`}
 			>
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-full h-full">
 					<polyline points="20 6 9 17 4 12" />

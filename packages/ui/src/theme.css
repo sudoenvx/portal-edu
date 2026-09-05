@@ -8,37 +8,37 @@
 
 
   --secondary: #4f5054;
-	--secondary-dark: #2d2c2b;
-	--secondary-text: #fff;
-	/* --secondary-tint: #d2d0d0; */
-	--secondary-tint: #dfdede;
-	--secondary-tint-text: #0e0e0e;
-  
-  --accent: #d9926d;
-  --accent-dark: #c87a53;
+  --secondary-dark: #2d2c2b;
+  --secondary-text: #fff;
+  /* --secondary-tint: #d2d0d0; */
+  --secondary-tint: #dfdede;
+  --secondary-tint-text: #0e0e0e;
+
+  --accent: #6750a4;
+  --accent-dark: #7965af;
   --accent-text: #111118;
-  --accent-tint: #f3ded3;
+  --accent-tint: #e3dded;
   --accent-tint-text: #111118;
 
-    /* customs */
+  /* customs */
   --blue-ice: #f0f5f7;
   --creamy: #f0efec;
   --creamy-muted: #e8e6e1;
   --creamy-dark: #dddbd1;
   /* --creamy-dark: #dad7ce; */
-  
-  --danger:          #B75D69;
-  --danger-hover:    #aa4a57;
-  --danger-text:     #fff;
-  --danger-tint:     #e7d5d7;
-  --danger-tint-text:     #2F2F36;
+
+  --danger: #B75D69;
+  --danger-hover: #aa4a57;
+  --danger-text: #fff;
+  --danger-tint: #e7d5d7;
+  --danger-tint-text: #2F2F36;
 
   --card: #f4f4f4;
-	--card-hover: #e3e3e3;
+  --card-hover: #e3e3e3;
 
-	--text:          #0e0e0e;
-	--text-muted:    #676765;
-	--text-faint:    #B0AEA8;
+  --text: #1e293b;
+  --text-muted: #676765;
+  --text-faint: #B0AEA8;
 
 
   /* --border: #DBDBDB; */
@@ -47,8 +47,8 @@
 
   --warning: #E1A13A;
   --success: #32966F;
-  --background: #eaeaea;
-  /* --background: #edecea; */
+  --background: #edecea;
+  --background: #eeebeb;
   --surface: #FFFFFF;
 }
 
@@ -80,7 +80,7 @@
 
   --color-card: var(--card);
   --color-card-hover: var(--card-hover);
-  
+
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-text-faint: var(--text-faint);

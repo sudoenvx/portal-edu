@@ -1,5 +1,6 @@
 import React, { forwardRef, useId } from 'react'
 import { cn } from '../utils/cn'
+import { Language, useDetectedLanguage } from '@portal-edu/utils'
 
 export type InputVariant = 'standard' | 'outstanding' | 'bordered'
 
@@ -37,16 +38,16 @@ const VARIANT_CLASSES: Record<InputVariant, string> = {
   ),
 
   bordered: cn(
-    'border border-border rounded-sm bg-surface',
+    'border border-secondary/50 rounded-[3px] bg-surface',
     'placeholder:text-text-muted!',
-    'focus:border-secondary focus:bg-creamy'
+    'focus:border-secondary focus:bg-creamy/80'
   )
 }
 
 const VARIANT_ERROR_CLASSES: Record<InputVariant, string> = {
-  standard: 'border-danger focus:border-danger bg-danger-tint',
-  outstanding: 'border-danger focus:border-danger bg-danger-tint',
-  bordered: 'border-danger focus:border-danger bg-danger-tint',
+  standard: 'border-danger focus:border-danger',
+  outstanding: 'border-danger focus:border-danger',
+  bordered: 'border-danger focus:border-danger',
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -68,11 +69,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 ) {
   const generatedId = useId()
   const inputId = id ?? generatedId
+  const detectedLanguage = useDetectedLanguage(props.value as string ?? props.placeholder ?? 'en')
 
   return (
     <div className={cn('flex flex-col gap-1', containerClassName)}>
       {label && (
-        <label htmlFor={inputId} className="text-[11px] font-medium text-text w-fit">
+        <label htmlFor={inputId} className={
+          cn(
+            'text-[11px] font-medium w-fit',
+            error ? 'text-danger' : 'text-text',
+          )
+        }>
           {label}
         </label>
       )}
@@ -97,6 +104,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
             !!trailingIcon && 'pe-8',
             error && VARIANT_ERROR_CLASSES[variant],
             disabled && 'opacity-50 cursor-not-allowed bg-secondary/10',
+            detectedLanguage == Language.English ? 'font-inter placeholder:font-inter' : 'font-tajwal! placeholder:font-tajwal!',
             className,
           )}
           {...props}

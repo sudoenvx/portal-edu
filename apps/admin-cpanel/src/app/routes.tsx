@@ -13,16 +13,16 @@ export type AppRoute = {
 export const Routes: Record<string, AppRoute> = {
     "/": {
         path: "/",
-        label: "Dashboard",
-        description: "Quick look on your system",
+        label: "لوحة التحكم",
+        description: "متابعة و ادارة المدرسين",
         icon: LayoutDashboard,
     },
 
 
     "/settings": {
         path: "/settings",
-        label: "Settings",
-        description: "manage your system settings",
+        label: "الاعدادات",
+        description: "تحكم في اعدادات النظام",
         icon: Settings,
     }
 }

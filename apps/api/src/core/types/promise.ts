@@ -4,4 +4,4 @@ type Resolver<T> = (value: T | PromiseLike<T>) => void;
 type Rejector = (reason: ApiError) => void;
 
 
-export type { Resolver, Rejector }
+export type { Resolver, Rejector }  

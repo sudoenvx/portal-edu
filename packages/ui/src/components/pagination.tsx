@@ -30,7 +30,7 @@ export function Pagination({
           disabled={currentPage === 1}
           title="الصفحة السابقة"
         >
-          <ChevronLeft size={13} />
+          <ChevronRight size={13} />
         </PgBtn>
 
         {pages.map((p, i) =>
@@ -53,7 +53,7 @@ export function Pagination({
           disabled={currentPage === totalPages}
           title="الصفحة التالية"
         >
-          <ChevronRight size={13} />
+          <ChevronLeft size={13} />
         </PgBtn>
       </div>
     </div>

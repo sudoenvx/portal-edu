@@ -1,15 +1,39 @@
-// src/utils/auth/cookies.ts
-import { Response } from "express";
+import { CookieOptions, Response } from "express";
 
-export function setAuthCookie(res: Response, token: string) {
-  res.cookie("auth_token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 1000 * 60 * 60 * 24, // 1 day
-  });
+export const AUTH_COOKIE_NAME = "access_token";
+
+const authCookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "none",
+  path: "/",
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+};
+
+/**
+ * Stores the authentication token in an HTTP-only cookie.
+ */
+export function setAuthTokenCookie(
+  response: Response,
+  token: string,
+): void {
+  response.cookie(
+    AUTH_COOKIE_NAME,
+    token,
+    authCookieOptions,
+  );
 }
 
-export function clearAuthCookie(res: Response) {
-  res.clearCookie("auth_token");
+/**
+ * Removes the authentication token cookie.
+ */
+export function clearAuthTokenCookie(
+  response: Response,
+): void {
+  response.clearCookie(AUTH_COOKIE_NAME, {
+    httpOnly: authCookieOptions.httpOnly,
+    secure: authCookieOptions.secure,
+    sameSite: authCookieOptions.sameSite,
+    path: authCookieOptions.path,
+  });
 }

@@ -13,6 +13,3 @@ const adapter = new PrismaMariaDb(DatabaseConfig.database_url as string)
 export const prisma = globalForPrisma.prisma || new PrismaClient({ adapter })
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-
-// Re-export models/types from Prisma Client so your apps don't need to import raw @prisma/client
-export * from '@prisma/client'

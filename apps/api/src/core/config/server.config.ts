@@ -5,7 +5,7 @@ export const DatabaseConfig = {
 }
 
 export const CorsConfig = {
-    whitelist: process.env.ALLOWED_ORIGINS?.split(',').map((origin) => origin.trim()) || [],
+    whitelist: process.env.CORS_WHITELIST?.split(',').map((origin) => origin.trim()) || [],
     credentials: true,
 }
 

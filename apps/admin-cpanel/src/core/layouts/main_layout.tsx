@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import { Navbar } from './navbar'
 import { Sidebar } from './sidebar'
 
 function MainLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const location = useLocation()
 
+  // إغلاق القائمة الجانبية في الموبايل عند تغيير المسار
   useEffect(() => {
-    const closeSidebarOnDesktop = () => {
-      if (window.innerWidth >= 1024) setSidebarOpen(false)
-    }
-
-    window.addEventListener('resize', closeSidebarOnDesktop)
-    return () => window.removeEventListener('resize', closeSidebarOnDesktop)
-  }, [])
+    setMobileMenuOpen(false)
+  }, [location.pathname])
 
   return (
-    <div className="min-h-screen bg-background text-ink">
-      <div className="flex gap-4 p-4">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="flex h-screen w-full flex-col bg-background text-ink overflow-hidden" dir="rtl">
+      
+      {/* الـ Navbar الآن في الأعلى ويغطي العرض بالكامل */}
+      <Navbar onMobileMenuClick={() => setMobileMenuOpen(true)} />
 
-        <div className="flex min-w-0 flex-1 flex-col gap-4 max-w-5xl mx-auto">
-          <Navbar onMenuClick={() => setSidebarOpen((isOpen) => !isOpen)} sidebarOpen={sidebarOpen} />
+      {/* منطقة المحتوى السفلي (تحتوي على القائمة الجانبية ومحتوى الصفحة) */}
+      <div className="flex flex-1 overflow-hidden">
+        
+        {/* القائمة الجانبية */}
+        <Sidebar 
+          mobileOpen={mobileMenuOpen} 
+          onMobileClose={() => setMobileMenuOpen(false)} 
+        />
 
-          <main className="min-w-0 flex-1">
+        {/* محتوى الصفحة الرئيسي */}
+        <main className="flex-1 min-w-0 overflow-y-auto p-4 md:p-6 scroll-smooth">
+          <div className="mx-auto max-w-7xl">
             <Outlet />
-          </main>
-        </div>
+          </div>
+        </main>
+        
       </div>
     </div>
   )

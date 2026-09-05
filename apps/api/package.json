@@ -8,7 +8,11 @@
     "dev": "tsx watch src/server.ts",
     "type-check": "tsc --noEmit",
     "build": "tsc --noEmit && esbuild src/server.ts --bundle --platform=node --format=esm --packages=external --outdir=dist",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:generate": "prisma generate",
+    "db:reset": "prisma migrate reset --force",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx src/core/database/prisma.seeder.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +27,7 @@
   "type": "module",
   "devDependencies": {
     "@types/compression": "^1.8.1",
+    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",

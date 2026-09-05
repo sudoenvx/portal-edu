@@ -1,0 +1,652 @@
+{"level":"warn","message":"GET","timestamp":"2026-09-03 15:11:38"}
+{"level":"warn","message":"/","timestamp":"2026-09-03 15:11:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 15:11:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/","path":"/","timestamp":"2026-09-03T12:11:38.433Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 17:05:13"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 17:05:13"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 17:05:13"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T14:05:13.456Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 17:05:13"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 17:05:13"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 17:05:13"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T14:05:13.465Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 20:09:31"}
+{"level":"warn","message":"/api/auth/admin/me","timestamp":"2026-09-03 20:09:31"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 20:09:31"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/auth/admin/me","path":"/api/auth/admin/me","referer":"http://localhost:5173/","timestamp":"2026-09-03T17:09:31.252Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 20:30:25"}
+{"level":"warn","message":"/api/auth/admin/me","timestamp":"2026-09-03 20:30:25"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 20:30:25"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/auth/admin/me","path":"/api/auth/admin/me","referer":"http://localhost:5173/","timestamp":"2026-09-03T17:30:25.777Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 20:34:30"}
+{"level":"warn","message":"/api/auth/admin/me","timestamp":"2026-09-03 20:34:30"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 20:34:30"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/auth/admin/me","path":"/api/auth/admin/me","referer":"http://localhost:5173/","timestamp":"2026-09-03T17:34:30.947Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"error","message":"Invalid credentials","timestamp":"2026-09-03 20:35:27"}
+{"level":"error","message":"Invalid credentials","timestamp":"2026-09-03 20:36:46"}
+{"level":"error","message":"Invalid credentials","timestamp":"2026-09-03 20:36:54"}
+{"level":"error","message":"Invalid credentials","timestamp":"2026-09-03 20:39:25"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 20:42:10"}
+{"level":"warn","message":"/api/auth/admin/me","timestamp":"2026-09-03 20:42:10"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 20:42:10"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/auth/admin/me","path":"/api/auth/admin/me","referer":"http://localhost:5173/","timestamp":"2026-09-03T17:42:10.986Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:34"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:19:34"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:34"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:34.281Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:34"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:19:34"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:34"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:34.284Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:46.379Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:46.381Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:46.912Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:19:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:19:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:19:46.914Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:00"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:27:00"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:00"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:00.639Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:00"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:27:00"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:00"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:00.641Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:02"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-03 21:27:02"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:02"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:02.628Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:03"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:27:03"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:03"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:03.653Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:03"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:27:03"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:03"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:03.655Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:05"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-03 21:27:05"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:05"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:05.143Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:18"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:27:18"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:18"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:18.499Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:18"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:27:18"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:18"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:18.500Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:19"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-03 21:27:19"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:19"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:19.366Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:20"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:20.165Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:20"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:20.733Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:27:20"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:27:20"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:27:20.736Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:33:49"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-03 21:33:49"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:33:49"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:33:49.883Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-03 21:33:49"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-03 21:33:49"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-03 21:33:49"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T18:33:49.885Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 00:10:16"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 00:10:16"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 00:10:16"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T21:10:16.460Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 00:10:16"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 00:10:16"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 00:10:16"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T21:10:16.463Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 00:34:50"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 00:34:50"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 00:34:50"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T21:34:50.768Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 00:34:50"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 00:34:50"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 00:34:50"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T21:34:50.770Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 01:28:31"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 01:28:31"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 01:28:31"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T22:28:31.101Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 01:28:33"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 01:28:33"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 01:28:33"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-03T22:28:33.007Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 01:28:33"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 01:28:33"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 01:28:33"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-03T22:28:33.010Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 01:28:37"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 01:28:37"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 01:28:37"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-03T22:28:37.558Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:37"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 05:30:37"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:37"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:37.200Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:38"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:30:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:38.244Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:38"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:30:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:38.248Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:40"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 05:30:40"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:40"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:40.627Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:41"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:30:41"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:41"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:41.844Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:30:41"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:30:41"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:30:41"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:30:41.846Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:34:17"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:34:17"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:34:17"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:34:17.960Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:34:17"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:34:17"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:34:17"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:34:17.964Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:40:39"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:40:39"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:40:39"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:40:39.336Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:40:39"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:40:39"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:40:39"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:40:39.338Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:40:42"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 05:40:42"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:40:42"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T02:40:42.922Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:40:45"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:40:45"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:40:45"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:40:45.273Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:40:45"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:40:45"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:40:45"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:40:45.275Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:44:27"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:44:27"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:44:27"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:44:27.854Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:44:27"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:44:27"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:44:27"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:44:27.857Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:58:56"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 05:58:56"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:58:56"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:58:56.220Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 05:58:56"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 05:58:56"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 05:58:56"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T02:58:56.222Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:06"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:03:06"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:06"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:06.272Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:06"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:03:06"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:06"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:06.275Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:37"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:03:37"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:37"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:37.212Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:37"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:03:37"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:37"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:37.221Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:41"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:03:41"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:41"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:41.906Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:03:41"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:03:41"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:03:41"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:03:41.908Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:04:04"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:04:04"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:04:04"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:04:04.867Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:04:04"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:04:04"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:04:04"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:04:04.871Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:07:25"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:07:25"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:07:25"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:07:25.982Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:07:25"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:07:25"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:07:25"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:07:25.985Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:11:05"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:11:05"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:11:05"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:11:05.270Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:11:05"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:11:05"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:11:05"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:11:05.273Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:15:27"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:15:27"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:15:27"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:15:27.638Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:27:26"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:27:26"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:27:26"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:27:26.669Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:27:26"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:27:26"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:27:26"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:27:26.671Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:30:07"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 06:30:07"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:30:07"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:30:07.343Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:30:07"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 06:30:07"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:30:07"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T03:30:07.345Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:38:19"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:38:19"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:38:19"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:38:19.451Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:39:01"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:39:01"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:39:01"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:39:01.005Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:39:02"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:39:02"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:39:02"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:39:02.755Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:39:04"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:39:04"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:39:04"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:39:04.986Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:39:16"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:39:16"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:39:16"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:39:16.047Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 06:39:31"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 06:39:31"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 06:39:31"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T03:39:31.816Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 15:36:55"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 15:36:55"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 15:36:55"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T12:36:55.784Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 15:36:55"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 15:36:55"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 15:36:55"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T12:36:55.787Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 16:41:18"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 16:41:18"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 16:41:18"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T13:41:18.043Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 16:41:18"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 16:41:18"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 16:41:18"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T13:41:18.048Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 17:59:34"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 17:59:34"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 17:59:34"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T14:59:34.993Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 17:59:34"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 17:59:34"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 17:59:34"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T14:59:34.996Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 17:59:36"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 17:59:36"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 17:59:36"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T14:59:36.087Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:04:13"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:04:13"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:04:13"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:04:13.249Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:05:46"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 18:05:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:05:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:05:46.460Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:05:46"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 18:05:46"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:05:46"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:05:46.463Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:05:47"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:05:47"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:05:47"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:05:47.875Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:06:56"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:06:56"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:06:56"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:06:56.994Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:07:00"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:07:00"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:07:00"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:07:00.996Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:07:04"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:07:04"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:07:04"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:07:04.973Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:07:06"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:07:06"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:07:06"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:07:06.973Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:09:33"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 18:09:33"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:09:33"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:09:33.522Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:09:33"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 18:09:33"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:09:33"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:09:33.523Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"error","message":"The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined","timestamp":"2026-09-04 18:25:44"}
+{"level":"error","message":"The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined","timestamp":"2026-09-04 18:26:05"}
+{"level":"error","message":"The first argument must be of type string or an instance of Buffer, ArrayBuffer, or Array or an Array-like Object. Received undefined","timestamp":"2026-09-04 18:27:51"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:46:27"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 18:46:27"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:46:27"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T15:46:27.030Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:50:49"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 18:50:49"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:50:49"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:50:49.746Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 18:50:49"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 18:50:49"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 18:50:49"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T15:50:49.750Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:11:07"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:11:07"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:11:07"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T16:11:07.804Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:11:09"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:11:09"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:11:09"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:11:09.786Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:11:09"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:11:09"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:11:09"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:11:09.788Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:11:13"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:11:13"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:11:13"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T16:11:13.101Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:15:14"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:15:14"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:15:14"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:15:14.576Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:15:14"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:15:14"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:15:14"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:15:14.579Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:17:12"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:17:12"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:17:12"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:17:12.602Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:17:12"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:17:12"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:17:12"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:17:12.604Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:17:24"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:17:24"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:17:24"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:17:24.284Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:17:24"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:17:24"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:17:24"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:17:24.287Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:18:18"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:18:18"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:18:18"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T16:18:18.987Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:18:32"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:18:32"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:18:32"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:18:32.325Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:18:32"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:18:32"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:18:32"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:18:32.328Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:18:37"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:18:37"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:18:37"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T16:18:37.215Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"POST","timestamp":"2026-09-04 19:20:00"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:20:00"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:20:00"}
+{"body":{"bodySize":160,"hasBody":true},"ip":"::1","level":"warn","message":"Route not found","method":"POST","originalUrl":"/api/admin/teachers","path":"/api/admin/teachers","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:20:00.810Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"POST","timestamp":"2026-09-04 19:20:29"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:20:29"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:20:29"}
+{"body":{"bodySize":160,"hasBody":true},"ip":"::1","level":"warn","message":"Route not found","method":"POST","originalUrl":"/api/admin/teachers","path":"/api/admin/teachers","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:20:29.981Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"error","message":"\nInvalid `prisma.teacher.create()` invocation in\nE:\\workspace\\Development\\portal-edu\\apps\\api\\src\\modules\\teacher\\teacher.repo.ts:30:31\n\n  27 }\n  28 \n  29 public create = async (data: CreateTeacherPayload) => {\n→ 30     return prisma.teacher.create({\n           data: {\n             name: \"Ali Tarek\",\n             phone: \"01150421159\",\n             email: \"alitarek99944@gmail.com\",\n             subject: \"fdaf\",\n             ~~~~~~~\n             pricePerStudent: 0,\n             password: \"$argon2id$v=19$m=65536,p=4,t=12$GpLh9Xk6KxgaF3kCxT8rkw$HnFuPEEK3S4oS0RHILVB4bSfJn9DXdpzwAhMrMamEOU\",\n             confirmPassword: \"123456\",\n         ?   subscriptionStatus?: String,\n         ?   createdAt?: DateTime,\n         ?   updatedAt?: DateTime,\n         ?   students?: TeacherStudentCreateNestedManyWithoutTeacherInput,\n         ?   groups?: GroupCreateNestedManyWithoutTeacherInput,\n         ?   locations?: LocationCreateNestedManyWithoutTeacherInput\n           }\n         })\n\nUnknown argument `subject`. Available options are marked with ?.","timestamp":"2026-09-04 19:21:17"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:37:53"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 19:37:53"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:37:53"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:37:53.206Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:37:53"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 19:37:53"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:37:53"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T16:37:53.208Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 19:38:19"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 19:38:19"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 19:38:19"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T16:38:19.938Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:08:29"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:08:29"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:08:29"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:08:29.036Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:09:38"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:09:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:09:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:09:38.892Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:09:38"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:09:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:09:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:09:38.895Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:12:40"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:12:40"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:12:40"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:12:40.884Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:12:40"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:12:40"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:12:40"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:12:40.886Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:30:55"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:30:55"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:30:55"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:30:55.006Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:30:55"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:30:55"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:30:55"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:30:55.008Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:26"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:32:26"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:26"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:26.076Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:26"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:32:26"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:26"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:26.079Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:29"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:32:29"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:29"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:29.638Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:29"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:32:29"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:29"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:29.641Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:30"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:32:30"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:30"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:30.825Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:30"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:32:30"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:30"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:30.827Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:32:49"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:32:49"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:32:49"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:32:49.989Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:35:47"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:35:47"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:35:47"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:35:47.769Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:38:09"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:38:09"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:38:09"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:38:09.234Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:38:09"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:38:09"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:38:09"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:38:09.236Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:38:31"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:38:31"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:38:31"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:38:31.493Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:38:31"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:38:31"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:38:31"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:38:31.496Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:41:51"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 21:41:51"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:41:51"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:41:51.013Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:41:51"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 21:41:51"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:41:51"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T18:41:51.018Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:42:13"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:42:13"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:42:13"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:42:13.536Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:42:43"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:42:43"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:42:43"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:42:43.981Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:43:06"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:43:06"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:43:06"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:43:06.981Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:43:08"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:43:08"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:43:08"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:43:08.821Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 21:43:43"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 21:43:43"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 21:43:43"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T18:43:43.936Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:13:36"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:13:36"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:13:36"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:13:36.996Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:24:20"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:24:20"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:24:20"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:24:20.755Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:24:21"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:24:21"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:24:21"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:24:21.204Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:24:54"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:24:54"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:24:54"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:24:54.875Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:29:17"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:29:17"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:29:17"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:29:17.554Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:05"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 22:35:05"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:05"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:05.684Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:05"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 22:35:05"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:05"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:05.685Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:32"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 22:35:32"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:32"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:32.702Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:32"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 22:35:32"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:32"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:32.704Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:38"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 22:35:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:38.987Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:35:38"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 22:35:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:35:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:35:38.988Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:42:38"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:42:38"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:42:38"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:42:38.337Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:43:30"}
+{"level":"warn","message":"/api/admin/dashboard/stats","timestamp":"2026-09-04 22:43:30"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:43:30"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/dashboard/stats","path":"/api/admin/dashboard/stats","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:43:30.558Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:43:30"}
+{"level":"warn","message":"/api/admin/teachers/latest","timestamp":"2026-09-04 22:43:30"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:43:30"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers/latest","path":"/api/admin/teachers/latest","referer":"http://localhost:5173/","timestamp":"2026-09-04T19:43:30.560Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:43:33"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:43:33"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:43:33"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:43:33.194Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:43:52"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:43:52"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:43:52"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:43:52.008Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-04 22:43:54"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-04 22:43:54"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-04 22:43:54"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-04T19:43:54.469Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-05 07:03:58"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-05 07:03:58"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-05 07:03:58"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-05T04:03:58.777Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-05 07:03:59"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-05 07:03:59"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-05 07:03:59"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-05T04:03:59.352Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-05 07:04:06"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-05 07:04:06"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-05 07:04:06"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-05T04:04:06.388Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}
+{"level":"warn","message":"GET","timestamp":"2026-09-05 07:09:27"}
+{"level":"warn","message":"/api/admin/teachers","timestamp":"2026-09-05 07:09:27"}
+{"level":"warn","message":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36","timestamp":"2026-09-05 07:09:27"}
+{"ip":"::1","level":"warn","message":"Route not found","method":"GET","originalUrl":"/api/admin/teachers?page=1","path":"/api/admin/teachers","query":{"page":"1"},"referer":"http://localhost:5173/","timestamp":"2026-09-05T04:09:27.296Z","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36"}

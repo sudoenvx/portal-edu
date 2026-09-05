@@ -21,7 +21,7 @@ export const Card = ({ title, description, headerActions, headerClassName = '', 
         <header className={`flex items-center justify-between gap-4 border-b border-border p-1.5 ${headerClassName}`}>
           {(title || description) && (
             <div className="min-w-0 flex-1">
-              {title && <h2 className="m-0 text-[12px] font-medium leading-snug text-text/80">{title}</h2>}
+              {title && <h2 className="m-0 text-[11px] font-medium leading-snug ">{title}</h2>}
               {description && <p className="m-0 text-xs leading-normal text-text-muted">{description}</p>}
             </div>
           )}

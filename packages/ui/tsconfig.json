@@ -4,6 +4,14 @@
     "jsx": "react-jsx",
     "noEmit": true
   },
+  "references": [
+    {
+      "path": "../../packages/types",
+    },
+    {
+      "path": "../../packages/utils"
+    }
+  ],
   "include": ["src/**/*", ".storybook/**/*"],
   "exclude": ["node_modules", "dist", "storybook-static"]
 }

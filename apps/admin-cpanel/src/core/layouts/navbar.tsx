@@ -1,118 +1,108 @@
-import {
-  LayoutDashboard,
-  Menu,
-  Power,
-  SidebarCloseIcon,
-} from 'lucide-react'
-// import { Popover } from '../ui'
-// import AdminUserIcon from '@/core/components/shared/admin_logo'
-import { useRouteContext } from '@/app/routes'
-// import AdminDropdownMenu from '@/core/components/shared/admin_dropdown_content'
-// import { useNotification } from '@/core/hooks/use_notification'
-// import { useNavigate } from 'react-router-dom'
-import { cn } from '@/core/utils'
+import { useState } from 'react'
+import { LOGO } from '@/core/assets'
+import { useLayoutSettings } from '@/core/layouts/layout_settings'
+import { Menu, PanelRightClose, PanelRightOpen, Power, Maximize, Minimize, Moon, Sun } from 'lucide-react'
 
 type NavbarProps = {
-  onMenuClick: () => void
-  sidebarOpen: boolean
+  onMobileMenuClick: () => void
 }
-
-// function NavbarUserMenu() {
-//   return (
-//     <Popover
-//       side="bottom"
-//       align="center"
-//       offset={8}
-//       triggerType="click"
-//       triggerClassName="rounded-sm focus-visible:outline-none focus-visible:outline-offset-2 focus-visible:outline-primary"
-//       contentClassName="w-54 p-1.5"
-//       trigger={
-//         <span className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-secondary-tint hover:bg-secondary-tint-dark text-text transition-colors duration-200 text-[11px] font-bold">
-//           <AdminUserIcon className="h-5 w-5" />
-//         </span>
-
-//       }
-//     >
-//       <AdminDropdownMenu />
-//     </Popover>
-//   )
-// }
 
 function getCurrentDate() {
-  return new Intl.DateTimeFormat('en', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: 'numeric' }).format(new Date())
+  // Format: FRI, SEP 4, 10:21 PM
+  return new Intl.DateTimeFormat('en', { 
+    weekday: 'short', 
+    month: 'short', 
+    day: 'numeric', 
+    hour: 'numeric', 
+    minute: 'numeric' 
+  }).format(new Date()).toUpperCase()
 }
 
-export function Navbar({ onMenuClick, sidebarOpen }: NavbarProps) {
-  const routeContext = useRouteContext()
-  // const { logoutMutation } = useAuth()
-  // const { notify } = useNotification()
-  // const navigate = useNavigate()
+export function Navbar({ onMobileMenuClick }: NavbarProps) {
+  const { isSidebarCollapsed, toggleSidebar, isDarkMode, toggleDarkMode } = useLayoutSettings()
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const handleLogout = async () => {
-    // await logoutMutation.mutateAsync({}, {
-    //   onSuccess() {
-    //     notify.success('Logged out successfully')
-    //     navigate('/login', { replace: true })
-    //   }
-    // })
+    // Logic for logout
+  }
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen()
+      setIsFullscreen(true)
+    } else if (document.exitFullscreen) {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+    }
   }
 
   return (
-    <header className="sticky top-4 z-30 rounded-sm bg-surface/80 py-1.5 px-1.5 backdrop-blur-md">
-      <div className="mx-auto flex items-center justify-between gap-2 ">
-        <div className="flex min-w-0 items-center gap-1.5">
-          <button
-            type="button"
-            onClick={onMenuClick}
-            aria-label={sidebarOpen ? 'إغلاق القائمة الجانبية' : 'فتح القائمة الجانبية'}
-            aria-expanded={sidebarOpen}
-            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-secondary-tint text-text-muted transition-colors duration-200 hover:bg-secondary/30 hover:text-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
-          >
-            {sidebarOpen ? <SidebarCloseIcon className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
-          </button>
+    <header className="z-40 flex h-12 shrink-0 items-center justify-between bg-surface px-2 border-b border-border/50">
+      
+      {/* الجزء الأيمن: اللوجو وزر التحكم بالقائمة */}
+      <div className="flex items-center gap-4">
+        {/* زر الموبايل */}
+        <button
+          type="button"
+          onClick={onMobileMenuClick}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-sm text-text-muted hover:bg-secondary-tint hover:text-text lg:hidden"
+        >
+          <Menu className="h-5 w-5" />
+        </button>
 
-          {
-            routeContext != null ? (
-              <div className="flex min-w-0 items-center gap-2">
-                <span className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-primary text-primary-text sm:inline-flex">
-                  <routeContext.icon className="h-5 w-5" strokeWidth={1.8} />
-                </span>
-                <div className="min-w-0">
-                  <p className="truncate text-[13px] font-semibold leading-4 text-text">{routeContext.label}</p>
-                  <p className="hidden truncate text-[11px] leading-4 text-text-muted sm:block">{routeContext.description}</p>
-                </div>
-              </div>
-            ) : (
-              <span className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-primary text-primary-text sm:inline-flex">
-                <LayoutDashboard className="h-5 w-5" strokeWidth={1.8} />
-              </span>
-            )
-          }
+        {/* اللوجو فقط بدون الاسم */}
+        <div className="flex items-center select-none">
+          <img src={LOGO} alt="Portal Edu Logo" className="h-7 w-7 object-contain" />
         </div>
 
-        <div className="flex shrink-0 items-center gap-1.5">
-          <div className="hidden items-center gap-1.5 rounded-sm px-2 text-primary-dark md:flex">
-            {/* <CalendarDays className="h-4 w-4" strokeWidth={1.8} /> */}
-            <span className="text-[12px] uppercase font-medium font-inter">{getCurrentDate()}</span>
-          </div>
+        {/* زر طي القائمة */}
+        <button
+          type="button"
+          onClick={toggleSidebar}
+          title={isSidebarCollapsed ? 'توسيع القائمة' : 'طي القائمة'}
+          className="hidden lg:inline-flex h-8 w-8 items-center justify-center rounded-sm text-text-muted hover:bg-secondary-tint hover:text-text transition-colors"
+        >
+          {isSidebarCollapsed ? <PanelRightOpen size={18} /> : <PanelRightClose size={18} />}
+        </button>
+      </div>
 
-          {/* <NavbarUserMenu /> */}
-          {/* logout icon */}
-          <span onClick={handleLogout} className={
-            cn(
-              "relative flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-danger text-danger-text hover:bg-danger-hover transition-colors duration-200 text-[11px] font-bold",
-              // logoutMutation.isPending && 'pointer-events-none bg-text-faint! hover:bg-text-faint text-text'
-            )
-          }>
-            {
-            <Power className="h-4.5 w-4.5" />
-              // logoutMutation.isPending ? (
-              //   <Loader2 className="h-4.5 w-4.5 animate-spin" />
-              // ) : (
-              // )
-            }
-          </span>
+      {/* الجزء الأيسر: التاريخ وأدوات النظام */}
+      <div className="flex items-center gap-2 sm:gap-2">
+        
+        {/* التاريخ بالإنجليزية والشكل المختصر */}
+        <div className="hidden items-center px-2 text-primary-dark md:flex font-inter">
+          <span className="text-[11px] font-bold tracking-wider">{getCurrentDate()}</span>
+        </div>
 
+        <div className="h-4 w-px bg-border hidden sm:block mx-1" />
+
+        <div className="flex gap-1">
+          {/* زر ملء الشاشة */}
+        <button 
+          onClick={toggleFullScreen}
+          title="ملء الشاشة"
+          className="flex h-7 w-7 items-center justify-center rounded-sm text-text-muted hover:bg-creamy hover:text-text transition-colors duration-200"
+        >
+          {isFullscreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
+        </button>
+
+        {/* زر الوضع الداكن */}
+        <button 
+          onClick={toggleDarkMode}
+          title="تغيير المظهر"
+          className="flex h-7 w-7 items-center justify-center rounded-sm text-text-muted hover:bg-creamy hover:text-text transition-colors duration-200"
+        >
+          {isDarkMode ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
+        </button>
+
+        {/* زر تسجيل الخروج */}
+        <button 
+          onClick={handleLogout} 
+          title="تسجيل الخروج"
+          className="flex h-7 w-7 items-center justify-center rounded-sm bg-danger text-white hover:bg-danger-hover transition-colors duration-200 ms-1"
+        >
+          <Power className="h-4 w-4" />
+        </button>
         </div>
       </div>
     </header>

@@ -1,44 +1,50 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { ChevronsUpDown, Columns3 } from 'lucide-react'
 import { Pagination } from './pagination'
 import { FloatingSelectionToolbar } from './floating-selection-toolbar'
-import { cn } from '../utils/cn'
 import { Checkbox } from './checkbox'
+import { useTableStore } from '../core/stores/use-table-store'
+import { cn } from '../utils/cn'
+import { DropdownMenu, DropdownMenuCheckItem } from './dropdown-menu'
+import { IconButton } from './icon-button'
+import { Button } from './button'
 
 export interface DataTableColumn<T> {
+  id?: string // مُعرف فريد للعمود (مهم إذا كنت ستستخدم خاصية إخفاء الأعمدة)
   header: string
   accessor?: keyof T
   render?: (item: T) => React.ReactNode
   className?: string
   headerClassName?: string
   cellClassName?: string
-  /** Pin this column to the start or end of the table while horizontally scrolling.
-   *  Pinned columns are expected to be contiguous — start-pinned columns first, end-pinned columns last. */
   pinned?: 'start' | 'end'
-  /** Optional fixed width, recommended for pinned columns to avoid layout shift, e.g. 160 or '10rem' */
   width?: number | string
 }
 
 export interface DataTableProps<T> {
+  // ---- Header Props ----
+  title?: React.ReactNode
+  description?: React.ReactNode
+  tableActions?: React.ReactNode // أزرار الإجراءات العلوية للجدول
+  persistedKey?: string // إذا تم تمريره، سيتم تفعيل زر إخفاء/إظهار الأعمدة وحفظها
+
+  // ---- Table Props ----
   data: T[]
   columns: DataTableColumn<T>[]
   getRowId: (item: T) => string
-
-  /** Optional actions column */
   actions?: (item: T) => React.ReactNode
   actionsHeader?: string
-  /** Pin the actions column to the end of the table */
   pinActions?: boolean
+  striped?: boolean // تفعيل تلوين الصفوف بالتبادل
 
-  /** Row selection */
+  // ---- Selection ----
   selectable?: boolean
-  /** Controlled selection — omit to let the table manage selection internally */
   selectedIds?: string[]
   onSelectionChange?: (ids: string[]) => void
-  /** Action buttons rendered inside the floating toolbar when rows are selected */
   toolbarActions?: (selectedIds: string[], clearSelection: () => void) => React.ReactNode
   toolbarItemLabel?: string
 
-  /** Pagination (all optional — omit to render an unpaginated table) */
+  // ---- Pagination ----
   currentPage?: number
   totalPages?: number
   totalItems?: number
@@ -48,22 +54,29 @@ export interface DataTableProps<T> {
   loading?: boolean
   skeletonRows?: number
   emptyMessage?: string
-
-  /** Text direction — defaults to 'rtl' */
   dir?: 'rtl' | 'ltr'
-
   className?: string
   rowClassName?: (item: T) => string
   onRowClick?: (item: T) => void
 }
 
+// دالة مساعدة للحصول على مُعرف العمود
+function getColumnId<T>(col: DataTableColumn<T>, index: number): string {
+  return col.id || (typeof col.accessor === 'string' ? col.accessor : col.header) || `col-${index}`
+}
+
 export function DataTable<T>({
+  title,
+  description,
+  tableActions,
+  persistedKey,
   data,
   columns,
   getRowId,
   actions,
   actionsHeader = '',
   pinActions = false,
+  striped = false,
   selectable = false,
   selectedIds,
   onSelectionChange,
@@ -76,13 +89,22 @@ export function DataTable<T>({
   onPageChange,
   loading = false,
   skeletonRows = 6,
-  emptyMessage = 'No records found. Try changing filters or create a new one.',
+  emptyMessage = 'لا توجد بيانات للعرض.',
   dir = 'rtl',
   className,
   rowClassName,
   onRowClick,
 }: DataTableProps<T>) {
-  // ---- selection state (controlled or internal) --------------------------
+  // ---- Store & Column Visibility -----------------------------------------
+  const { hiddenColumns: allHiddenColumns, toggleColumn } = useTableStore()
+  const hiddenColumns = persistedKey ? (allHiddenColumns[persistedKey] || []) : []
+
+  // الأعمدة المرئية فقط هي التي سيتم رسمها
+  const visibleColumns = useMemo(() => {
+    return columns.filter((col, i) => !hiddenColumns.includes(getColumnId(col, i)))
+  }, [columns, hiddenColumns])
+
+  // ---- Selection State ---------------------------------------------------
   const [internalSelected, setInternalSelected] = useState<Set<string>>(new Set())
   const selected = selectedIds ? new Set(selectedIds) : internalSelected
 
@@ -90,7 +112,6 @@ export function DataTable<T>({
     onSelectionChange?.(Array.from(next))
     if (!selectedIds) setInternalSelected(next)
   }
-
   const clearSelection = () => setSelected(new Set())
 
   const currentPageIds = useMemo(() => data.map(getRowId), [data, getRowId])
@@ -104,7 +125,6 @@ export function DataTable<T>({
     else currentPageIds.forEach((id) => next.add(id))
     setSelected(next)
   }
-
   const toggleRow = (id: string) => {
     const next = new Set(selected)
     if (next.has(id)) next.delete(id)
@@ -112,37 +132,34 @@ export function DataTable<T>({
     setSelected(next)
   }
 
-  // ---- column layout -------------------------------------------------------
-  const showPagination =
-    currentPage !== undefined &&
-    totalPages !== undefined &&
-    totalItems !== undefined &&
-    perPage !== undefined &&
-    onPageChange !== undefined
+  // ---- Column Layout & Pinning -------------------------------------------
+  const showPagination = currentPage !== undefined && totalPages !== undefined && totalItems !== undefined && perPage !== undefined && onPageChange !== undefined
 
   const checkboxIndex = selectable ? 0 : -1
   const columnStartIndex = selectable ? 1 : 0
-  const colCount = (selectable ? 1 : 0) + columns.length + (actions ? 1 : 0)
+  const colCount = (selectable ? 1 : 0) + visibleColumns.length + (actions ? 1 : 0)
   const actionsIndex = actions ? colCount - 1 : -1
+
+const hasActions = !!actions;
 
   const pinnedMap = useMemo(() => {
     const map: Record<number, 'start' | 'end'> = {}
     if (selectable) map[checkboxIndex] = 'start'
-    columns.forEach((col, i) => {
+    visibleColumns.forEach((col, i) => {
       if (col.pinned) map[columnStartIndex + i] = col.pinned
     })
-    if (actions && pinActions) map[actionsIndex] = 'end'
+    if (hasActions && pinActions) map[actionsIndex] = 'end'
     return map
-  }, [columns, selectable, actions, pinActions, checkboxIndex, columnStartIndex, actionsIndex])
+  }, [visibleColumns, selectable, hasActions, pinActions, checkboxIndex, columnStartIndex, actionsIndex])
 
   const hasPinnedColumns = Object.keys(pinnedMap).length > 0
 
-  // ---- measure pinned column offsets for sticky positioning ----------------
+  // ---- Sticky Positioning Offsets ----------------------------------------
   const wrapperRef = useRef<HTMLDivElement>(null)
   const headerCellRefs = useRef<(HTMLTableCellElement | null)[]>([])
   const [pinOffsets, setPinOffsets] = useState<Record<number, number>>({})
 
-  useLayoutEffect(() => {
+useLayoutEffect(() => {
     if (!hasPinnedColumns) return
 
     const computeOffsets = () => {
@@ -164,18 +181,33 @@ export function DataTable<T>({
         }
       }
 
-      setPinOffsets(offsets)
+      // التحديث الآمن: لا تقم بتحديث الـ State إلا إذا اختلفت الأرقام فعلياً
+      setPinOffsets((prev) => {
+        const prevKeys = Object.keys(prev);
+        const newKeys = Object.keys(offsets);
+        
+        if (prevKeys.length !== newKeys.length) return offsets;
+        
+        for (const key of newKeys) {
+          if (prev[Number(key)] !== offsets[Number(key)]) {
+            return offsets; // القيمة تغيرت، قم بتحديث الحالة
+          }
+        }
+        
+        return prev; // لم يتغير شيء، لا تقم بعمل Re-render
+      })
     }
 
     computeOffsets()
     const ro = new ResizeObserver(computeOffsets)
     if (wrapperRef.current) ro.observe(wrapperRef.current)
     window.addEventListener('resize', computeOffsets)
+    
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', computeOffsets)
     }
-  }, [pinnedMap, colCount, hasPinnedColumns, data.length])
+  }, [pinnedMap, colCount, hasPinnedColumns, data.length, visibleColumns.length])
 
   const pinnedStyle = (index: number): React.CSSProperties | undefined => {
     const side = pinnedMap[index]
@@ -188,38 +220,91 @@ export function DataTable<T>({
   }
 
   return (
-    <div className={cn('flex flex-col', className)}>
-      <div
-        ref={wrapperRef}
-        className="bg-surface rounded-sm  overflow-x-auto"
-      >
+    <div className={cn('flex flex-col rounded-lg overflow-hidden bg-surface', className)}>
+      
+      {/* ---- Header Section ---- */}
+      {(title || description || tableActions || persistedKey) && (
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 p-2">
+          <div className="flex flex-col min-w-0">
+            {title && <h3 className="text-[13px] font-bold text-text truncate">{title}</h3>}
+            {description && <p className="text-[11px] text-text-muted truncate">{description}</p>}
+          </div>
+          
+          <div className="flex items-center gap-2 shrink-0">
+            {tableActions}
+            
+            {/* زر التحكم في الأعمدة */}
+            {persistedKey && (
+              <DropdownMenu
+              menuClassName='w-35!'
+                
+                align="start"
+                trigger={
+                  // <IconButton icon={<Columns3 />} variant="ghost" size="sm" title="إعدادات الأعمدة" />
+                  <>
+                    <Button
+                      variant='secondary'
+                      tint
+                      leftIcon={<ChevronsUpDown className='text-[8px]!' />}
+                    >الاعمدة</Button>
+                  </>
+                }
+              >
+                <div className="px-2 py-1.5 text-[10px] font-bold text-text-muted uppercase tracking-wider">
+                  إظهار الأعمدة
+                </div>
+                <div className="max-h-48 overflow-y-auto flex flex-col gap-0.5">
+                  {columns.map((col, i) => {
+                    const colId = getColumnId(col, i)
+                    const isVisible = !hiddenColumns.includes(colId)
+                    return (
+                      <DropdownMenuCheckItem
+                        key={colId}
+                        checked={isVisible}
+                        onCheckedChange={() => toggleColumn(persistedKey, colId)}
+                        className={
+                          cn(
+                            isVisible && 'bg-accent-tint! text-text!',
+                            'hover:bg-secondary-tint/80 text-[11px]!'
+                          )
+                        }
+                        iconClassName={`${isVisible && 'text-text'}`}
+                      >
+                        {col.header}
+                      </DropdownMenuCheckItem>
+                    )
+                  })}
+                </div>
+              </DropdownMenu>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ---- Table Section ---- */}
+      <div ref={wrapperRef} className="overflow-x-auto">
         <table dir={dir} className="w-full">
           <thead>
-            <tr className="bg-secondary">
+            <tr className="">
               {selectable && (
                 <th
                   ref={(el) => { headerCellRefs.current[checkboxIndex] = el }}
                   style={pinnedStyle(checkboxIndex)}
-                  className="w-10 px-2.5 py-1.5 bg-secondary"
+                  className="w-10 px-2.5 py-2 bg-surface"
                 >
-                  <Checkbox
-                    checked={allOnPageSelected}
-                    indeterminate={someOnPageSelected}
-                    onChange={toggleSelectAll}
-                    aria-label="تحديد الكل"
-                  />
+                  <Checkbox checked={allOnPageSelected} indeterminate={someOnPageSelected} onChange={toggleSelectAll} />
                 </th>
               )}
 
-              {columns.map((col, i) => {
+              {visibleColumns.map((col, i) => {
                 const index = columnStartIndex + i
                 return (
                   <th
-                    key={i}
+                    key={index}
                     ref={(el) => { headerCellRefs.current[index] = el }}
                     style={{ width: col.width, ...pinnedStyle(index) }}
                     className={cn(
-                      'text-start px-2.5 py-1.5  text-[10px] font-medium uppercase tracking-wider text-white/80 whitespace-nowrap bg-secondary',
+                      'text-start px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-text whitespace-nowrap bg-[#e1e0d6]',
                       col.headerClassName,
                     )}
                   >
@@ -232,7 +317,7 @@ export function DataTable<T>({
                 <th
                   ref={(el) => { headerCellRefs.current[actionsIndex] = el }}
                   style={pinnedStyle(actionsIndex)}
-                  className="text-start px-2.5 py-1.5 text-[11px] font-medium uppercase tracking-wider text-secondary-text whitespace-nowrap bg-secondary"
+                  className="text-start px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-text whitespace-nowrap bg-[#e1e0d6]"
                 >
                   {actionsHeader}
                 </th>
@@ -243,7 +328,7 @@ export function DataTable<T>({
           <tbody>
             {loading ? (
               Array.from({ length: skeletonRows }).map((_, index) => (
-                <tr key={`skeleton-${index}`} className="border-t border-border">
+                <tr key={`skeleton-${index}`} className="border-b border-border/50 last:border-0">
                   {Array.from({ length: colCount }).map((__, cellIndex) => (
                     <td key={cellIndex} className="px-2 py-3 bg-white">
                       <div className="h-4 rounded bg-secondary/20 animate-pulse" />
@@ -253,65 +338,49 @@ export function DataTable<T>({
               ))
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={colCount || 1} className="px-2 py-4 text-center text-sm text-text-muted">
+                <td colSpan={colCount || 1} className="px-2 py-8 text-center text-[12px] text-text-muted">
                   {emptyMessage}
                 </td>
               </tr>
             ) : (
-              data.map((item) => {
+              data.map((item, rowIndex) => {
                 const id = getRowId(item)
                 const isSelected = selected.has(id)
+                // منطق الـ Striped Rows
+                const rowBg = isSelected ? 'bg-primary/5' : (striped && rowIndex % 2 !== 0 ? 'bg-background/40' : 'bg-surface')
 
                 return (
                   <tr
                     key={id}
                     className={cn(
-                      'border-t first:border-t-0 border-border/80 transition-colors',
+                      'border-b border-border/50 last:border-0 transition-colors hover:bg-surface-raised',
                       onRowClick && 'cursor-pointer',
-                      isSelected && 'bg-primary/5',
+                      rowBg,
                       rowClassName?.(item),
                     )}
                     onClick={() => onRowClick?.(item)}
                   >
                     {selectable && (
-                      <td
-                        style={pinnedStyle(checkboxIndex)}
-                        className={cn('px-2.5 py-2', isSelected ? 'bg-primary/5' : 'bg-white')}
-                      >
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={() => toggleRow(id)}
-                          aria-label="تحديد الصف"
-                        />
+                      <td style={pinnedStyle(checkboxIndex)} className={cn('px-2.5 py-2', rowBg)}>
+                        <Checkbox checked={isSelected} onChange={() => toggleRow(id)} />
                       </td>
                     )}
 
-                    {columns.map((col, i) => {
+                    {visibleColumns.map((col, i) => {
                       const index = columnStartIndex + i
                       return (
                         <td
-                          key={i}
+                          key={index}
                           style={pinnedStyle(index)}
-                          className={cn(
-                            'px-1.5 py-1.5 whitespace-nowrap',
-                            pinnedMap[index] && (isSelected ? 'bg-primary/5' : 'bg-white'),
-                            col.cellClassName,
-                          )}
+                          className={cn('px-2 py-2 whitespace-nowrap', pinnedMap[index] && rowBg, col.cellClassName)}
                         >
-                          {col.render
-                            ? col.render(item)
-                            : col.accessor
-                            ? (item[col.accessor] as React.ReactNode)
-                            : null}
+                          {col.render ? col.render(item) : col.accessor ? (item[col.accessor] as React.ReactNode) : null}
                         </td>
                       )
                     })}
 
                     {actions && (
-                      <td
-                        style={pinnedStyle(actionsIndex)}
-                        className={cn('px-1.5 py-1.5', pinnedMap[actionsIndex] && (isSelected ? 'bg-primary/5' : 'bg-white'))}
-                      >
+                      <td style={pinnedStyle(actionsIndex)} className={cn('px-2 py-2', pinnedMap[actionsIndex] && rowBg)}>
                         <div className="flex items-center gap-1 justify-end">{actions(item)}</div>
                       </td>
                     )}
@@ -321,19 +390,20 @@ export function DataTable<T>({
             )}
           </tbody>
         </table>
-      {showPagination && data.length > 0 && !loading && (
-        <div className="px-1.5 py-1.5 rounded-sm bg-surface mt-0">
-          <Pagination
-            currentPage={currentPage!}
-            totalPages={totalPages!}
-            totalItems={totalItems!}
-            perPage={perPage!}
-            onPageChange={onPageChange!}
-          />
-        </div>
-      )}
-      </div>
 
+        {/* ---- Pagination Section ---- */}
+        {showPagination && data.length > 0 && !loading && (
+          <div className="px-2 py-2 border-t border-border/80 bg-surface">
+            <Pagination
+              currentPage={currentPage!}
+              totalPages={totalPages!}
+              totalItems={totalItems!}
+              perPage={perPage!}
+              onPageChange={onPageChange!}
+            />
+          </div>
+        )}
+      </div>
 
       {selectable && (
         <FloatingSelectionToolbar count={selected.size} onClear={clearSelection} itemLabel={toolbarItemLabel}>

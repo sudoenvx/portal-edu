@@ -46,11 +46,18 @@ class BadRequestError extends ApiError {
 }
 
 
+class NotFoundError extends ApiError {
+    constructor(message = "Not Found") {
+        super(message, ErrorMessage.NOT_FOUND, ApiStatusCode.NOT_FOUND);
+    }
+}
+
 
 export {
     AuthError,
     ValidationError,
     DuplicationError,
     ApiError,
-    BadRequestError
+    BadRequestError,
+    NotFoundError
 }
