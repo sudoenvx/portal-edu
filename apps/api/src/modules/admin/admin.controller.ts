@@ -1,43 +1,33 @@
-import { ApiResponse } from "../../core/types/api-response";
-import { clearAuthTokenCookie, setAuthTokenCookie } from "../../core/utils/auth/cookie";
-import asyncWrapper from "../../core/wrappers/async-wrapper";
-import { AdminRepository } from "./admin.repo";
-import { AdminService } from "./admin.service";
+import { Request, Response } from 'express';
+import { adminService } from './admin.service';
+import { ApiResponse } from '../../core/types/api-response';
+import { setAuthTokenCookie, clearAuthTokenCookie } from '../../core/utils/auth/cookie';
 
+export const loginAdminHandler = async (req: Request, res: Response) => {
+    const result = await adminService.login(req.body);
+    setAuthTokenCookie(res, result.token);
+    ApiResponse.success(res, result, 'Admin logged in successfully.');
+};
 
-const adminRepository = new AdminRepository()
-const adminService = new AdminService(adminRepository)
+export const logoutAdminHandler = async (_req: Request, res: Response) => {
+    clearAuthTokenCookie(res);
+    ApiResponse.success(res, null, 'Logged out successfully.');
+};
 
-export const loginAdminHandler = asyncWrapper(
-    async (req, res) => {
+export const getAdminMeHandler = async (req: Request, res: Response) => {
+    const adminId = Number(req.user?.id);
+    const admin = await adminService.findById(adminId);
+    ApiResponse.success(res, admin);
+};
 
-        const { email, password } = req.body
+export const updateAdminProfileHandler = async (req: Request, res: Response) => {
+    const adminId = Number(req.user?.id);
+    const updated = await adminService.update(adminId, req.body);
+    ApiResponse.success(res, updated, 'Profile updated successfully.');
+};
 
-        const result = await adminService.login({ email, password })
-        setAuthTokenCookie(res, result.access_token)
-        ApiResponse.success(res, result)
-    }
-)
-
-export const registerHandler = asyncWrapper(
-    async (req, res) => {
-        const { name, password, email } = req.body
-        const admin = await adminService.register({ name, password, email })
-        res.json(admin)
-    }
-)
-
-export const logoutAdminHandler = asyncWrapper(
-    async (req, res) => {
-
-    }
-)
-
-export const getCurrentAdminHandler = asyncWrapper(
-    async (req, res) => {
-        const admin_id = req.headers['identifier_id']
-        const admin = adminService.get(+admin_id!)
-        clearAuthTokenCookie(res)
-        ApiResponse.success(res, admin)
-    }
-)
+export const changeAdminPasswordHandler = async (req: Request, res: Response) => {
+    const adminId = Number(req.user?.id);
+    const result = await adminService.changePassword(adminId, req.body);
+    ApiResponse.success(res, result, result.message);
+};

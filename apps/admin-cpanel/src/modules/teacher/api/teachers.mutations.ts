@@ -1,26 +1,42 @@
 import { useMutationAction } from '@/core/hooks/use_query_actions'
-import type { TeacherFormValues } from '../schemas/teachers.schemas'
+import type { CreateTeacherFormValues } from '../schemas/teachers.schemas'
 
 export function useAddTeacher() {
-  return useMutationAction<void, TeacherFormValues>({
+  return useMutationAction<void, CreateTeacherFormValues & { profileImage?: File }>({
     method: 'post',
     url: '/teachers',
-    key: ['teachers'], // سيقوم بتحديث جدول المدرسين تلقائياً
+    key: ['teachers'],
+    body: ({ profileImage, ...values }) => {
+      const formData = new FormData()
+      Object.entries(values).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) formData.append(key, String(value))
+      })
+      if (profileImage) formData.append('profileImage', profileImage)
+      return formData
+    },
   })
 }
 
-export function useUpdateTeacher(teacherId: string) {
-  return useMutationAction<void, TeacherFormValues>({
+export function useUpdateTeacher(teacherId: string | number) {
+  return useMutationAction<void, Partial<CreateTeacherFormValues>>({
     method: 'put',
-    url: `/admin/teachers/${teacherId}`,
-    key: ['teachers'],
+    url: `/teachers/${teacherId}`,
+    key: ['teachers', 'profile', teacherId],
+  })
+}
+
+export function useUpdateTeacherStatus(teacherId: string | number) {
+  return useMutationAction<void, { accountStatus: string }>({
+    method: 'patch',
+    url: `/teachers/${teacherId}/status`,
+    key: ['teachers', 'profile', teacherId],
   })
 }
 
 export function useDeleteTeacher() {
-  return useMutationAction<void, { id: string }>({
+  return useMutationAction<void, { id: string | number }>({
     method: 'delete',
-    url: (data) => `/admin/teachers/${data.id}`,
+    url: (data) => `/teachers/${data.id}`,
     key: ['teachers'],
   })
 }

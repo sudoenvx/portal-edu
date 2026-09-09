@@ -18,11 +18,11 @@ export interface NotificationProps {
 const notificationConfig = {
   success: { icon: CheckCircle, iconColor: "text-primary", progressColor: "bg-primary" },
   error: { icon: AlertTriangle, iconColor: "text-danger", progressColor: "bg-danger" },
-  info: { icon: Info, iconColor: "text-[#264653]", progressColor: "bg-[#264653]" },
-  warning: { icon: AlertTriangle, iconColor: "text-[#fca311]", progressColor: "bg-[#fca311]" },
+  info: { icon: Info, iconColor: "text-info", progressColor: "bg-info" },
+  warning: { icon: AlertTriangle, iconColor: "text-warning", progressColor: "bg-warning" },
 };
 
-export const NotificationToast = ({ id, message, type, onDismiss, duration = 3000 }: NotificationProps) => {
+export const NotificationToast = ({ id, message, type, onDismiss, duration = 5000 }: NotificationProps) => {
   const { icon: Icon, iconColor, progressColor } = notificationConfig[type];
 
   // Auto-dismiss after the specified duration
@@ -41,16 +41,16 @@ export const NotificationToast = ({ id, message, type, onDismiss, duration = 300
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: -20, scale: 0.9, transition: { duration: 0.2 } }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="relative w-full max-w-lg overflow-hidden bg-white py-1.5 px-1.5 shadow-card shadow-secondary/50 rounded-sm backdrop-blur-md text-gray-800"
+      className="relative w-full max-w-lg overflow-hidden bg-surface py-1.5 px-1.5 shadow-elevated border border-border-subtle rounded-sm text-text"
     >
       <div className="flex items-center gap-3">
         <Icon className={cn("w-5 h-5 shrink-0", iconColor)} />
         <p className="text-xs font-medium grow">{message}</p>
         <button 
           onClick={() => onDismiss(id)} 
-          className=" p-1 text-danger-tint-text bg-danger/20 hover:bg-danger/30 cursor-pointer rounded-sm transition-colors shrink-0"
+          className=" p-1 text-danger-subtle-text bg-danger-subtle hover:bg-danger/30 cursor-pointer rounded-xs transition-colors shrink-0"
         >
-          <X size={16} />
+          <X size={14} />
         </button>
       </div>
 

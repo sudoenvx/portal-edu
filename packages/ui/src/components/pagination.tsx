@@ -1,5 +1,7 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import React from 'react'
+import { IconButton } from './icon-button'
+import { Select } from './select'
 import { cn } from '../utils/cn'
 
 interface PaginationProps {
@@ -8,79 +10,120 @@ interface PaginationProps {
   totalItems: number
   perPage: number
   onPageChange: (page: number) => void
+  onPerPageChange?: (perPage: number) => void
+  perPageOptions?: number[]
+  /** Hide the per-page selector entirely (e.g. if the parent doesn't
+   *  support changing page size). Shown by default when
+   *  `onPerPageChange` is provided. */
+  showPerPageSelect?: boolean
+  className?: string
 }
 
 export function Pagination({
   currentPage,
   totalPages,
+  totalItems,
+  perPage,
   onPageChange,
+  onPerPageChange,
+  perPageOptions = [10, 20, 30],
+  showPerPageSelect = true,
+  className,
 }: PaginationProps) {
   const pages = buildPageSequence(currentPage, totalPages)
 
+  const start = totalItems === 0 ? 0 : (currentPage - 1) * perPage + 1
+  const end = Math.min(currentPage * perPage, totalItems)
+
   return (
-    <div dir="rtl" className="flex items-center justify-between">
-      {/* <span className="text-[12px] text-text-muted">
-        showing {start} – { end} of {totalItems} records
-      </span> */}
+    <div dir="rtl" className={cn('flex flex-col-reverse items-center justify-between gap-3 sm:flex-row', className)}>
+      <div className="flex items-center gap-2">
+        <span className="text-[12px] text-text-muted">
+          عرض <span className="font-semibold tabular-nums text-text">{start}</span>
+          {' – '}
+          <span className="font-semibold tabular-nums text-text">{end}</span>
+          {' من أصل '}
+          <span className="font-semibold tabular-nums text-text">{totalItems}</span>
+          {' نتيجة'}
+        </span>
+
+        {onPerPageChange && showPerPageSelect && (
+          <div className="flex items-center gap-1.5">
+            <span className="text-[12px] text-text-muted">·</span>
+            <Select
+              size="sm"
+              value={String(perPage)}
+              onChange={(value) => onPerPageChange(Number(value))}
+              options={perPageOptions.map((n) => ({ value: String(n), label: `${n} / صفحة` }))}
+            />
+          </div>
+        )}
+      </div>
 
       <div className="flex items-center gap-1">
-        {/* "السابق" (previous) visually points toward the start of reading (right) in RTL */}
-        <PgBtn
-          onClick={() => onPageChange(currentPage - 1)}
+        <IconButton
+          icon={<ChevronsRight size={13} />}
+          color="neutral"
+          style="ghost"
+          size="sm"
+          aria-label="الصفحة الأولى"
           disabled={currentPage === 1}
-          title="الصفحة السابقة"
-        >
-          <ChevronRight size={13} />
-        </PgBtn>
+          onClick={() => onPageChange(1)}
+        />
+        {/* "السابق" (previous) visually points toward the start of reading (right) in RTL */}
+        <IconButton
+          icon={<ChevronRight size={13} />}
+          color="neutral"
+          style="ghost"
+          size="sm"
+          aria-label="الصفحة السابقة"
+          disabled={currentPage === 1}
+          onClick={() => onPageChange(currentPage - 1)}
+        />
 
         {pages.map((p, i) =>
           p === '…' ? (
-            <span key={`dots-${i}`} className="text-[12px] text-text-muted px-1">…</span>
+            <span key={`dots-${i}`} className="px-1 text-[12px] text-text-muted">…</span>
           ) : (
-            <PgBtn
-              key={p}
-              active={p === currentPage}
-              onClick={() => onPageChange(p as number)}
-            >
+            <PgBtn key={p} active={p === currentPage} onClick={() => onPageChange(p as number)}>
               {p}
             </PgBtn>
-          )
+          ),
         )}
 
         {/* "التالي" (next) visually points toward the end of reading (left) in RTL */}
-        <PgBtn
-          onClick={() => onPageChange(currentPage + 1)}
+        <IconButton
+          icon={<ChevronLeft size={13} />}
+          color="neutral"
+          style="ghost"
+          size="sm"
+          aria-label="الصفحة التالية"
           disabled={currentPage === totalPages}
-          title="الصفحة التالية"
-        >
-          <ChevronLeft size={13} />
-        </PgBtn>
+          onClick={() => onPageChange(currentPage + 1)}
+        />
+        <IconButton
+          icon={<ChevronsLeft size={13} />}
+          color="neutral"
+          style="ghost"
+          size="sm"
+          aria-label="الصفحة الأخيرة"
+          disabled={currentPage === totalPages}
+          onClick={() => onPageChange(totalPages)}
+        />
       </div>
     </div>
   )
 }
 
-function PgBtn({
-  children, onClick, disabled, active, title,
-}: {
-  children: React.ReactNode
-  onClick?: () => void
-  disabled?: boolean
-  active?: boolean
-  title?: string
-}) {
+function PgBtn({ children, onClick, active }: { children: React.ReactNode; onClick?: () => void; active?: boolean }) {
   return (
     <button
+      type="button"
       onClick={onClick}
-      disabled={disabled}
-      title={title}
+      aria-current={active ? 'page' : undefined}
       className={cn(
-        'min-w-6 h-6 px-1.5 rounded-xs text-[11px] font-medium tabular-nums',
-        'transition-colors flex items-center justify-center font-inter',
-        active
-          ? 'bg-primary border-primary text-primary-text'
-          : 'bg-secondary/20  text-text hover:bg-secondary/20 hover:text-text hover:border-border-strong',
-        disabled && 'opacity-40 cursor-not-allowed pointer-events-none',
+        'flex h-6 min-w-6 items-center justify-center rounded-xs px-1.5 font-inter text-[11px] font-medium tabular-nums transition-colors',
+        active ? 'bg-secondary text-secondary-foreground' : 'bg-neutral-100 text-text hover:bg-neutral-200',
       )}
     >
       {children}

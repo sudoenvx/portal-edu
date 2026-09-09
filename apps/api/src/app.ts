@@ -3,15 +3,16 @@ import cors from 'cors'
 import compression from 'compression'
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 import { CorsConfig } from './core/config/server.config';
 import { notFoundMiddleware } from './core/middlewares/not-found.mw';
-import logger from './core/utils/logger';
-import errorHandler from './core/middlewares/error-handler.mw';
-import { AdminRouter } from './modules/admin';
-import { TeacherRouter } from './modules/teacher/teacher.routes';
+import { globalErrorHandler } from './core/middlewares/global-error-handler.mw';
+import { AppRouter } from './modules';
 
 export const app: Application = express();
+const appDirectory = path.dirname(fileURLToPath(import.meta.url));
 app.use(helmet())
 app.use(cookieParser())
 
@@ -27,7 +28,7 @@ const corsMiddleware = cors({
   },
 
   credentials: true, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'locale']
 })
 
@@ -35,20 +36,9 @@ app.use(corsMiddleware);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(compression())
+app.use('/uploads', express.static(path.resolve(appDirectory, '../uploads')))
 
-app.use(
-  '/api',
-  AdminRouter,
-  TeacherRouter
-)
+app.use('/api', AppRouter)
 
-const $404 = notFoundMiddleware({
-  logger: logger,
-  suggestAlternatives: true,
-  includeRequestInfo: true,
-  trackMetrics: true
-})
-
-app.use($404);
-
-app.use(errorHandler)
+app.use(notFoundMiddleware);
+app.use(globalErrorHandler);

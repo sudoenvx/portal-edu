@@ -1,5 +1,6 @@
 // checkbox.tsx
 import { type ReactNode, createContext, useContext, useState } from 'react'
+import { Check } from 'lucide-react'
 import { Card } from './card'
 import { cn } from '../utils/cn'
 
@@ -89,21 +90,23 @@ export function CheckboxIndicator({ checked, className, innerClassName }: { chec
   return (
     <span
       className={cn(
-        'relative flex aspect-square h-4 w-4 shrink-0 items-center justify-center rounded-sm border-2 outline-none transition-colors duration-150',
+        'relative flex aspect-square h-4 w-4 shrink-0 items-center justify-center rounded-sm border  outline-none transition-colors duration-150',
         isOn ? 'border-primary bg-primary' : 'border-border bg-surface',
         className,
       )}
     >
       {isIndeterminate ? (
-        <span className="h-0.5 w-2 shrink-0 rounded-[1px] bg-white transition-all duration-150" />
+        <span className="h-0.5 w-2 shrink-0 rounded-xs bg-white transition-all duration-150" />
       ) : (
         <span
           className={cn(
-            'aspect-square shrink-0 rounded-xs bg-white transition-all duration-150',
-            isOn ? 'h-2 w-2 opacity-100' : 'h-2 w-2 opacity-0',
+            'absolute h-3 w-3 shrink-0 rounded-sm text-white transition-all duration-150',
+            isOn ? 'scale-100 opacity-100' : 'scale-0 opacity-0',
             innerClassName,
           )}
-        />
+        >
+          <Check className="h-full w-full" strokeWidth={3} />
+        </span>
       )}
     </span>
   )
@@ -128,7 +131,7 @@ export function Checkbox({ label, disabled, className, indicatorClassName, indic
         aria-label={props['aria-label']}
         disabled={isDisabled}
         onClick={toggle}
-        className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1"
+        className="rounded-xs outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-1"
       >
         <CheckboxIndicator checked={displayState} className={indicatorClassName} innerClassName={indicatorInnerClassName} />
       </button>

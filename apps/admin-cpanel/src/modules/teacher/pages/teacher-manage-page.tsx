@@ -1,22 +1,23 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import {
   Users,
-  MapPin,
-  CreditCard,
+  Users2,
   Wallet,
   CalendarDays,
   Phone,
   Mail,
   ShieldAlert,
-  LayoutDashboard,
   BookOpen,
-  GraduationCap,
-  Users2,
-  Tag,
-  Save,
   ArrowLeft,
-  Settings
+  Settings,
+  UserCheck,
+  Clock,
+  CheckCircle2,
+  Save,
+  Trash2,
+  Copy,
+  GraduationCap,
 } from 'lucide-react'
 
 import {
@@ -24,344 +25,491 @@ import {
   StatisticCard,
   Button,
   Badge,
-  SwitchTile,
   DataTable,
   type DataTableColumn,
   Card,
   Input,
-  WindowCard
+  IconButton,
 } from '@portal-edu/ui'
 import { useTeacherProfile } from '@/modules/teacher/api/teacher-profiles.queries'
-import type { TeacherProfileDetails } from '@/modules/teacher/types/teacher-profile.types'
+import { useUpdateTeacher, useDeleteTeacher } from '@/modules/teacher/api/teachers.mutations'
+import { useNotification } from '@/core/hooks/use_notification'
+import type { GroupItem, InvoiceItem } from '@/modules/teacher/types/teacher-profile.types'
 import { AVATAR_PLACEHOLDER } from '@/core/assets'
 
-type SettingsTab = 'overview' | 'students' | 'groups' | 'locations' | 'invoices' | 'settings'
+type TabKey = 'groups' | 'invoices' | 'settings'
 
-const tabItems: { key: SettingsTab; label: string; icon: any }[] = [
-  { key: 'overview', label: 'نظرة عامة', icon: LayoutDashboard },
-  { key: 'students', label: 'الطلاب', icon: GraduationCap },
-  { key: 'groups', label: 'المجموعات', icon: Users2 },
-  { key: 'locations', label: 'الأماكن', icon: MapPin },
-  { key: 'invoices', label: 'الفواتير', icon: Wallet },
-  { key: 'settings', label: 'إعدادات النظام', icon: Settings },
-]
-
-const TABLE_LABEL_CLASS = 'text-xs font-semibold text-primary-dark uppercase'
-
-// Helper for the Aside Info Rows
-function CompactInfoRow({ icon: Icon, label, value, dir = 'rtl', valueClass = 'text-text' }: { icon: any, label: string, value: string, dir?: 'ltr' | 'rtl', valueClass?: string }) {
-  return (
-    <div className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-0 last:pb-0">
-      <div className="flex items-center gap-1.5 text-text-muted">
-        <Icon size={13} strokeWidth={2.5} />
-        <span className="text-[11px] font-medium">{label}</span>
-      </div>
-      <span className={`text-[11px] font-semibold ${valueClass}`} dir={dir}>{value}</span>
-    </div>
-  )
+const STATUS_MAP: Record<string, { label: string; variant: 'success' | 'warning' | 'danger' | 'primary' }> = {
+  active: { label: 'نشط', variant: 'success' },
+  ACTIVE: { label: 'نشط', variant: 'success' },
+  trial: { label: 'تجريبي', variant: 'warning' },
+  TRIAL: { label: 'تجريبي', variant: 'warning' },
+  suspended_payment: { label: 'موقوف (فواتير)', variant: 'danger' },
+  SUSPENDED_PAYMENT: { label: 'موقوف (فواتير)', variant: 'danger' },
+  inactive: { label: 'غير نشط', variant: 'danger' },
+  INACTIVE: { label: 'غير نشط', variant: 'danger' },
 }
-
 
 export default function TeacherManagePage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState<SettingsTab>('overview')
+  const { notify } = useNotification()
+  const [activeTab, setActiveTab] = useState<TabKey>('groups')
 
-  const { data: teacher, isLoading } = useTeacherProfile(id || 'dummy-id')
+  const teacherId = Number(id)
+  const { data: teacher, isLoading } = useTeacherProfile(teacherId)
+
+  const updateTeacherMutation = useUpdateTeacher(teacherId)
+  const deleteTeacherMutation = useDeleteTeacher()
+
+  // Form State for editing
+  const [fullName, setFullName] = useState('')
+  const [subjectSpecialization, setSubjectSpecialization] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [formInitialized, setFormInitialized] = useState(false)
+
+  if (teacher && !formInitialized) {
+    setFullName(teacher.fullName || teacher.name || '')
+    setSubjectSpecialization(teacher.subjectSpecialization || teacher.subject || '')
+    setPhoneNumber(teacher.phoneNumber || teacher.phone || '')
+    setEmail(teacher.email || '')
+    setFormInitialized(true)
+  }
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      await updateTeacherMutation.mutateAsync({
+        fullName,
+        // subjectSpecialization,
+        // phoneNumber,
+        // email,
+        ...(newPassword ? { password: newPassword } : {}),
+      })
+      notify.success('تم تحديث بيانات المدرس بنجاح')
+      setNewPassword('')
+    } catch (err: any) {
+      notify.error(err.message || 'فشل تحديث البيانات')
+    }
+  }
+
+
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('هل أنت متأكد من رغبتك في تعطيل/حذف حساب هذا المدرس؟')) return
+    try {
+      await deleteTeacherMutation.mutateAsync({ id: teacherId })
+      notify.success('تم تعطيل حساب المدرس')
+      navigate('/teachers')
+    } catch (err: any) {
+      notify.error(err.message || 'فشل حذف الحساب')
+    }
+  }
+
+  const copyToClipboard = (text: string, label: string) => {
+    navigator.clipboard.writeText(text)
+    notify.success(`تم نسخ ${label}`)
+  }
+
+  // --- Data Table Columns ---
+  const groupColumns: DataTableColumn<GroupItem>[] = useMemo(() => [
+    {
+      header: 'اسم المجموعة',
+      accessor: 'groupName',
+      render: (row) => (
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-secondary/10 text-secondary font-bold">
+            <Users2 size={14} />
+          </div>
+          <span className="font-bold text-[12px] text-text">{row.groupName}</span>
+        </div>
+      ),
+    },
+    {
+      header: 'الاشتراك الشهري',
+      accessor: 'standardMonthlyFee',
+      render: (row) => (
+        <span className="font-semibold text-[12px] text-primary tabular-nums">
+          {row.standardMonthlyFee ? `${row.standardMonthlyFee} ج.م` : 'غير محدد'}
+        </span>
+      ),
+    },
+    {
+      header: 'السعة القصوى',
+      accessor: 'maxCapacity',
+      render: (row) => (
+        <span className="text-[12px] text-text-muted tabular-nums">
+          {row.maxCapacity ? `${row.maxCapacity} طالب` : 'غير محدودة'}
+        </span>
+      ),
+    },
+    {
+      header: 'الطلاب المسجلين',
+      render: (row) => (
+        <Badge variant="primary" size="sm">
+          {row._count?.enrollments || 0} طالب
+        </Badge>
+      ),
+    },
+  ], [])
+
+  const invoiceColumns: DataTableColumn<InvoiceItem>[] = useMemo(() => [
+    { header: 'الشهر المفوتر', accessor: 'month', cellClassName: 'font-semibold text-[12px] text-text' },
+    {
+      header: 'المبلغ المطلوب',
+      render: (row) => (
+        <span className="font-semibold text-[12px] text-primary-hover tabular-nums">
+          {row.amount.toLocaleString()} ج.م
+        </span>
+      ),
+    },
+    {
+      header: 'المبلغ المدفوع',
+      render: (row) => (
+        <span className="font-semibold text-[12px] text-success tabular-nums">
+          {row.amountPaid.toLocaleString()} ج.م
+        </span>
+      ),
+    },
+    {
+      header: 'الحالة',
+      render: (row) => {
+        const isPaid = row.isPaid || row.status === 'paid'
+        return (
+          <Badge variant={isPaid ? 'success' : 'warning'} size="sm">
+            {isPaid ? 'مسددة بالكامل' : 'مستحقة'}
+          </Badge>
+        )
+      },
+    },
+  ], [])
 
   if (isLoading || !teacher) {
     return (
       <div className="flex h-[60vh] items-center justify-center">
         <div className="flex flex-col items-center gap-2 text-text-muted animate-pulse">
-          <Users size={24} className="opacity-50" />
-          <Typography variant="body-small">جاري تحميل بيانات المدرس...</Typography>
+          <Users size={32} className="opacity-50" />
+          <Typography variant="body-small">جاري تحميل ملف المدرس...</Typography>
         </div>
       </div>
     )
   }
 
-  // --- Data Tables Columns ---
-  const invoiceColumns: DataTableColumn<TeacherProfileDetails['recentInvoices'][0]>[] = [
-    { header: 'الفاتورة', accessor: 'id', cellClassName: 'tabular-nums text-text-muted text-[11px]' },
-    { header: 'الشهر', accessor: 'month', cellClassName: 'font-semibold text-[11px] text-text' },
-    { header: 'القيمة', render: (row) => <span className="font-semibold text-[11px] text-primary-dark">{row.amount.toLocaleString()} ج.م</span> },
-    { header: 'الحالة', render: (row) => <Badge variant={row.isPaid ? 'success' : 'warning'} size="sm">{row.isPaid ? 'مسددة' : 'مستحقة'}</Badge> }
-  ]
-
-  const locationColumns: DataTableColumn<any>[] = [
-    { header: 'اسم المكان', accessor: 'name', cellClassName: 'font-semibold text-[11px] text-text' },
-    { header: 'النوع', render: () => <Badge variant="gray" size="sm">سنتر تعليمي</Badge> },
-    { header: 'المجموعات', accessor: 'groupsCount', cellClassName: 'text-[11px] font-semibold text-text tabular-nums' },
-  ]
-
-  const dummyGroups = [
-    { id: 'g1', name: 'الأحد والثلاثاء (ثانوية عامة)', location: 'سنتر الفرسان - الإسكندرية', students: 120 },
-    { id: 'g2', name: 'أونلاين مكثف', location: 'مجموعات أونلاين', students: 330 },
-  ]
-
-  const groupColumns: DataTableColumn<any>[] = [
-    { header: 'المجموعة', accessor: 'name', cellClassName: 'font-semibold text-[11px] text-text' },
-    { header: 'المكان', accessor: 'location', cellClassName: 'text-[10px] text-text-muted' },
-    { header: 'الطلاب', render: (row) => <span className="font-semibold text-[11px] text-primary">{row.students}</span> },
-  ]
-
-  const dummyStudents = [
-    { id: 's1', name: 'أحمد محمود', group: 'الأحد والثلاثاء (ثانوية عامة)', phone: '01012345678', isPaid: true },
-    { id: 's2', name: 'مريم سعيد', group: 'أونلاين مكثف', phone: '01098765432', isPaid: false },
-  ]
-
-  const studentColumns: DataTableColumn<any>[] = [
-    { header: 'اسم الطالب', accessor: 'name', cellClassName: 'font-semibold text-[11px] text-text' },
-    { header: 'المجموعة', accessor: 'group', cellClassName: 'text-[10px] text-text-muted' },
-    { header: 'الهاتف', accessor: 'phone', cellClassName: 'tabular-nums text-[11px] text-text-muted' },
-    { header: 'الحالة', render: (row) => <Badge variant={row.isPaid ? 'success' : 'warning'} size="sm">{row.isPaid ? 'مسدد' : 'متأخر'}</Badge> },
-  ]
-
+  const currentStatus = (teacher.accountStatus || teacher.status || 'active').toLowerCase()
+  const statusInfo = STATUS_MAP[currentStatus] || { label: currentStatus, variant: 'primary' }
 
   return (
-    <div className="flex flex-col gap-3 animate-in fade-in duration-300">
+    <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+      
+      {/* 1. Header & Navigation */}
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-3 mt-1">
+            <Typography variant="title-large" element="h1" className="text-text font-bold">
+              {teacher.fullName || teacher.name}
+            </Typography>
+            <Badge variant={statusInfo.variant} size="sm">
+              {statusInfo.label}
+            </Badge>
+          </div>
+        </div>
 
-      {/* 1. Header & Global Actions */}
-      <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-col gap-1.5" />
-        <div className="flex flex-wrap items-center gap-2">
-          <Button leftIcon={<ArrowLeft strokeWidth={2} />} variant="secondary" tint size="sm" onClick={() => navigate(-1)}>رجوع</Button>
-          <Button leftIcon={<Save strokeWidth={2} />} variant="primary" size="sm">حفظ التغييرات</Button>
+        <div className="flex items-center gap-2">
+          <Button
+            rightIcon={<ArrowLeft />}
+            color="neutral"
+            size="sm"
+            onClick={() => navigate('/teachers')}
+          >
+            العودة للمدرسين
+          </Button>
         </div>
       </header>
 
-      {/* 2. Tabs Bar — floating vertical rail on large screens, horizontal scroller on mobile */}
+      {/* 2. Key Metrics Banner */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <StatisticCard
+          label="إجمالي الطلاب المسجلين"
+          value={teacher.stats?.totalStudents?.toLocaleString() || '0'}
+          icon={GraduationCap}
+          iconClassName="bg-primary/10 text-primary"
+        />
+        <StatisticCard
+          label="المجموعات الدراسية"
+          value={teacher.stats?.activeGroups?.toString() || '0'}
+          icon={Users2}
+          iconClassName="bg-accent/20 text-accent-hover"
+        />
+        <StatisticCard
+          label="المساعدين (Staff)"
+          value={teacher.stats?.totalAssistants?.toString() || '0'}
+          icon={UserCheck}
+          iconClassName="bg-success/20 text-success"
+        />
+        <StatisticCard
+          label="إجمالي الحصص المعطاة"
+          value={teacher.stats?.totalSessions?.toString() || '0'}
+          icon={Clock}
+          iconClassName="bg-secondary/15 text-secondary-hover"
+        />
+      </div>
 
-{/* Mobile / tablet: horizontal tabs (unchanged) */}
-<div className="lg:hidden overflow-x-auto rounded-sm bg-surface px-1.5 py-1.5">
-  <div className="flex w-full gap-1.5">
-    {tabItems.map((tab) => {
-      const Icon = tab.icon
-      return (
-        <button
-          key={tab.key}
-          type="button"
-          onClick={() => setActiveTab(tab.key)}
-          className={`inline-flex max-sm:min-w-fit group items-center gap-1.5 rounded-sm px-3 py-1 last:me-2 text-[12px] font-medium transition-all duration-150 ${
-            activeTab === tab.key
-              ? 'bg-accent-tint text-accent-text'
-              : 'bg-transparent text-text hover:bg-secondary-tint hover:text-text'
-          }`}
-        >
-          <Icon
-            className={activeTab === tab.key ? 'h-3.5 w-3.5 text-accent-text' : 'h-3.5 w-3.5 text-text-muted group-hover:text-secondary-tint-text'}
-            strokeWidth={2}
-          />
-          <span>{tab.label}</span>
-        </button>
-      )
-    })}
-  </div>
-</div>
-
-{/* Desktop: floating vertical rail, fixed to the left edge of the viewport */}
-<div className="hidden lg:flex flex-col gap-1 fixed left-4 top-1/2 -translate-y-1/2 z-30 rounded-sm bg-surface p-1.5 shadow-lg">
-  {tabItems.map((tab) => {
-    const Icon = tab.icon
-    return (
-      <button
-        key={tab.key}
-        type="button"
-        title={tab.label}
-        onClick={() => setActiveTab(tab.key)}
-        className={`group relative flex items-center justify-center rounded-sm p-2 transition-all duration-150 ${
-          activeTab === tab.key
-            ? 'bg-accent-tint text-accent-text'
-            : 'bg-transparent text-text-muted hover:bg-secondary-tint hover:text-text'
-        }`}
-      >
-        <Icon className="h-4 w-4" strokeWidth={2} />
-        {/* Label flyout on hover */}
-        <span className="pointer-events-none absolute left-10 ms-2 whitespace-nowrap rounded-xs bg-secondary px-3 py-1 text-[11px] font-medium text-white/90 opacity-0 scale-95 origin-left transition-all duration-150 group-hover:opacity-100 group-hover:scale-100">
-          {tab.label}
-        </span>
-      </button>
-    )
-  })}
-</div>
-
-      {/* 3. Main Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-12 gap-3 items-start">
-
-        {/* === ASIDE (Main Info) === */}
-        <aside className="flex flex-col gap-3 lg:col-span-3 lg:sticky lg:top-16">
-          <WindowCard
-            title={'معلومات المدرس'}
-            windowClassName='bg-primary-dark!'
-            bodyClassName=" flex flex-col">
-
-            {/* Identity Header */}
-            <div className="flex items-center gap-2.5 p-1.5 bg-secondary-tint rounded-sm">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm text-primary-dark font-semibold text-lg">
-                <img src={AVATAR_PLACEHOLDER} alt="avatar" className="w-full h-full object-cover rounded-sm" />
+      {/* 3. Main Two-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        
+        {/* Right Info Sidebar (4 Cols) */}
+        <div className="lg:col-span-4 flex flex-col gap-4">
+          <Card
+            variant='framed'
+            bodyClassName="p-0 bg-surface"
+            title={
+              <div className="flex items-center gap-1.5 text-white/80">
+                <BookOpen size={14} />
+                <span>بطاقة المدرس (Tenant Card)</span>
+              </div>
+            }
+          >
+            {/* Profile Hero Box */}
+            <div className="flex items-center gap-3.5 p-2 bg-background/50">
+              <div className="flex h-12 w-12 shrink-0 items-center p-1 justify-center rounded-xl bg-accent-subtle text-primary-foreground font-bold text-lg">
+                <img src={AVATAR_PLACEHOLDER} className='bg-cover' style={{
+                  mixBlendMode: 'multiply',
+                  filter: 'contrast(1)'
+                }}/>
               </div>
               <div className="flex flex-col min-w-0">
-                <Typography variant="body-small" element="h2" className="font-semibold text-text truncate">
-                  {teacher.name}
-                </Typography>
-                <div className="flex items-center gap-1 mt-0.5">
-                  <Badge className="bg-success py-0.5 rounded-xs text-white/90" size="sm">
-                    {teacher.status === 'ACTIVE' ? 'نشط' : 'موقوف'}
-                  </Badge>
+                <span className="font-bold text-text text-[14px] truncate">{teacher.fullName || teacher.name}</span>
+                <span className="text-[12px] text-text-muted font-medium mt-0.5">{teacher.subjectSpecialization || 'تخصص عام'}</span>
+              </div>
+            </div>
+
+            {/* Information Rows */}
+            <div className="flex flex-col p-4 gap-3 text-[12px]">
+              <div className="flex items-center justify-between pb-2 border-b border-border/50">
+                <span className="text-text-muted flex items-center gap-1.5">
+                  <Mail size={13} />
+                  <span>البريد الإلكتروني</span>
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="font-semibold text-text font-inter" dir="ltr">{teacher.email}</span>
+                  <IconButton
+                    icon={<Copy size={11} />}
+                    size="xs"
+                    color="secondary"
+                    style='ghost'
+                    title="نسخ البريد"
+                    aria-label="نسخ البريد"
+                    onClick={() => copyToClipboard(teacher.email, 'البريد الإلكتروني')}
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Core Info Details */}
-            <div className="flex flex-col pt-1.5">
-              <CompactInfoRow valueClass='font-inter font-semibold! text-text!' icon={CalendarDays} label="تاريخ الانضمام" value={teacher.joinDate} />
-              <CompactInfoRow valueClass='font-inter font-semibold! text-text!' icon={Phone} label="الهاتف" value={teacher.phone} dir="ltr" />
-              <CompactInfoRow valueClass='font-inter font-semibold! text-text!' icon={Mail} label="البريد" value={teacher.email || '—'} />
-            </div>
-          </WindowCard>
-
-          {/* Extended Info */}
-          <WindowCard
-            title={'معلومات إضافية'}
-            bodyClassName=" pt-0.5!"
-          >
-            <div className="flex flex-col">
-              <CompactInfoRow icon={BookOpen} label="المادة الدراسية" value={teacher.subject} />
-              <CompactInfoRow dir='ltr' icon={Wallet} label="سعر الطالب" value={`${teacher.pricePerStudent.toLocaleString()} EGP`} valueClass="text-primary-dark font-inter" />
-              <CompactInfoRow icon={Tag} label="نوع الاشتراك" value={(teacher as any).subscriptionType ?? 'غير محدد'} />
-            </div>
-          </WindowCard>
-        </aside>
-
-        {/* === MAIN CONTENT AREA === */}
-        <main className="flex flex-col gap-3 md:col-span-2 lg:col-span-9 min-w-0">
-
-          {/* TAB: OVERVIEW */}
-          {activeTab === 'overview' && (
-            <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
-
-              {/* Stats Row */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <StatisticCard label="الطلاب" value={teacher.stats.totalStudents.toString()} icon={Users} iconClassName="bg-blue-ice text-primary" />
-                <StatisticCard label="المجموعات" value={teacher.stats.activeGroups.toString()} icon={MapPin} iconClassName="bg-creamy text-text-muted" />
-                <StatisticCard label="المستحق (ج.م)" value={teacher.stats.currentMonthOwed.toLocaleString()} icon={Wallet} iconClassName="bg-warning/10 text-warning" />
-                <StatisticCard label="الأرباح (ج.م)" value={teacher.stats.totalRevenue.toLocaleString()} icon={CreditCard} iconClassName="bg-success/10 text-success" />
+              <div className="flex items-center justify-between pb-2 border-b border-border/50">
+                <span className="text-text-muted flex items-center gap-1.5">
+                  <Phone size={13} />
+                  <span>رقم الهاتف</span>
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="font-semibold text-text font-inter" dir="ltr">{teacher.phoneNumber || teacher.phone || '—'}</span>
+                  {teacher.phoneNumber && (
+                    <IconButton
+                      icon={<Copy size={11} />}
+                      size="xs"
+                      color='secondary'
+                      style='ghost'
+                      title="نسخ الهاتف"
+                      aria-label="نسخ الهاتف"
+                      onClick={() => copyToClipboard(teacher.phoneNumber!, 'رقم الهاتف')}
+                    />
+                  )}
+                </div>
               </div>
 
-            </div>
-          )}
+              <div className="flex items-center justify-between pb-2 border-b border-border/50">
+                <span className="text-text-muted flex items-center gap-1.5">
+                  <CalendarDays size={13} />
+                  <span>تاريخ الانضمام</span>
+                </span>
+                <span className="font-semibold text-text font-inter tabular-nums">
+                  {teacher.joinDate || teacher.createdAt?.split('T')[0] || '—'}
+                </span>
+              </div>
 
-          {/* TAB: STUDENTS */}
-          {activeTab === 'students' && (
-            <div className="flex flex-col gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <span className={TABLE_LABEL_CLASS}>طلاب المدرس</span>
-              <DataTable
-                perPage={5}
-                currentPage={1}
-                onPageChange={() => {}}
-                totalPages={Math.ceil(dummyStudents.length / 5)}
-                totalItems={dummyStudents.length}
-              data={dummyStudents} columns={studentColumns} getRowId={(row) => row.id} className="border-0" />
+              <div className="flex items-center justify-between">
+                <span className="text-text-muted flex items-center gap-1.5">
+                  <CheckCircle2 size={13} />
+                  <span>معرف النظام</span>
+                </span>
+                <span className="font-bold text-primary font-inter">#{teacher.id}</span>
+              </div>
             </div>
-          )}
+          </Card>
+        </div>
 
-          {/* TAB: GROUPS */}
+        {/* Left Tabs Content (8 Cols) */}
+        <div className="lg:col-span-8 flex flex-col gap-4">
+          
+          {/* Tabs Switcher */}
+          <div className="flex items-center gap-1.5 bg-surface p-1.5 rounded-sm  overflow-x-auto">
+            <button
+              type="button"
+              onClick={() => setActiveTab('groups')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-bold transition-colors ${
+                activeTab === 'groups' ? 'bg-primary text-primary-foreground' : 'text-text-muted hover:bg-neutral-100/80 hover:text-text'
+              }`}
+            >
+              <Users2 size={14} />
+              <span>المجموعات ({teacher.groups?.length || 0})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('invoices')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-bold transition-colors ${
+                activeTab === 'invoices' ? 'bg-primary text-primary-foreground' : 'text-text-muted hover:bg-neutral-100/80 hover:text-text'
+              }`}
+            >
+              <Wallet size={14} />
+              <span>الفواتير والاشتراك ({teacher.recentInvoices?.length || 0})</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('settings')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-[12px] font-bold transition-colors ${
+                activeTab === 'settings' ? 'bg-primary text-primary-foreground' : 'text-text-muted hover:bg-neutral-100/80 hover:text-text'
+              }`}
+            >
+              <Settings size={14} />
+              <span>تعديل الحساب</span>
+            </button>
+          </div>
+
+          {/* Tab 1: Groups */}
           {activeTab === 'groups' && (
-            <div className="flex flex-col gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <span className={TABLE_LABEL_CLASS}>المجموعات</span>
-              <DataTable data={dummyGroups} columns={groupColumns} getRowId={(row) => row.id} className="border-0" />
-            </div>
+            <DataTable
+              title="المجموعات الدراسية"
+              description="قائمة بجميع المجموعات التابعة لهذا المدرس ومعدل الإشغال."
+              data={teacher.groups || []}
+              columns={groupColumns}
+              getRowId={(row) => String(row.id)}
+              className="bg-surface rounded-sm"
+            />
           )}
 
-          {/* TAB: LOCATIONS */}
-          {activeTab === 'locations' && (
-            <div className="flex flex-col gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <span className={TABLE_LABEL_CLASS}>أماكن التدريس</span>
-              <DataTable data={teacher.locations} columns={locationColumns} getRowId={(row) => row.id} className="border-0" />
-            </div>
-          )}
-
-          {/* TAB: INVOICES */}
+          {/* Tab 2: SaaS Invoices */}
           {activeTab === 'invoices' && (
-            <div className="flex flex-col gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <span className={TABLE_LABEL_CLASS}>الفواتير الأخيرة</span>
-              <DataTable data={teacher.recentInvoices} columns={invoiceColumns} getRowId={(row) => row.id} className="border-0" />
-            </div>
+            <DataTable
+              title="سجل دورات الفوترة الشهرية (SaaS Billing)"
+              description="الفواتير الصادرة للمدرس بناءً على عدد الطلاب النشطين نهاية كل شهر."
+              data={teacher.recentInvoices || []}
+              columns={invoiceColumns}
+              getRowId={(row) => row.id}
+              className="bg-surface rounded-sm"
+            />
           )}
 
-          {/* TAB: SETTINGS */}
+          {/* Tab 3: Settings & Edit Profile */}
           {activeTab === 'settings' && (
-            <div className="flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="flex flex-col gap-4">
+              <form onSubmit={handleUpdateProfile}>
+                <Card>
+                  <div className="mb-4 border-b border-border-subtle pb-3">
+                    <h2 className="text-[13px] font-bold text-text">تعديل البيانات الأساسية</h2>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-2 p-3">
+                    <Input
+                      label="الاسم الكامل"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      variant="outline"
+                      required
+                    />
+                    <Input
+                      label="المادة التعليمية (التخصص)"
+                      value={subjectSpecialization}
+                      onChange={(e) => setSubjectSpecialization(e.target.value)}
+                      variant="outline"
+                    />
+                    <Input
+                      label="رقم الهاتف"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      variant="outline"
+                      dir="ltr"
+                      className="text-left"
+                    />
+                    <Input
+                      label="البريد الإلكتروني"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      type="email"
+                      variant="outline"
+                      dir="ltr"
+                      className="text-left"
+                      required
+                    />
+                    <div className="sm:col-span-2">
+                      <Input
+                        label="تعيين كلمة مرور جديدة (اختياري)"
+                        type="password"
+                        placeholder="اتركه فارغاً إذا كنت لا تريد تغييره"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        variant="outline"
+                        dir="ltr"
+                        className="text-left"
+                        hint="إذا تم إدخال كلمة مرور جديدة سيتم إعادة تشفيرها واستبدال القديمة."
+                      />
+                    </div>
+                  </div>
 
-              {/* General Settings */}
-              <Card
-                title={<span className="text-[12px] font-semibold text-primary-dark">إعدادات الحساب الأساسية</span>}
-                headerClassName="pb-1.5! border-b border-border/60"
-                bodyClassName=""
-              >
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <Input label="اسم المدرس" defaultValue={teacher.name} placeholder="الاسم" variant="bordered" />
-                  <Input label="المادة التعليمية" defaultValue={teacher.subject} placeholder="مثال: فيزياء" variant="bordered" />
-                  <Input label="رقم الهاتف" defaultValue={teacher.phone} type="tel" variant="bordered" dir="ltr" className="text-right" />
-                  <Input label="البريد الإلكتروني" defaultValue={teacher.email || ''} type="email" placeholder="example@mail.com" variant="bordered" dir="ltr" className="text-right" />
-                  <Input label="سعر المحاسبة لكل طالب (ج.م)" defaultValue={teacher.pricePerStudent.toString()} type="number" variant="bordered" />
-                </div>
-              </Card>
-
-              {/* Access & Permissions */}
-              <Card
-                title={<span className="text-[12px] font-semibold text-primary-dark">صلاحيات النظام والوصول</span>}
-                headerClassName="pb-1.5! border-b border-border/60"
-                bodyClassName=""
-              >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <SwitchTile
-                    label="تفعيل تسجيل الدخول"
-                    description="يسمح للمدرس والمساعدين بالوصول للوحة التحكم الخاصة بهم"
-                    checked={teacher.settings.allowLogin}
-                    onCheckedChange={() => { }}
-                  />
-                  <SwitchTile
-                    label="صلاحية تسجيل الطلاب"
-                    description="يسمح للمدرس بإضافة طلاب جدد للمجموعات التابعة له"
-                    checked={teacher.settings.canAddNewStudents}
-                    onCheckedChange={() => { }}
-                  />
-                  <SwitchTile
-                    label="نظام الحظر التلقائي"
-                    description="يتم إيقاف حساب المدرس تلقائياً عند التأخر في سداد الفواتير"
-                    checked={teacher.settings.requireInvoicePayment}
-                    onCheckedChange={() => { }}
-                  />
-                </div>
-              </Card>
+                  <div className="flex justify-end p-2 bg-neutral-100/50">
+                    <Button
+                      type="submit"
+                      size="sm"
+                      loading={updateTeacherMutation.isPending}
+                      leftIcon={<Save size={14} />}
+                    >
+                      حفظ التعديلات
+                    </Button>
+                  </div>
+                </Card>
+              </form>
 
               {/* Danger Zone */}
-              <Card bodyClassName="p-1.5!" className="border-danger/30">
+              <Card>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-sm bg-danger text-white">
-                      <ShieldAlert size={14} />
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-danger/10 text-danger">
+                      <ShieldAlert size={16} />
                     </div>
                     <div>
-                      <Typography variant="body-small" element="h3" className="text-danger-hover font-semibold">
-                        حذف المدرس نهائياً من النظام
-                      </Typography>
-                      <p className="text-[10px] text-text-muted mt-0.5 leading-tight">
-                        هذا الإجراء خطير ولا يمكن التراجع عنه. سيتم حذف جميع الفواتير والمجموعات المرتبطة به.
+                      <span className="font-bold text-[12px] text-text">تعطيل أو حذف حساب المدرس</span>
+                      <p className="text-[11px] text-text-muted">
+                        سيتم إيقاف وصول المدرس ومساعديه للوحة التحكم، مع الاحتفاظ ببيانات الطلاب والحضور تاريخياً.
                       </p>
                     </div>
                   </div>
-                  <Button variant="danger" size="sm" className="shrink-0">
-                    حذف الحساب
+
+                  <Button
+                    color="danger"
+                    size="sm"
+                    onClick={handleDeleteAccount}
+                    loading={deleteTeacherMutation.isPending}
+                    leftIcon={<Trash2 size={14} />}
+                  >
+                    تعطيل الحساب
                   </Button>
                 </div>
               </Card>
 
+
+              <div className="h-4"></div>
             </div>
           )}
-
-        </main>
+        </div>
       </div>
     </div>
   )

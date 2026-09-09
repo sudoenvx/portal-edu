@@ -1,42 +1,62 @@
-export type TeacherAccountStatus = 'ACTIVE' | 'TRIAL' | 'SUSPENDED'
+export type TeacherAccountStatus = 'active' | 'suspended_payment' | 'inactive' | 'trial' | string
+
+export interface StudyStageItem {
+  id: number
+  stageName: string
+  orderingIndex: number | null
+  _count: { students: number; groups: number }
+}
+
+export interface GroupItem {
+  id: number
+  groupName: string
+  standardMonthlyFee: number | null
+  maxCapacity: number | null
+  _count: { enrollments: number }
+}
+
+export interface InvoiceItem {
+  id: string
+  month: string
+  amount: number
+  amountPaid: number
+  isPaid: boolean
+  status: string
+}
+
+export interface PaymentItem {
+  id: number
+  amount: number
+  paymentMethod: string
+  transactionReference: string | null
+  status: string
+  paidAt: string
+}
 
 export interface TeacherProfileDetails {
-  id: string
+  id: number
   name: string
-  phone: string
+  fullName: string
   email: string
-  subject: string
-  pricePerStudent: number
-  status: TeacherAccountStatus
+  phone: string | null
+  phoneNumber: string | null
+  subject: string | null
+  subjectSpecialization: string | null
+  status: string
+  accountStatus: TeacherAccountStatus
+  profilePictureUrl: string | null
   joinDate: string
+  createdAt: string
   
-  // إحصائيات
   stats: {
     totalStudents: number
     activeGroups: number
-    totalRevenue: number
-    currentMonthOwed: number
+    totalAssistants: number
+    totalSessions: number
   }
 
-  // إعدادات التحكم (UI/UX Toggles)
-  settings: {
-    allowLogin: boolean
-    canAddNewStudents: boolean
-    requireInvoicePayment: boolean
-  }
-
-  // أحدث الفواتير
-  recentInvoices: {
-    id: string
-    month: string
-    amount: number
-    isPaid: boolean
-  }[]
-  
-  // أماكن الشرح
-  locations: {
-    id: string
-    name: string
-    groupsCount: number
-  }[]
+  studyStages: StudyStageItem[]
+  groups: GroupItem[]
+  recentInvoices: InvoiceItem[]
+  recentPayments: PaymentItem[]
 }

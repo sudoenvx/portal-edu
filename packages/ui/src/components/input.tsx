@@ -1,53 +1,62 @@
-import React, { forwardRef, useId } from 'react'
+import React, { forwardRef, useId, useRef, useCallback, useEffect, useState } from 'react'
 import { cn } from '../utils/cn'
 import { Language, useDetectedLanguage } from '@portal-edu/utils'
+import { Plus, Minus } from 'lucide-react'
+import { IconButton } from './icon-button' // تأكد من صحة مسار الاستيراد
 
-export type InputVariant = 'standard' | 'outstanding' | 'bordered'
+export type InputVariant = 'neutral' | 'outline' | 'filled' | 'underline' | 'outstanding'
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string
   hint?: string
   error?: string
-  size?: 'sm' | 'md' | 'lg'
-  /** 'surface' = bottom-border card look, sits nicely on an off-white page bg (e.g. #edecea).
-   *  'outline' = full border, reads better directly on a white surface (cards, modals, white panels). */
+  size?: 'sm' | 'md' | 'lg' | 'xl'
   variant?: InputVariant
-  /** Icon rendered at the start (right side in RTL, left side in LTR) */
   leadingIcon?: React.ReactNode
-  /** Icon rendered at the end (left side in RTL, right side in LTR) */
   trailingIcon?: React.ReactNode
   containerClassName?: string
 }
 
 const SIZE_CLASSES = {
   sm: 'h-6.5 text-[12px] px-2',
-  md: 'h-8 text-[12px] px-2',
+  md: 'h-7.5 text-[12px] px-2',
   lg: 'h-8.5 text-[13px] px-2.5',
+  xl: 'h-10 text-[14px] px-3',
 }
 
 const VARIANT_CLASSES: Record<InputVariant, string> = {
-  standard: cn(
-    'rounded-sm bg-surface ',
-    'placeholder:text-text-muted!',
+  outline: cn(
+    'rounded-sm border border-input-border transition-colors',
+    'hover:border-input-border-hover',
+    'focus-within:border-input-border-focus',
+  ),
+  neutral: cn(
+    'rounded-sm bg-neutral-100/80 transition-colors',
+    'focus-within:bg-neutral-200/80',
+  ),
+  filled: cn(
+    'rounded-sm border border-transparent bg-surface transition-colors',
+    'focus-within:border-input-border-focus focus-within:bg-input-background',
+  ),
+  underline: cn(
+    'rounded-none border-0 border-b-2 border-border bg-transparent px-0 transition-colors',
+    'hover:border-border-strong',
+    'focus-within:border-primary',
   ),
   outstanding: cn(
-    'rounded-sm bg-transparent ',
-    'border border-b-3 border-secondary/50',
-    'focus:border-secondary/50 focus:border-b-secondary focus:bg-creamy',
-    'placeholder:text-text-muted!',
+    'rounded-sm bg-input-background transition-colors',
+    'border border-b-3 border-border',
+    'focus-within:border-secondary/50 focus-within:border-b-secondary focus-within:bg-input-focus',
+    '[&_input]:placeholder:text-text-muted!',
   ),
-
-  bordered: cn(
-    'border border-secondary/50 rounded-[3px] bg-surface',
-    'placeholder:text-text-muted!',
-    'focus:border-secondary focus:bg-creamy/80'
-  )
 }
 
 const VARIANT_ERROR_CLASSES: Record<InputVariant, string> = {
-  standard: 'border-danger focus:border-danger',
-  outstanding: 'border-danger focus:border-danger',
-  bordered: 'border-danger focus:border-danger',
+  outline: 'border-danger focus-within:border-danger',
+  filled: 'border-danger bg-danger-subtle focus-within:border-danger',
+  underline: 'border-danger focus-within:border-danger',
+  outstanding: 'border-danger focus-within:border-danger focus-within:border-b-danger',
+  neutral: 'border-danger focus-within:border-danger',
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -55,21 +64,60 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     label,
     hint,
     error,
-    size = 'sm',
-    variant = 'standard',
+    size = 'md',
+    variant = 'outline',
     leadingIcon,
     trailingIcon,
     className,
     containerClassName,
     id,
     disabled,
+    type,
+    value,
+    defaultValue,
+    placeholder,
+    onChange,
     ...props
   },
   ref,
 ) {
   const generatedId = useId()
   const inputId = id ?? generatedId
-  const detectedLanguage = useDetectedLanguage(props.value as string ?? props.placeholder ?? 'en')
+  const controlledValue = value === undefined ? undefined : String(value)
+  const [uncontrolledValue, setUncontrolledValue] = useState(() => String(defaultValue ?? placeholder ?? ''))
+
+  useEffect(() => {
+    if (controlledValue !== undefined) setUncontrolledValue(controlledValue)
+  }, [controlledValue])
+
+  const detectedLanguage = useDetectedLanguage(controlledValue ?? uncontrolledValue)
+  
+  const internalRef = useRef<HTMLInputElement>(null)
+
+  const setRefs = useCallback(
+    (node: HTMLInputElement) => {
+      internalRef.current = node
+      if (typeof ref === 'function') ref(node)
+      else if (ref) (ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+    },
+    [ref]
+  )
+
+  const handleContainerClick = () => {
+    if (!disabled) document.getElementById(inputId)?.focus()
+  }
+
+  const handleStep = (direction: 'up' | 'down') => {
+    const input = internalRef.current
+    if (!input || disabled) return
+
+    if (direction === 'up') input.stepUp()
+    else input.stepDown()
+
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+    nativeInputValueSetter?.call(input, input.value)
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+  }
 
   return (
     <div className={cn('flex flex-col gap-1', containerClassName)}>
@@ -84,34 +132,72 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
         </label>
       )}
 
-      <div className="relative flex items-center">
+      <div 
+        className={cn(
+          "relative flex items-center gap-2 cursor-text",
+          SIZE_CLASSES[size],
+          VARIANT_CLASSES[variant],
+          error && VARIANT_ERROR_CLASSES[variant],
+          disabled && 'cursor-not-allowed bg-disabled-background opacity-70'
+        )}
+        onClick={handleContainerClick}
+      >
         {leadingIcon && (
-          <span className="absolute inset-s-2 flex items-center text-text-muted pointer-events-none">
+          <span className="flex shrink-0 items-center text-text-muted pointer-events-none">
             {leadingIcon}
           </span>
         )}
 
         <input
           id={inputId}
-          ref={ref}
+          ref={setRefs}
           disabled={disabled}
+          type={type}
+          value={value}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          onChange={(event) => {
+            if (controlledValue === undefined) setUncontrolledValue(event.target.value)
+            onChange?.(event)
+          }}
           aria-invalid={!!error}
           className={cn(
-            'w-full text-text placeholder:text-text-muted placeholder:text-[11px] transition-colors outline-none',
-            VARIANT_CLASSES[variant],
-            SIZE_CLASSES[size],
-            !!leadingIcon && 'ps-8',
-            !!trailingIcon && 'pe-8',
-            error && VARIANT_ERROR_CLASSES[variant],
-            disabled && 'opacity-50 cursor-not-allowed bg-secondary/10',
-            detectedLanguage == Language.English ? 'font-inter placeholder:font-inter' : 'font-tajwal! placeholder:font-tajwal!',
+            'w-full min-w-0 h-full bg-transparent outline-none text-text placeholder:text-text-muted placeholder:text-[11px] disabled:text-disabled-foreground disabled:cursor-not-allowed',
+            type === 'number' && 'appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [-moz-appearance:textfield]',
+            detectedLanguage === Language.English ? 'font-inter! placeholder:font-inter!' : 'font-tajawal! placeholder:font-tajawal!',
             className,
           )}
           {...props}
         />
 
+        {/* أزرار التحكم الأفقية (تظهر فقط عند type="number") */}
+        {type === 'number' && !disabled && (
+          <div className="flex shrink-0 items-center gap-0.5 ms-1">
+            <IconButton
+              icon={<Minus />}
+              size="xs"
+              color="secondary"
+              style="ghost"
+              aria-label="إنقاص"
+              tabIndex={-1}
+              onPointerDown={(e) => e.preventDefault()}
+              onClick={() => handleStep('down')}
+            />
+            <IconButton
+              icon={<Plus />}
+              size="xs"
+              color="secondary"
+              style="ghost"
+              aria-label="زيادة"
+              tabIndex={-1}
+              onPointerDown={(e) => e.preventDefault()}
+              onClick={() => handleStep('up')}
+            />
+          </div>
+        )}
+
         {trailingIcon && (
-          <span className="absolute inset-e-2.5 flex items-center text-text-muted">
+          <span className="flex shrink-0 items-center text-text-muted">
             {trailingIcon}
           </span>
         )}

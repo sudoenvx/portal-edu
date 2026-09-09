@@ -1,114 +1,7 @@
 @import "tailwindcss";
 @import "@portal-edu/ui/src/index.css";
+@import "./base.css";
 
-* {
-  box-sizing: border-box;
-}
-
-/* 1. Hide the up/down and left/right arrows */
-*::-webkit-scrollbar-button {
-  display: none;
-}
-
-/* 2. Main scrollbar track sizing */
-*::-webkit-scrollbar {
-  width: 8px; 
-  height: 8px;
-}
-
-/* 3. Scrollbar track configuration */
-*::-webkit-scrollbar-track {
-  /* background: var(--background); */
-  background: transparent;
-}
-
-/* 4. Scrollbar thumb configuration */
-*::-webkit-scrollbar-thumb {
-  border: 2px solid var(--background);
-  border-radius: 999px;
-  background: var(--secondary);
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-dark);
-}
-
-*::-webkit-scrollbar-corner {
-  background: var(--background);
-}
-
-/* 5. Safe Firefox Fallback (Firefox natively hides arrows when using thin) */
-@supports not selector(::-webkit-scrollbar) {
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--secondary) var(--background);
-  }
-}
-
-
-@layer base {
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-  }
-
-  /* Since you don't have a specific SemiBold file, we map it to Bold */
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Bold.ttf') format('truetype');
-    font-weight: 600; 
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-ExtraBold.ttf') format('truetype');
-    font-weight: 800;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Tajawal';
-    src: url('/fonts/Tajawal/Tajawal-Black.ttf') format('truetype');
-    font-weight: 900;
-    font-style: normal;
-  }
-}
-
-
-@theme {
-  --font-inter: 'Inter', sans-serif;
-}
 
 @font-face {
   font-family: 'Inter';
@@ -125,8 +18,4 @@ body {
 }
 
 
-::selection {
-  background: #686970;
-  color: #fff;
 
-}

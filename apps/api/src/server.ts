@@ -1,27 +1,46 @@
 import { app } from './app';
 import { AppConfig } from './core/config/server.config';
+import { prisma } from './core/database/prisma.client'; // Import prisma
 import logger from './core/utils/logger';
 import { Server } from 'http';
 
 async function shutdown(server: Server) {
-  console.log("🔻 Shutting down gracefully...");
-  server.close(() => {
-    console.log("✅ Closed remaining connections");
-    process.exit(0);
+  logger.info("🔻 Shutting down gracefully...");
+
+  // 1. Stop accepting new HTTP requests
+  server.close(async () => {
+    logger.info("✅ Closed HTTP connections");
+
+    // 2. Disconnect Prisma safely
+    try {
+      await prisma.$disconnect();
+      logger.info("✅ Disconnected from Database");
+      process.exit(0);
+    } catch (dbErr) {
+      logger.error("❌ Error disconnecting database", dbErr);
+      process.exit(1);
+    }
   });
 
-  // Force exit if not closed in X sec
-  setTimeout(() => process.exit(1), 10000);
+  // Force exit if not closed in 10 sec
+  setTimeout(() => {
+    logger.error("❌ Force closing app after 10s timeout");
+    process.exit(1);
+  }, 10000);
 }
 
 async function main() {
   try {
+    // Optional: Test DB connection before starting server
+    await prisma.$connect();
+    logger.info("✅ Connected to Database");
+
     const server = app.listen(AppConfig.port, () => {
-      console.log(`[server] => http://localhost:${AppConfig.port}`);
+      logger.info(`🚀 Server running on http://localhost:${AppConfig.port}`);
     });
 
     server.on('error', (err) => {
-      logger.error('Server error:', err.message);
+      logger.error('Server error:', err);
       process.exit(1);
     });
 
@@ -29,7 +48,6 @@ async function main() {
     process.on("SIGINT", () => shutdown(server));
   } catch (err) {
     logger.error('Failed to start server:', err);
-    console.log(err)
     process.exit(1);
   }
 }

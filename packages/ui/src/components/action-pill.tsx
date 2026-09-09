@@ -60,7 +60,7 @@ export function ActionPill({
       </div>
 
       {suffix && (
-        <div className={cn('flex items-center min-w-0 font-semibold text-primary-dark truncate', suffixClassName)}>
+        <div className={cn('flex items-center min-w-0 font-semibold text-primary-hover truncate', suffixClassName)}>
           {suffix}
         </div>
       )}

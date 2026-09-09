@@ -45,14 +45,14 @@ export function ToggleGroup({
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
               size === 'sm' ? 'h-6.5 px-2.5 text-[11px]' : 'h-8 px-3 text-[12px]',
               isActive
-                ? 'bg-primary text-primary-text '
-                : 'text-text-muted hover:text-text hover:bg-secondary-tint'
+                ? 'bg-primary text-primary-foreground '
+                : 'text-text-muted hover:text-text hover:bg-neutral-100'
             )}
           >
             {option.icon && (
               <span className={cn(
                 'flex items-center justify-center [&>svg]:w-[1.2em] [&>svg]:h-[1.2em]',
-                isActive ? 'text-primary-text' : 'text-text-muted'
+                isActive ? 'text-primary-foreground' : 'text-text-muted'
               )}>
                 {option.icon}
               </span>

@@ -1,4 +1,4 @@
-import { ErrorMessage } from "./error-codes";
+import { ErrorMessage } from "./error-code-messages";
 import { ApiStatusCode } from "./status-codes";
 
 type ErrorCodeType = (typeof ErrorMessage)[keyof typeof ErrorMessage];
@@ -11,7 +11,7 @@ class ApiError extends Error {
     constructor(
         message: string,
         code: ErrorCodeType = ErrorMessage.INTERNAL_SERVER_ERROR,
-        status: StatusCodeType = ApiStatusCode.INTERNAL_SERVER,
+        status: StatusCodeType = ApiStatusCode.INTERNAL_SERVER_ERROR,
         details: Array<string> = []
     ) {
         super(message);
@@ -27,15 +27,15 @@ class ValidationError extends ApiError {
     }
 }
 
-class AuthError extends ApiError {
+class UnauthorizedError extends ApiError {
     constructor(message = "Unauthorized") {
-        super(message, ErrorMessage.AUTH_ERROR, ApiStatusCode.NOT_AUTHORIZED);
+        super(message, ErrorMessage.UNAUTHORIZED, ApiStatusCode.UNAUTHORIZED);
     }
 }
 
 class DuplicationError extends ApiError {
     constructor(message = "Data is duplicated") {
-        super(message, ErrorMessage.DUPLICATION_ERROR, ApiStatusCode.ALREADY_EXISTS);
+        super(message, ErrorMessage.RESOURCE_EXISTS, ApiStatusCode.CONFLICT);
     }
 }
 
@@ -54,7 +54,7 @@ class NotFoundError extends ApiError {
 
 
 export {
-    AuthError,
+    UnauthorizedError as AuthError,
     ValidationError,
     DuplicationError,
     ApiError,

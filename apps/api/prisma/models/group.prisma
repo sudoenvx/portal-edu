@@ -6,6 +6,7 @@ model StudentGroup {
   studyStageId       Int?      @map("study_stage_id")
   studyStage         StudyStage? @relation(fields: [studyStageId], references: [id])
   standardMonthlyFee Decimal?  @map("standard_monthly_fee") @db.Decimal(10, 2)
+  scheduleDescription String?   @map("schedule_description") @db.VarChar(255)
   maxCapacity        Int?      @map("max_capacity")
   deletedAt          DateTime? @map("deleted_at") // soft delete
   createdAt          DateTime  @default(now()) @map("created_at")

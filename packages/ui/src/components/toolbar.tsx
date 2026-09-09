@@ -22,7 +22,7 @@ export function Toolbar({ leading, trailing, className, ...props }: ToolbarProps
         <a href={"/"}>
           <span
             aria-hidden="true"
-            className="inline-flex p-1.5 shrink-0 items-center justify-center rounded-sm bg-primary text-primary-text"
+            className="inline-flex p-1.5 shrink-0 items-center justify-center rounded-sm bg-primary text-primary-foreground"
           >
             <Home className="h-4.5 w-4.5" strokeWidth={1.8} />
           </span>

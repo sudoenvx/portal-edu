@@ -30,21 +30,25 @@ export function FloatingSelectionToolbar({
         className,
       )}
     >
-      <div className="pointer-events-auto flex items-center gap-3 rounded-sm bg-white shadow-elevated px-1.5 py-1.5 animate-in fade-in slide-in-from-bottom-2">
+      <div className="flex items-center gap-3 rounded-sm bg-secondary p-1.5 pointer-events-auto">
         <button
           type="button"
           onClick={onClear}
           title="إلغاء التحديد"
-          className="flex p-1.5 shrink-0 items-center justify-center rounded transition-colors hover:bg-danger/30 bg-danger/20"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-sm text-white/70 bg-white/10 hover:bg-white/20  hover:text-white transition-colors"
         >
-          <X size={12} />
+          <X size={16} strokeWidth={2} />
         </button>
 
-        <span className="text-[12px] font-medium whitespace-nowrap text-text pe-3">
+        <span className="text-[12px] font-medium whitespace-nowrap text-white/80 pe-1">
           تم تحديد {count} {itemLabel}
         </span>
 
-        {children && <div className="flex items-center gap-1.5">{children}</div>}
+        {children && (
+          <div className="flex items-center gap-1.5 border-s border-white/25 ps-2">
+            {children}
+          </div>
+        )}
       </div>
     </div>
   )

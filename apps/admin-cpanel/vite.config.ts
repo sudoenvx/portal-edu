@@ -8,11 +8,16 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tailwindcss(), tsconfigPaths()],
 
+  server: {
+    port: 4000,
+    strictPort: true
+  },
+
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"), 
+      "@": path.resolve(__dirname, "./src"),
       "~/": path.resolve(__dirname, "./"),
       "@portal-edu/ui": path.resolve(__dirname, "../../packages/ui"),
     }
-  }
+  },
 })

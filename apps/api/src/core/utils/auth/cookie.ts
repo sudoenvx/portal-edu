@@ -1,11 +1,12 @@
 import { CookieOptions, Response } from "express";
 
 export const AUTH_COOKIE_NAME = "access_token";
+const isProduction = process.env.NODE_ENV === "production";
 
 const authCookieOptions: CookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "none",
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
   path: "/",
   maxAge: 1000 * 60 * 60 * 24, // 1 day
 };

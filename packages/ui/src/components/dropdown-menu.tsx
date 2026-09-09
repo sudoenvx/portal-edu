@@ -1,431 +1,314 @@
-// DropdownMenu.tsx
-import { AnimatePresence, motion } from 'motion/react'
+// dropdown-menu.tsx
 import {
-	createContext,
-	type ReactNode,
-	useCallback,
-	useContext,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
+  cloneElement,
+  createContext,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactElement,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from 'react'
-import { createPortal } from 'react-dom'
+import { Check } from 'lucide-react'
+import { Popover } from './popover'
 import { Input } from './input'
 import { cn } from '../utils/cn'
+import type { FloatingAlign, FloatingSide } from '../utils/floating'
 
-// ── Types ──────────────────────────────────────────────────────────
+// ── Context: lets items close the menu without prop-drilling ────────
+const CloseCtx = createContext<() => void>(() => {})
 
-type Side = 'top' | 'bottom' | 'left' | 'right'
-type Align = 'start' | 'center' | 'end'
+// ── DropdownMenu ──────────────────────────────────────────────────
 
 type DropdownMenuProps = {
-	trigger: ReactNode
-	children: ReactNode
-	side?: Side
-	align?: Align
-	offset?: number
-	triggerClassName?: string
-	menuClassName?: string
+  trigger: ReactElement
+  children: ReactNode
+  side?: FloatingSide
+  align?: FloatingAlign
+  offset?: number
+  menuClassName?: string
+  open?: boolean
+  defaultOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 
-	// ── Search ──
-	// Turns on a search input pinned to the top of the menu. The menu has no
-	// knowledge of what its items are (they're arbitrary ReactNode children),
-	// so by default it filters purely by matching each rendered menuitem's
-	// visible text against the query. Pass `onSearchChange` if you want to
-	// drive filtering/fetching yourself (e.g. server-side search over a large
-	// list) — in that case set `filterItems={false}` so the built-in text
-	// filter doesn't also hide things behind your back.
-	searchable?: boolean
-	searchPlaceholder?: string
-	searchValue?: string // controlled search input value
-	onSearchChange?: (value: string) => void
-	filterItems?: boolean // default true — auto-hide items whose text doesn't match
-	noResultsLabel?: ReactNode // shown when filterItems hides every item
+  searchable?: boolean
+  searchPlaceholder?: string
+  searchValue?: string
+  onSearchChange?: (value: string) => void
+  /** Auto-hide items whose text doesn't match. Set false if you're
+   *  driving filtering yourself (e.g. server-side search). */
+  filterItems?: boolean
+  noResultsLabel?: ReactNode
 }
-
-type DropdownMenuItemProps = {
-	icon?: ReactNode
-	shortcut?: string
-	variant?: 'default' | 'danger'
-	selected?: boolean
-	disabled?: boolean
-	onSelect?: () => void
-	className?: string
-	children: ReactNode
-}
-
-type DropdownMenuCheckItemProps = {
-	checked: boolean
-	onCheckedChange: (v: boolean) => void
-	children: ReactNode
-	className?: string
-	iconClassName?: string
-	group?: string // pass the same group string for radioyle single-select
-}
-
-// ── Internal context ───────────────────────────────────────────────
-
-const CloseCtx = createContext<(() => void) | null>(null)
-
-// ── Position helper ────────────────────────────────────────────────
-
-function clamp(val: number, min: number, max: number) {
-	return Math.min(Math.max(val, min), max)
-}
-
-function calcPos(
-	triggerRect: DOMRect,
-	menuRect: DOMRect,
-	side: Side,
-	align: Align,
-	offset: number,
-): { top: number; left: number } {
-	const vw = window.innerWidth
-	const vh = window.innerHeight
-	const pad = 6
-	let top = 0,
-		left = 0
-
-	if (side === 'bottom' || side === 'top') {
-		top = side === 'bottom' ? triggerRect.bottom + offset : triggerRect.top - menuRect.height - offset
-
-		left =
-			align === 'start'
-				? triggerRect.left
-				: align === 'end'
-					? triggerRect.right - menuRect.width
-					: triggerRect.left + (triggerRect.width - menuRect.width) / 2
-	} else {
-		left = side === 'right' ? triggerRect.right + offset : triggerRect.left - menuRect.width - offset
-
-		top =
-			align === 'start'
-				? triggerRect.top
-				: align === 'end'
-					? triggerRect.bottom - menuRect.height
-					: triggerRect.top + (triggerRect.height - menuRect.height) / 2
-	}
-
-	return {
-		top: clamp(top, pad, vh - menuRect.height - pad),
-		left: clamp(left, pad, vw - menuRect.width - pad),
-	}
-}
-
-// ── DropdownMenu ───────────────────────────────────────────────────
 
 export function DropdownMenu({
-	trigger,
-	children,
-	side = 'bottom',
-	align = 'start',
-	offset = 4,
-	triggerClassName,
-	searchable = false,
-	searchPlaceholder = 'Search…',
-	searchValue,
-	onSearchChange,
-	filterItems = true,
-	noResultsLabel = 'No results',
-	menuClassName
+  trigger,
+  children,
+  side = 'bottom',
+  align = 'start',
+  offset = 4,
+  menuClassName,
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
+  searchable = false,
+  searchPlaceholder = 'بحث',
+  searchValue,
+  onSearchChange,
+  filterItems = true,
+  noResultsLabel = 'No results',
 }: DropdownMenuProps) {
-	const [open, setOpen] = useState(false)
-	const [pos, setPos] = useState({ top: 0, left: 0 })
-	const triggerRef = useRef<HTMLButtonElement>(null)
-	const menuRef = useRef<HTMLDivElement>(null)
-	const searchRef = useRef<HTMLInputElement>(null)
-	const listRef = useRef<HTMLDivElement>(null)
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
+  const isControlled = controlledOpen !== undefined
+  const isOpen = isControlled ? controlledOpen : uncontrolledOpen
 
-	// uncontrolled fallback so `searchable` works even without onSearchChange
-	const [internalSearch, setInternalSearch] = useState('')
-	const search = searchValue ?? internalSearch
-	const [visibleCount, setVisibleCount] = useState<number | null>(null)
+  const [internalSearch, setInternalSearch] = useState('')
+  const search = searchValue ?? internalSearch
+  const [visibleCount, setVisibleCount] = useState<number | null>(null)
 
-	const close = useCallback(() => setOpen(false), [])
+  const searchRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
 
-	const setSearch = useCallback(
-		(value: string) => {
-			if (searchValue === undefined) setInternalSearch(value)
-			onSearchChange?.(value)
-		},
-		[searchValue, onSearchChange],
-	)
+  const setOpen = (next: boolean) => {
+    if (!isControlled) setUncontrolledOpen(next)
+    onOpenChange?.(next)
+  }
 
-	// reset search each time the menu closes so it doesn't linger stale
-	useEffect(() => {
-		if (!open) {
-			setInternalSearch('')
-			setVisibleCount(null)
-		}
-	}, [open])
+  // Reset stale search state whenever the menu closes.
+  useEffect(() => {
+    if (isOpen) return
+    setInternalSearch('')
+    setVisibleCount(null)
+  }, [isOpen])
 
-	// position after menu mounts
-	useLayoutEffect(() => {
-		if (!open || !triggerRef.current || !menuRef.current) return
-		const tr = triggerRef.current.getBoundingClientRect()
-		const mr = menuRef.current.getBoundingClientRect()
-		setPos(calcPos(tr, mr, side, align, offset))
-		if (searchable) searchRef.current?.focus()
-		else menuRef.current.focus()
-	}, [open, side, align, offset, searchable])
+  // Autofocus search on open — real focus, not a DOM query hack.
+  useEffect(() => {
+    if (isOpen && searchable) searchRef.current?.focus()
+  }, [isOpen, searchable])
 
-	// reposition on resize / scroll
-	useEffect(() => {
-		if (!open) return
-		const update = () => {
-			if (!triggerRef.current || !menuRef.current) return
-			const tr = triggerRef.current.getBoundingClientRect()
-			const mr = menuRef.current.getBoundingClientRect()
-			setPos(calcPos(tr, mr, side, align, offset))
-		}
-		window.addEventListener('resize', update)
-		window.addEventListener('scroll', update, true)
-		return () => {
-			window.removeEventListener('resize', update)
-			window.removeEventListener('scroll', update, true)
-		}
-	}, [open, side, align, offset])
+  const setSearch = (value: string) => {
+    if (searchValue === undefined) setInternalSearch(value)
+    onSearchChange?.(value)
+  }
 
-	// client-side text filter over rendered menuitems (opt-out via filterItems={false})
-	useLayoutEffect(() => {
-		if (!open || !searchable || !filterItems || !listRef.current) return
-		const items = [
-			...listRef.current.querySelectorAll<HTMLElement>('[role="menuitem"], [role="menuitemcheckbox"]'),
-		]
-		const query = search.trim().toLowerCase()
-		let shown = 0
-		for (const item of items) {
-			const matches = query === '' || (item.textContent ?? '').toLowerCase().includes(query)
-			item.style.display = matches ? '' : 'none'
-			if (matches) shown++
-		}
-		setVisibleCount(shown)
-	}, [open, searchable, filterItems, search, children])
+  // Filters by reading rendered menuitem text — items are arbitrary
+  // ReactNode so we can't inspect their content without mounting them
+  // first. `hidden` (not inline `display`) is used because it's the
+  // correct semantic primitive: browsers drop hidden elements from the
+  // accessibility tree and tab order for free, so keyboard nav below
+  // doesn't need to duplicate that logic.
+  useLayoutEffect(() => {
+    if (!isOpen || !searchable || !filterItems || !listRef.current) return
+    const items = listRef.current.querySelectorAll<HTMLElement>('[role^="menuitem"]')
+    const query = search.trim().toLowerCase()
+    let shown = 0
+    for (const item of items) {
+      const matches = query === '' || (item.textContent ?? '').toLowerCase().includes(query)
+      item.hidden = !matches
+      if (matches) shown++
+    }
+    setVisibleCount(shown)
+  }, [isOpen, searchable, filterItems, search, children])
 
-	// outside click / escape
-	useEffect(() => {
-		if (!open) return
-		const onDown = (e: MouseEvent) => {
-			if (!menuRef.current?.contains(e.target as Node) && !triggerRef.current?.contains(e.target as Node)) close()
-		}
-		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') {
-				close()
-				return
-			}
-			const items = [
-				...(menuRef.current?.querySelectorAll<HTMLButtonElement>(
-					'button[role="menuitem"]:not(:disabled), button[role="menuitemcheckbox"]:not(:disabled)',
-				) ?? []),
-			].filter((el) => el.style.display !== 'none')
-			if (items.length === 0) return
+  const getFocusableItems = () =>
+    [...(listRef.current?.querySelectorAll<HTMLButtonElement>('button[role^="menuitem"]:not(:disabled)') ?? [])].filter(
+      (el) => !el.hidden,
+    )
 
-			const active = document.activeElement as HTMLButtonElement
-			const idx = items.indexOf(active)
+  const handleKeyDown = (event: ReactKeyboardEvent) => {
+    const items = getFocusableItems()
+    if (items.length === 0) return
+    const active = document.activeElement as HTMLButtonElement
+    const idx = items.indexOf(active)
 
-			if (e.key === 'ArrowDown') {
-				e.preventDefault()
-				// from the search input (idx === -1), ArrowDown goes to the first item
-				items[idx === -1 ? 0 : (idx + 1) % items.length]?.focus()
-			}
-			if (e.key === 'ArrowUp') {
-				e.preventDefault()
-				items[idx === -1 ? items.length - 1 : (idx - 1 + items.length) % items.length]?.focus()
-			}
-			// if (e.key === 'Enter' && (active === searchRef.current)) {
-			// 	e.preventDefault()
-			// 	items[0]?.click()
-			// }
-		}
-		document.addEventListener('mousedown', onDown)
-		document.addEventListener('keydown', onKey)
-		return () => {
-			document.removeEventListener('mousedown', onDown)
-			document.removeEventListener('keydown', onKey)
-		}
-	}, [open, close])
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      items[idx === -1 ? 0 : (idx + 1) % items.length]?.focus()
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      items[idx === -1 ? items.length - 1 : (idx - 1 + items.length) % items.length]?.focus()
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      items[0]?.focus()
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      items[items.length - 1]?.focus()
+    }
+  }
 
-	const ctx = useMemo(() => close, [close])
+  return (
+    <Popover
+      trigger={cloneElement(trigger, { 'aria-haspopup': 'menu' } as any)}
+      side={side}
+      align={align}
+      offset={offset}
+      open={isOpen}
+      onOpenChange={setOpen}
+      contentClassName={cn(
+        'flex max-h-60 min-w-50 flex-col gap-1 rounded-sm p-1.5',
+        menuClassName,
+      )}
+    >
+      <div role="menu" onKeyDown={handleKeyDown} className="flex flex-col gap-1">
+        {searchable && (
+          <Input
+            ref={searchRef}
+            type="text"
+            role="searchbox"
+            size="sm"
+            variant="outline"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={searchPlaceholder}
+            aria-label={searchPlaceholder}
+          />
+        )}
 
-	return (
-		<>
-			<button
-				ref={triggerRef}
-				type="button"
-				aria-haspopup="menu"
-				aria-expanded={open}
-				onClick={() => setOpen((o) => !o)}
-				className={`not-draggable inline-flex items-center ${triggerClassName ?? ''}`}
-			>
-				{trigger}
-			</button>
-
-			{createPortal(
-				<AnimatePresence>
-					{open && (
-						<CloseCtx.Provider value={ctx}>
-							<motion.div
-								initial={{ y: -10, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}
-								transition={{ type: 'tween', duration: 0.25 }}
-								exit={{ y: -10, opacity: 0 }}
-								ref={menuRef}
-								role="menu"
-								tabIndex={-1}
-								style={{ top: pos.top, left: pos.left }}
-								className={
-									cn(
-										'fixed max-h-60 overflow-hidden z-50 min-w-50 p-1 outline-none bg-surface  border-border rounded-md flex flex-col gap-1 shadow-sm shadow-secondary/60',
-										menuClassName
-									)
-								}
-							>
-								{searchable && (
-									<div>
-										<Input
-											ref={searchRef}
-											type="text"
-											role="searchbox"
-											value={search}
-											variant='bordered'
-											className='mb-1'
-											onChange={(e) => setSearch(e.target.value)}
-											placeholder={searchPlaceholder}
-										/>
-									</div>
-								)}
-
-								<div ref={listRef} className="flex flex-col gap-1 overflow-auto">
-									{children}
-									{searchable && filterItems && visibleCount === 0 && (
-										<div className="px-1.5 py-1 text-[12px] text-text-muted select-none">{noResultsLabel}</div>
-									)}
-								</div>
-							</motion.div>
-						</CloseCtx.Provider>
-					)}
-				</AnimatePresence>,
-				document.body,
-			)}
-		</>
-	)
+        <div ref={listRef} className="flex flex-col gap-0.5 overflow-auto">
+          <CloseCtx.Provider value={() => setOpen(false)}>{children}</CloseCtx.Provider>
+          {searchable && filterItems && visibleCount === 0 && (
+            <div className="select-none px-1.5 py-1 text-[12px] text-text-muted">{noResultsLabel}</div>
+          )}
+        </div>
+      </div>
+    </Popover>
+  )
 }
 
-// ── DropdownMenuItem ───────────────────────────────────────────────
+// ── DropdownMenuItem ─────────────────────────────────────────────
+
+type DropdownMenuItemProps = {
+  icon?: ReactNode
+  shortcut?: string
+  variant?: 'default' | 'danger'
+  selected?: boolean
+  disabled?: boolean
+  onSelect?: () => void
+  className?: string
+  children: ReactNode
+}
 
 export function DropdownMenuItem({
-	icon,
-	shortcut,
-	variant = 'default',
-	selected = false,
-	disabled,
-	onSelect,
-	children,
+  icon,
+  shortcut,
+  variant = 'default',
+  selected = false,
+  disabled,
+  onSelect,
+  children,
+  className,
 }: DropdownMenuItemProps) {
-	const close = useContext(CloseCtx)
+  const close = useContext(CloseCtx)
 
-	return (
-		<button
-			type="button"
-			role="menuitem"
-			disabled={disabled}
-			onClick={() => {
-				if (!disabled) {
-					onSelect?.()
-					close?.()
-				}
-			}}
-			className={`
-
-        flex w-full items-center justify-between gap-2
-        rounded px-1.5 py-0.5 text-[12px] text-left lowercase
-        border-none cursor-pointer font-[inherit] outline-none
-        transition-colors duration-100
-        disabled:pointer-events-none disabled:opacity-40
-        ${variant === 'danger'
-					? 'bg-danger-tint text-danger-tint-text hover:bg-danger focus:bg-danger hover:text-danger-text focus:text-danger-text'
-					: selected
-						? 'bg-primary text-primary-text hover:bg-primary focus:bg-primary'
-						: 'text-text font-medium hover:bg-card-hover hover:text-primary-tint-text focus:bg-surface-raised'
-				}
-				}
-      `}
-		>
-			<span className="flex items-center gap-2">
-				{icon && (
-					<span className="w-3.5 h-3.5 text-primary-tint-text! flex items-center justify-center opacity-65 shrink-0 [&>svg]:w-full [&>svg]:h-full">
-						{icon}
-					</span>
-				)}
-				{children}
-			</span>
-			{shortcut && (
-				<kbd
-					className={`
-          text-[11px] font-[inherit] px-1.5 py-px rounded-sm
-          bg-surface-raised
-          ${variant === 'danger' ? 'text-danger/60 bg-danger-tint border-danger-tint' : 'text-text-muted'}
-        `}
-				>
-					{shortcut}
-				</kbd>
-			)}
-		</button>
-	)
+  return (
+    <button
+      type="button"
+      role="menuitem"
+      disabled={disabled}
+      onClick={() => {
+        if (disabled) return
+        onSelect?.()
+        close()
+      }}
+      className={cn(
+        'flex w-full items-center justify-between gap-2 rounded-sm border-none px-1.5 py-1 text-left',
+        'cursor-pointer font-[inherit] text-[11px] font-medium outline-none transition-colors duration-100',
+        'focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1',
+        'disabled:pointer-events-none disabled:opacity-40',
+        variant === 'danger' &&
+          'text-danger-subtle-foreground hover:bg-danger-subtle focus:bg-danger-subtle',
+        variant === 'default' &&
+          (selected
+            ? 'bg-primary text-primary-foreground hover:bg-primary cursor-auto focus:bg-primary-hover'
+            : 'text-text hover:bg-neutral-100 focus:bg-neutral-100'),
+        className,
+      )}
+    >
+      <span className="flex items-center gap-2">
+        {icon && (
+          <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center opacity-65 [&>svg]:h-full [&>svg]:w-full">
+            {icon}
+          </span>
+        )}
+        {children}
+      </span>
+      {shortcut && (
+        <kbd
+          className={cn(
+            'rounded-sm px-1.5 py-px font-[inherit] text-[11px]',
+            variant === 'danger' ? 'bg-danger-subtle text-danger-subtle-foreground/70' : 'bg-surface-secondary text-text-muted',
+          )}
+        >
+          {shortcut}
+        </kbd>
+      )}
+    </button>
+  )
 }
 
-// ── DropdownMenuCheckItem ──────────────────────────────────────────
-// Works as both a toggle (no group) and radio (with group).
+// ── DropdownMenuCheckItem ────────────────────────────────────────
+// Toggle only. (The old `group` prop was dead — declared in the type
+// but never wired to anything, so a single-select radio group never
+// actually worked. That's a job for the consumer's own state, one
+// level up, not something this component can fake safely.)
 
-export function DropdownMenuCheckItem({ checked, onCheckedChange, className, iconClassName, children }: DropdownMenuCheckItemProps) {
-	const close = useContext(CloseCtx)
-
-	return (
-		<button
-			type="button"
-			role="menuitemcheckbox"
-			aria-checked={checked}
-			onClick={() => {
-				onCheckedChange?.(!checked)
-				close?.()
-			}}
-			className={`
-        flex w-full items-center gap-2
-        rounded px-1.5 py-0.75 text-[12px] text-left
-        border-none cursor-pointer font-[inherit] outline-none
-        hover:bg-surface-raised focus:bg-surface-raised
-        transition-colors duration-100
-		${checked ? 'bg-primary text-primary-text' : 'text-text hover:bg-card-hover hover:text-primary-tint-text focus:bg-surface-raised'}
-		${className}
-      `}
-		>
-			{/* checkmark — takes up space even when unchecked to keep alignment */}
-			<span
-				className={`w-3.5 h-3.5 flex items-center justify-center shrink-0 ${checked ? 'text-primary-text' : 'text-text-muted'} transition-opacity ${checked ? 'opacity-100' : 'opacity-0'} ${iconClassName}`}
-			>
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} className="w-full h-full">
-					<polyline points="20 6 9 17 4 12" />
-				</svg>
-			</span>
-			{children}
-		</button>
-	)
+type DropdownMenuCheckItemProps = {
+  checked: boolean
+  onCheckedChange: (v: boolean) => void
+  children: ReactNode
+  className?: string
+  closeOnSelect?: boolean
 }
 
-// ── DropdownMenuSeparator ──────────────────────────────────────────
+export function DropdownMenuCheckItem({
+  checked,
+  onCheckedChange,
+  children,
+  className,
+  closeOnSelect = false,
+}: DropdownMenuCheckItemProps) {
+  const close = useContext(CloseCtx)
+
+  return (
+    <button
+      type="button"
+      role="menuitemcheckbox"
+      aria-checked={checked}
+      onClick={() => {
+        onCheckedChange(!checked)
+        if (closeOnSelect) close()
+      }}
+      className={cn(
+        'flex w-full items-center gap-2 rounded-sm border-none px-1.5 py-1 text-left',
+        'cursor-pointer font-[inherit] text-[11px] outline-none transition-colors duration-100',
+        'focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1',
+        checked ? 'bg-primary text-primary-foreground' : 'text-text hover:bg-neutral-100 focus:bg-neutral-100',
+        className,
+      )}
+    >
+      <span
+        className={cn(
+          'flex h-3.5 w-3.5 shrink-0 items-center justify-center transition-opacity',
+          checked ? 'opacity-100' : 'opacity-0',
+        )}
+      >
+        <Check className="h-full w-full" strokeWidth={2.5} />
+      </span>
+      {children}
+    </button>
+  )
+}
 
 export function DropdownMenuSeparator() {
-	return <div role="separator" className="h-[0.5px] bg-border" />
+  return <div role="separator" className="h-px bg-border" />
 }
 
-// ── DropdownMenuLabel ──────────────────────────────────────────────
-
 export function DropdownMenuLabel({ children }: { children: ReactNode }) {
-	return (
-		<div className="px-1 pt-1 pb-0 text-[10px] font-bold tracking-widest uppercase text-text-faint select-none">
-			{children}
-		</div>
-	)
+  return (
+    <div className="select-none px-1 pb-0 pt-1 text-[10px] font-bold uppercase tracking-widest text-text-faint">
+      {children}
+    </div>
+  )
 }

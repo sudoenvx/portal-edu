@@ -1,59 +1,118 @@
-import { generateToken } from "../../core/utils/auth/jwt";
-import { hashPassword, verifyPassword } from "../../core/utils/auth/password";
-import promiseWrapper from "../../core/wrappers/promise-wrapper";
-import { AuthError, NotFoundError } from "../../shared/contracts/api-error";
-import { AdminLoginPayload, AdminRegisterPayload } from "./admin.dto";
-import { AdminRepository } from "./admin.repo";
+import { prisma } from '../../core/database/prisma.client';
+import { AuthError, NotFoundError, DuplicationError, BadRequestError } from '../../shared/contracts/api-error';
+import { verifyPassword, hashPassword } from '../../core/utils/auth/password';
+import { generateToken } from '../../core/utils/auth/jwt';
+import { AdminLoginInput, AdminUpdateProfileInput, ChangePasswordInput } from './admin.schema';
+import { AuthTokenPayload } from '../../core/types/auth.types';
 
 export class AdminService {
-    private readonly adminRepository: AdminRepository
+    public async login(input: AdminLoginInput) {
+        const admin = await prisma.admin.findUnique({
+            where: { email: input.email.toLowerCase().trim() },
+        });
 
-    public constructor(adminRepository: AdminRepository) {
-        this.adminRepository = adminRepository
+        if (!admin) {
+            throw new AuthError('Invalid email or password.');
+        }
+
+        const isPasswordValid = await verifyPassword(input.password, admin.password);
+        if (!isPasswordValid) {
+            throw new AuthError('Invalid email or password.');
+        }
+
+        const tokenPayload: AuthTokenPayload = {
+            id: admin.id,
+            role: admin.role as 'admin' | 'super_admin',
+            email: admin.email,
+            permissions: ['*'],
+        };
+
+        const token = generateToken(tokenPayload);
+
+        return {
+            admin: {
+                id: admin.id,
+                name: admin.name,
+                email: admin.email,
+                role: admin.role,
+                createdAt: admin.createdAt,
+            },
+            token,
+        };
     }
 
-    public login = async ({ email, password }: AdminLoginPayload) => promiseWrapper<{admin: unknown, access_token: string}>(
-        async (resolve, reject) => {
-            const admin = await this.adminRepository.findByEmail(email)
-            if (!admin) {
-                const admin_not_found = new NotFoundError('Admin not found')
-                return reject(admin_not_found)
+    public async findById(id: number) {
+        const admin = await prisma.admin.findUnique({
+            where: { id },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true,
+            },
+        });
+
+        if (!admin) {
+            throw new NotFoundError('Admin not found.');
+        }
+
+        return admin;
+    }
+
+    public async update(id: number, input: AdminUpdateProfileInput) {
+        if (input.email) {
+            const existing = await prisma.admin.findFirst({
+                where: {
+                    email: input.email.toLowerCase().trim(),
+                    id: { not: id },
+                },
+            });
+            if (existing) {
+                throw new DuplicationError('An account with this email already exists.');
             }
-            const isValid = await verifyPassword(password, admin.password)
-
-            if (!isValid) {
-                const invalid_credentials = new AuthError('Invalid credentials')
-                return reject(invalid_credentials)
-            }
-
-            const access_token = generateToken({
-                id: admin.id,
-                email: admin.email
-            })
-
-            return resolve({
-                admin, access_token
-            })
-
         }
-    )
 
-    public register = async ({ name, password, email }: AdminRegisterPayload) => promiseWrapper(
-        async (resolve) => {
-            const hashedPassword = await hashPassword(password)
+        const updated = await prisma.admin.update({
+            where: { id },
+            data: {
+                ...(input.name ? { name: input.name.trim() } : {}),
+                ...(input.email ? { email: input.email.toLowerCase().trim() } : {}),
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                createdAt: true,
+            },
+        });
 
-            const created_admin = await this.adminRepository.create({
-                name, password: hashedPassword, email
-            })
+        return updated;
+    }
 
-            return resolve(created_admin)
+    public async changePassword(id: number, input: ChangePasswordInput) {
+        const admin = await prisma.admin.findUnique({
+            where: { id },
+        });
+
+        if (!admin) {
+            throw new NotFoundError('Admin not found.');
         }
-    )
 
-    public get = async (id: number) => promiseWrapper(
-        async (resolve) => {
-            const admin = await this.adminRepository.findOne(id)
-            return resolve(admin)
+        const isCurrentValid = await verifyPassword(input.currentPassword, admin.password);
+        if (!isCurrentValid) {
+            throw new BadRequestError('Current password is incorrect.');
         }
-    )
+
+        const newHash = await hashPassword(input.newPassword);
+        await prisma.admin.update({
+            where: { id },
+            data: { password: newHash },
+        });
+
+        return { message: 'Password updated successfully.' };
+    }
 }
+
+export const adminService = new AdminService();

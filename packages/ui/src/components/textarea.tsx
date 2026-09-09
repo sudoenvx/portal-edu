@@ -1,7 +1,7 @@
 import React, { forwardRef, useId } from 'react'
 import { cn } from '../utils/cn'
 
-export type TextareaVariant = 'standard' | 'surface' | 'bordered'
+export type TextareaVariant = 'outline' | 'filled' | 'underline' | 'outstanding'
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
@@ -15,31 +15,37 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
   containerClassName?: string
 }
 
+
 const VARIANT_CLASSES: Record<TextareaVariant, string> = {
-  standard: cn(
-    'rounded-sm bg-transparent ',
-    'border border-b-3 border-secondary/50',
-    'focus:border-secondary/50 focus:border-b-secondary focus:bg-creamy',
-    'placeholder:text-text-muted!',
+  outline: cn(
+    'rounded-sm border border-input-border bg-input-background',
+    'hover:border-input-border-hover',
+    'focus:border-input-border-focus',
+  ),
+  filled: cn(
+    'rounded-sm border border-transparent bg-surface-secondary',
+    'hover:bg-surface-secondary/70',
+    'focus:border-input-border-focus focus:bg-input-background',
+  ),
+  underline: cn(
+    'rounded-none border-0 border-b-2 border-border bg-transparent px-0',
+    'hover:border-border-strong',
+    'focus:border-primary',
   ),
 
-  surface: cn(
-    'rounded-sm bg-surface ',
-    'border border-b-3 border-secondary/0 border-b-secondary/50',
-    'focus:border-secondary/60 focus:border-b-secondary focus:bg-blue-ice',
-  ),
-
-  bordered: cn(
-    'border border-border rounded-sm bg-surface',
+  outstanding: cn(
+    'rounded-[4px] bg-input-background',
+    'border border-b-3 border-border',
+    'focus:border-secondary/50 focus:border-b-secondary focus:bg-input-focus',
     'placeholder:text-text-muted!',
-    'focus:border-secondary focus:bg-creamy'
-  )
+  ),
 }
 
 const VARIANT_ERROR_CLASSES: Record<TextareaVariant, string> = {
-  standard: 'border-danger focus:border-danger bg-danger-tint',
-  surface: 'border-danger focus:border-danger bg-danger-tint',
-  bordered: 'border-danger focus:border-danger bg-danger-tint',
+  outline: 'border-danger bg-danger-subtle focus:border-danger',
+  filled: 'border-danger bg-danger-subtle focus:border-danger',
+  underline: 'border-danger focus:border-danger',
+  outstanding: 'border-danger focus:border-danger focus:border-b-danger',
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
@@ -47,7 +53,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     label,
     hint,
     error,
-    variant = 'standard',
+    variant = 'outline',
     resizable = false,
     className,
     containerClassName,

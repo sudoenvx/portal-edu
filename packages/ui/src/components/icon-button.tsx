@@ -1,89 +1,112 @@
+// icon-button.tsx
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import { Loader2 } from 'lucide-react'
 import { cn } from '../utils/cn'
+import { Tooltip } from './tooltip' // Ensure path is correct
+import { type FloatingSide } from '../utils'
 
-type IconButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'ghost'
+type IconButtonColor = 'primary' | 'secondary' | 'accent' | 'danger' | 'success' | 'neutral'
+type IconButtonStyle = 'solid' | 'tint' | 'ghost'
 type IconButtonSize = 'xs' | 'sm' | 'md' | 'lg'
 
-interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface IconButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'style'> {
   icon: ReactNode
-  variant?: IconButtonVariant
+  color?: IconButtonColor
+  style?: IconButtonStyle
   size?: IconButtonSize
   loading?: boolean
-  disabled?: boolean
+  /** Tooltip content, visually replaces the native tooltip. */
   title?: string
+  tooltipSide?: FloatingSide
+  /** Icon-only control — an accessible name is not optional. */
+  'aria-label': string
 }
 
-const variantClasses: Record<IconButtonVariant, string> = {
-  primary: 'bg-primary/20 hover:bg-primary/30 text-text',
-  secondary: 'bg-secondary/20 hover:bg-secondary/30 text-text',
-  danger: 'bg-danger/20 hover:bg-danger/30 text-text',
-  success: 'bg-success/20 hover:bg-success/30 text-text',
-  ghost: 'bg-transparent hover:bg-secondary/20 text-text',
+const colorStyle: Record<IconButtonColor, Record<IconButtonStyle, string>> = {
+  primary: {
+    solid: 'bg-primary text-primary-foreground hover:bg-primary-hover',
+    tint: 'bg-primary-subtle text-primary-subtle-foreground hover:bg-primary-subtle/70',
+    ghost: 'bg-transparent text-primary hover:bg-primary-subtle',
+  },
+  secondary: {
+    solid: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover',
+    tint: 'bg-neutral-100 text-text hover:bg-neutral-200',
+    ghost: 'bg-transparent text-text hover:bg-neutral-100 hover:text-text',
+  },
+  accent: {
+    solid: 'bg-accent text-accent-foreground hover:bg-accent-hover',
+    tint: 'bg-accent-subtle text-accent-subtle-foreground hover:bg-accent-subtle/70',
+    ghost: 'bg-transparent text-accent hover:bg-accent-subtle',
+  },
+  danger: {
+    solid: 'bg-danger text-danger-foreground hover:bg-danger-hover',
+    tint: 'bg-danger-subtle text-danger-subtle-foreground hover:bg-danger-subtle/70',
+    ghost: 'bg-transparent text-danger hover:bg-danger-subtle',
+  },
+  success: {
+    solid: 'bg-success text-success-foreground hover:bg-success-hover',
+    tint: 'bg-success-subtle text-success-subtle-foreground hover:bg-success-subtle/70',
+    ghost: 'bg-transparent text-success hover:bg-success-subtle',
+  },
+  neutral: {
+    solid: 'bg-surface text-text border border-border-strong hover:bg-surface-raised',
+    tint: 'bg-neutral-100 text-text hover:bg-neutral-200',
+    ghost: 'bg-transparent text-text-muted hover:bg-neutral-100 hover:text-text',
+  },
 }
-
-const disabledClasses = 'bg-secondary/15 text-text-muted cursor-not-allowed hover:bg-secondary/15'
 
 const sizeClasses: Record<IconButtonSize, string> = {
-  xs: 'w-5 h-5',
-  sm: 'w-6 h-6',
-  md: 'w-7 h-7',
-  lg: 'w-8 h-8',
+  xs: 'w-5 h-5 rounded-[3px]',
+  sm: 'w-6 h-6 rounded-xs',
+  md: 'w-7 h-7 rounded-xs',
+  lg: 'w-8 h-8 rounded-sm',
+}
+const iconSize: Record<IconButtonSize, string> = {
+  xs: '[&>svg]:w-3 [&>svg]:h-3',
+  sm: '[&>svg]:w-3.5 [&>svg]:h-3.5',
+  md: '[&>svg]:w-4 [&>svg]:h-4',
+  lg: '[&>svg]:w-[18px] [&>svg]:h-[18px]',
+}
+const spinnerSize: Record<IconButtonSize, string> = {
+  xs: 'w-2.5 h-2.5', sm: 'w-3 h-3', md: 'w-3.5 h-3.5', lg: 'w-4 h-4',
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  (
-    {
-      icon,
-      variant = 'secondary',
-      size = 'sm',
-      loading = false,
-      disabled = false,
-      className,
-      title,
-      ...props
-    },
-    ref,
-  ) => {
+  ({ icon, color = 'secondary', style = 'tint', size = 'sm', loading = false, disabled = false, className, title, tooltipSide = 'top', ...props }, ref) => {
     const isDisabled = disabled || loading
 
-    return (
+    const button = (
       <button
         ref={ref}
         type="button"
         disabled={isDisabled}
-        title={title}
+        aria-busy={loading}
         className={cn(
-          'inline-flex items-center justify-center rounded-xs transition-colors',
-          'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
+          'inline-flex shrink-0 items-center justify-center transition-colors duration-150',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1',
+          'disabled:cursor-not-allowed disabled:bg-disabled-background disabled:text-disabled-foreground disabled:border-disabled-border',
           sizeClasses[size],
-          isDisabled ? disabledClasses : variantClasses[variant],
+          !isDisabled && colorStyle[color][style],
           className,
         )}
         {...props}
       >
         {loading ? (
-          <Loader2 className={cn(
-            'animate-spin',
-            size === 'xs' && 'w-2.5 h-2.5',
-            size === 'sm' && 'w-3 h-3',
-            size === 'md' && 'w-3.5 h-3.5',
-            size === 'lg' && 'w-4 h-4',
-          )} />
+          <Loader2 className={cn('animate-spin', spinnerSize[size])} aria-hidden="true" />
         ) : (
-          <span className={cn(
-            'flex items-center justify-center',
-            size === 'xs' && '[&>svg]:w-3 [&>svg]:h-3',
-            size === 'sm' && '[&>svg]:w-3.5 [&>svg]:h-3.5',
-            size === 'md' && '[&>svg]:w-4 [&>svg]:h-4',
-            size === 'lg' && '[&>svg]:w-4.5 [&>svg]:h-4',
-          )}>
+          <span className={cn('flex items-center justify-center', iconSize[size])} aria-hidden="true">
             {icon}
           </span>
         )}
       </button>
     )
+
+    // Optionally wrap in tooltip if a `title` is provided
+    if (title) {
+      return <Tooltip side={tooltipSide} content={title}>{button}</Tooltip>
+    }
+
+    return button
   },
 )
-
 IconButton.displayName = 'IconButton'

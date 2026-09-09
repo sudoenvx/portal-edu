@@ -1,17 +1,19 @@
 import { useMemo } from 'react';
 
-export enum Language {
-  Arabic = 'Arabic',
-  English = 'English',
-  Mixed = 'Mixed',
-  Unknown = 'Unknown',
-}
+export const Language = {
+  Arabic: 'Arabic',
+  English: 'English',
+  Mixed: 'Mixed',
+  Unknown: 'Unknown',
+} as const;
+
+export type Language = (typeof Language)[keyof typeof Language];
 
 const ARABIC_PATTERN = /[\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]/g;
 const ENGLISH_PATTERN = /[a-zA-Z]/g;
 
 export const detectLanguage = (input: string): Language => {
-  if(input.length == 0) return Language.Arabic
+  if (input.length === 0) return Language.Arabic;
 
   const trimmed = String(input).trim();
   if (!trimmed) return Language.Unknown;
@@ -31,7 +33,6 @@ export const detectLanguage = (input: string): Language => {
   if (arabicRatio <= 0.2) return Language.English;
   return Language.Mixed;
 };
-
 
 export const useDetectedLanguage = (input: string): Language => {
   return useMemo(() => detectLanguage(input), [input]);

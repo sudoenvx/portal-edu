@@ -1,24 +1,35 @@
-import { hashPassword } from "../utils/auth/password"
-import { prisma } from "./prisma.client"
+import { prisma } from './prisma.client';
+import { seedDevDemoData } from './seeders/dev-demo.seeder';
+import { seedEssentialData } from './seeders/essential.seeder';
+import { seedPermissions } from './seeders/permissions.seeder';
 
 const seedDatabase = async () => {
-    await prisma.admin.upsert({
-        where: {
-            email: 'admin@edu.eg'
-        },
-        update: {
-            name: 'Super Admin',
-            password: await hashPassword('adminx'),
-        },
-        create: {
-            name: 'Super Admin',
-            email: 'admin@edu.eg',
-            password: await hashPassword('adminx'),
-        }
-    })
-}
+    console.log('🚀 Starting Database Seeder...\n');
+
+    // Always seed essential production data
+    await seedEssentialData();
+    await seedPermissions();
+
+    // Conditionally seed development demo data
+    const isDev = process.env.NODE_ENV !== 'production';
+    const forceDemo = process.argv.includes('--demo');
+
+    if (isDev || forceDemo) {
+        console.log('\n🔧 Environment is development / demo flag detected:');
+        await seedDevDemoData();
+    } else {
+        console.log('\n🔒 Production environment detected: skipped demo seeds.');
+    }
+};
 
 seedDatabase()
-    .then(() => console.log('Database seeded successfully'))
-    .catch((error) => console.error('Error seeding database', error))
-    .finally(async () => await prisma.$disconnect())
+    .then(() => {
+        console.log('\n🎉 Database seeding completed successfully!\n');
+    })
+    .catch((error) => {
+        console.error('\n❌ Error seeding database:', error);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });

@@ -1,260 +1,166 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { 
-  ArrowLeft, 
-  Save, 
-  Camera, 
-  User, 
-  Lock, 
-  Wallet,
-} from 'lucide-react'
-
-import { 
-  Typography, 
-  Button, 
-  Input, 
-  WindowCard
-} from '@portal-edu/ui'
+import { ArrowLeft, Home, IdCard, KeyRound, LockKeyhole, Save, User, Key } from 'lucide-react'
+import { Breadcrumb, Button, Card, Input, Select, Title } from '@portal-edu/ui'
 import { useNotification } from '@/core/hooks/use_notification'
-
+import { createTeacherSchema, type CreateTeacherFormValues } from '../schemas/teachers.schemas'
 import { useAddTeacher } from '../api/teachers.mutations'
-import { createTeacherSchema, type CreateTeacherFormValues } from '@/modules/teacher/schemas/create-teacher.schema'
+
+const STATUS_OPTIONS = [
+  { value: 'active', label: 'نشط (صلاحيات كاملة)' },
+  { value: 'trial', label: 'فترة تجريبية' },
+  { value: 'suspended_payment', label: 'موقوف (بسبب الدفع)' },
+  { value: 'inactive', label: 'غير نشط' },
+]
 
 export default function CreateTeacherPage() {
   const navigate = useNavigate()
   const { notify } = useNotification()
   const addMutation = useAddTeacher()
-  
-  // حالة محلية بسيطة لعرض معاينة الصورة عند اختيارها (UX UI)
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
-
-  const { register, handleSubmit, formState: { errors } } = useForm<CreateTeacherFormValues>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<CreateTeacherFormValues>({
     resolver: zodResolver(createTeacherSchema),
-    defaultValues: {
-      pricePerStudent: 0
-    }
+    defaultValues: { accountStatus: 'active' },
   })
-
-  // دالة التعامل مع اختيار الصورة
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const url = URL.createObjectURL(file)
-      setAvatarPreview(url)
-      // ملاحظة: يمكنك هنا حفظ الملف في الـ state لإرساله لاحقاً مع الفورم
-    }
-  }
+  const accountStatus = watch('accountStatus')
 
   const onSubmit = async (data: CreateTeacherFormValues) => {
     try {
       await addMutation.mutateAsync(data)
-      notify.success('تم تسجيل المعلم في النظام بنجاح')
-      navigate('/teachers') // العودة لصفحة المعلمين بعد النجاح
+      notify.success('تم إنشاء حساب المدرس بنجاح')
+      navigate('/teachers')
     } catch (error: any) {
-      notify.error(error.message || 'حدث خطأ أثناء حفظ البيانات')
+      notify.error(error.message || 'حدث خطأ أثناء الإنشاء')
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 animate-in fade-in duration-300">
-      
-      {/* 1. Header & Actions */}
-      <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-col gap-1.5">
-
-          <Typography variant="body-large" element="h1" className="text-text font-bold">
-            تسجيل معلم جديد
-          </Typography>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto flex w-full max-w-4xl flex-col gap-6 pb-8"
+    >
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-2">
+          <Breadcrumb
+            items={[
+              { label: 'الرئيسية', href: '/', icon: <Home className="h-4 w-4" /> },
+              { label: 'المدرسون', href: '/teachers' },
+              { label: 'إنشاء حساب جديد' },
+            ]}
+          />
+          <div>
+            <Title element="h1" className="font-bold text-text">
+              إضافة مدرس جديد
+            </Title>
+            <p className="m-0 mt-1 text-xs text-text-muted">
+              أنشئ بيانات الدخول الأساسية، وسيكمل المدرس ملفه ومحتواه من خلال onboarding.
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button 
-            type="button" 
-            leftIcon={<ArrowLeft strokeWidth={2} />} 
-            variant="neutral" 
-            size="sm" 
-            onClick={() => navigate(-1)}
-            disabled={addMutation.isPending}
-          >
-            إلغاء
-          </Button>
-          <Button 
-            type="submit" 
-            leftIcon={<Save strokeWidth={2} />} 
-            variant="primary" 
+          <Button
+            type="button"
+            color="neutral"
             size="sm"
+            leftIcon={<ArrowLeft size={15} />}
+            onClick={() => navigate(-1)}
+          >
+            رجوع
+          </Button>
+          <Button
+            type="submit"
+            color="primary"
+            style="solid"
+            size="sm"
+            leftIcon={<Save size={15} />}
             loading={addMutation.isPending}
           >
-            حفظ وإنشاء الحساب
+            حفظ المدرس
           </Button>
         </div>
       </header>
 
-      {/* 2. Form Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start mt-2">
-        
-        {/* العمود الأيمن: البيانات الشخصية (يأخذ مساحة أكبر) */}
-        <div className="flex flex-col gap-4 md:col-span-2">
-          <WindowCard 
-            bodyClassName='p-3!'
-            title={
-              <div className="flex items-center gap-2">
-                <User size={14} />
-                <span>البيانات الأساسية والشخصية</span>
-              </div>
-            }
-          >
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              
-              {/* قسم الصورة الشخصية */}
-              <div className="flex flex-col items-center gap-2 shrink-0">
-                <label 
-                  htmlFor="avatar-upload" 
-                  className="group relative flex h-24 w-24 cursor-pointer items-center justify-center rounded-sm border-2 border-dashed border-border bg-secondary-tint/50 hover:border-secondary transition-colors overflow-hidden group"
-                >
-                  {avatarPreview ? (
-                    <>
-                      <img src={avatarPreview} alt="Preview" className="h-full w-full object-cover" />
-                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Camera className="text-white" size={20} />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="flex flex-col items-center text-text-muted">
-                      <Camera size={24} className="mb-1 opacity-50 group-hover:opacity-100" />
-                      <span className="text-[10px] font-medium">اختر صورة</span>
-                    </div>
-                  )}
-                  <input 
-                    id="avatar-upload" 
-                    type="file" 
-                    accept="image/*" 
-                    className="hidden" 
-                    onChange={handleImageChange}
-                  />
-                </label>
-
-              </div>
-
-              {/* باقي حقول البيانات */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-                <Input
-                  label="الاسم الرباعي"
-                  placeholder="مثال: أحمد محمود إبراهيم"
-                  variant="bordered"
-                  {...register('name')}
-                  error={errors.name?.message}
-                />
-                
-                <Input
-                  label="المادة العلمية"
-                  placeholder="مثال: الفيزياء"
-                  variant="bordered"
-                  {...register('subject')}
-                  error={errors.subject?.message}
-                />
-
-                <Input
-                  label="رقم الهاتف"
-                  placeholder="01xxxxxxxxx"
-                  variant="bordered"
-                  dir="ltr"
-                  className="text-left font-inter"
-                  {...register('phone')}
-                  error={errors.phone?.message}
-                />
-
-                <Input
-                  required
-                  label="البريد الإلكتروني"
-                  type="email"
-                  placeholder="teacher@example.com"
-                  variant="bordered"
-                  dir="ltr"
-                  className="text-left font-inter"
-                  {...register('email')}
-                  error={errors.email?.message}
-                />
-              </div>
-            </div>
-          </WindowCard>
-        </div>
-
-        {/* العمود الأيسر: الأمان والماليات */}
-        <div className="flex flex-col gap-4 lg:col-span-1">
-          
-          {/* بطاقة بيانات الدخول (كلمة المرور) */}
-          <WindowCard 
-            title={
-              <div className="flex items-center gap-2">
-                <Lock size={14} />
-                <span>بيانات الدخول والأمان</span>
-              </div>
-            }
-
-            bodyClassName='p-3!'
-          >
-            <div className="flex flex-col gap-4">
-              <div className="bg-accent-tint p-1.5 rounded-xs">
-                <Typography variant="body-small" className="text-text text-[11px] leading-relaxed">
-                  هذه البيانات سيستخدمها المدرس ومساعدوه لتسجيل الدخول إلى النظام الخاص بهم.
-                </Typography>
-              </div>
-              
+      <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_280px]">
+        <Card
+            title="بيانات حساب المدرس"
+        bodyClassName="">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="sm:col-span-2">
               <Input
-                label="كلمة المرور الإفتراضية"
-                type="password"
-                placeholder="••••••••"
-                variant="bordered"
-                dir="ltr"
-                className="text-left"
-                {...register('password')}
-                error={errors.password?.message}
-              />
-              
-              <Input
-                label="تأكيد كلمة المرور"
-                type="password"
-                placeholder="••••••••"
-                variant="bordered"
-                dir="ltr"
-                className="text-left"
-                {...register('confirmPassword')}
-                error={errors.confirmPassword?.message}
+                label="الاسم الكامل"
+                placeholder="مثال: أحمد محمود"
+                leadingIcon={<User size={14} />}
+                variant="outline"
+                size="lg"
+                {...register('fullName')}
+                error={errors.fullName?.message}
               />
             </div>
-          </WindowCard>
-
-          {/* بطاقة الماليات */}
-          <WindowCard 
-            title={
-              <div className="flex items-center gap-2">
-                <Wallet size={14} />
-                <span>إعدادات المحاسبة</span>
-              </div>
-            }
-            bodyClassName='p-3!'
-          >
-            <div className="flex flex-col gap-4">
-              <Input
-                label="تسعيرة المنصة لكل طالب (ج.م)"
-                type="number"
-                placeholder="10"
-                variant="bordered"
-                {...register('pricePerStudent')}
-                error={errors.pricePerStudent?.message}
+            <Input
+              label="اسم المستخدم"
+              placeholder="ahmed_physics"
+              leadingIcon={<IdCard size={14} />}
+              variant="outline"
+              size="lg"
+              dir="ltr"
+              {...register('username')}
+              error={errors.username?.message}
+            />
+            <Input
+              label="كلمة المرور المؤقتة"
+              type="password"
+              placeholder="********"
+              leadingIcon={<KeyRound size={14} />}
+              variant="outline"
+              size="lg"
+              dir="ltr"
+              {...register('password')}
+              error={errors.password?.message}
+            />
+            <div className="sm:col-span-2">
+              <Select
+                label="حالة الحساب"
+                value={accountStatus || 'active'}
+                onChange={(value) =>
+                  setValue('accountStatus', value as CreateTeacherFormValues['accountStatus'], {
+                    shouldValidate: true,
+                  })
+                }
+                options={STATUS_OPTIONS}
+                size="lg"
               />
-              
-              <div className="bg-accent-tint p-1.5 rounded-xs">
-                <Typography variant="body-small" className="text-text text-[11px] leading-relaxed">
-                  هذا الرقم هو ما سيتم ضربه في إجمالي عدد الطلاب النشطين نهاية كل شهر لإصدار فاتورة المعلم.
-                </Typography>
+              {errors.accountStatus && (
+                <p className="mt-1 text-[11px] text-danger">{errors.accountStatus.message}</p>
+              )}
+            </div>
+          </div>
+          <div className="mt-6 flex items-start gap-2 border-t border-border-subtle pt-4 text-[11px] leading-6 text-text-muted">
+            <LockKeyhole size={15} className="mt-1 shrink-0 text-primary" />
+            <p className="m-0">
+              بعد تسجيل الدخول، سيحدد المدرس هاتفه ومادته ومراحله ومجموعاته وجدوله بنفسه.
+            </p>
+          </div>
+        </Card>
+        <aside className="flex flex-col gap-4">
+          <Card bodyClassName="p-3" className='shadow-none bg-info-subtle!'>
+            <div className="flex items-start gap-2">
+              <Key size={16} className="mt-0.5 shrink-0 text-info" />
+              <div>
+                <h2 className="text-[12px] font-bold text-info">مساحة مدرس مستقلة</h2>
+                <p className="mt-1 text-[11px] leading-6 text-info-subtle-foreground">
+                  سيُنشئ النظام مساحة معزولة للمدرس، ثم يكمل المدرس بياناته ومحتواه من خلال
+                  onboarding.
+                </p>
               </div>
             </div>
-          </WindowCard>
-
-        </div>
+          </Card>
+        </aside>
       </div>
     </form>
   )

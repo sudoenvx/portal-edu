@@ -30,20 +30,30 @@ interface TypographyProps {
 
 // Typography variant styles mapping
 const typographyStyles: Record<TypographyVariant, string> = {
+  // DISPLAYS (Massive, for heroes)
   "display-large": "text-[57px] font-normal leading-[64px] tracking-tight",
   "display-medium": "text-[45px] font-normal leading-[52px] tracking-tight",
   "display-small": "text-[36px] font-normal leading-[44px] tracking-tight",
-  "headline-large": "text-[32px] font-semibold leading-[40px] tracking-tight",
-  "headline-medium": "text-[28px] font-semibold leading-[36px] tracking-tight",
-  "headline-small": "text-[24px] font-semibold leading-[32px] tracking-tight",
-  "title-large": "text-[22px] font-medium leading-[28px] tracking-tight",
-  "title-medium": "text-base font-medium leading-6 tracking-normal",
-  "title-small": "text-sm font-medium leading-5 tracking-normal",
-  "body-large": "text-[14px] font-normal leading-6 tracking-normal",
+  
+  // HEADLINES (For page/section headers)
+  "headline-large": "text-[28px] font-semibold leading-[40px] tracking-tight",
+  "headline-medium": "text-[24px] font-semibold leading-[36px] tracking-tight",
+  "headline-small": "text-[22px] font-semibold leading-[32px] tracking-tight", /* Fixed leading */
+  
+  // TITLES (For cards, popups, and components)
+  "title-large": "text-[20px] font-medium leading-[28px] tracking-tight", /* Changed to 28px for better breathing room */
+  "title-medium": "text-[18px] font-medium leading-6 tracking-normal",
+  "title-small": "text-[16px] font-medium leading-5 tracking-normal",
+  
+  // BODY (For paragraphs and long reading)
+  /* Note: Change to 16px/14px/12px if this is not a high-density dashboard */
+  "body-large": "text-[14px] font-normal leading-relaxed tracking-normal",
   "body-medium": "text-[13px] font-normal leading-5 tracking-normal",
   "body-small": "text-[12px] font-normal leading-4 tracking-normal",
-  "label-large": "text-sm font-medium leading-5 tracking-normal",
-  "label-medium": "text-xs font-medium leading-4 tracking-wide",
+  
+  // LABELS (For buttons, badges, navigation — highly legible)
+  "label-large": "text-[14px] font-medium leading-5 tracking-normal", /* Unified syntax */
+  "label-medium": "text-[12px] font-medium leading-4 tracking-wide", /* Unified syntax */
   "label-small": "text-[11px] font-medium leading-4 tracking-wide uppercase",
 }
 
@@ -78,7 +88,7 @@ interface HeadingProps {
 
 export function Heading({
   level = 1,
-  size = "large",
+  size = "small",
   className,
   children,
   ...props
@@ -121,7 +131,7 @@ interface BodyProps {
 }
 
 export function Body({
-  size = "small",
+  size = "medium",
   className,
   children,
   ...props

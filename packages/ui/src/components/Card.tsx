@@ -1,37 +1,176 @@
-import type { ReactNode } from 'react'
+// card.tsx
+import { type KeyboardEvent, type ReactNode } from 'react'
+import { Title } from './typography'
+import { cn } from '../utils/cn'
 
-interface CardProps {
+type CardVariant = 'flat' | 'framed'
+
+export interface CardProps {
   title?: ReactNode
   description?: string
   headerActions?: ReactNode
   headerClassName?: string
   footer?: ReactNode
+  footerClassName?: string
   children: ReactNode
   className?: string
   bodyClassName?: string
   onClick?: () => void
-
+  /** Adds shadow-card elevation. Off by default — flat sits directly on
+   *  the page, matching the borderless/shadowless look used elsewhere. */
   elevated?: boolean
+  /** 'flat' = plain surface card (previous `Card`).
+   *  'framed' = padded outer frame around the content, like a window
+   *  chrome (previous `WindowCard`). */
+  variant?: CardVariant
 }
 
-export const Card = ({ title, description, headerActions, headerClassName = '', footer, children, className = '', bodyClassName = 'p-2', onClick, elevated = false }: CardProps) => {
+function CardHeader({
+  title,
+  description,
+  headerActions,
+  headerClassName,
+  variant,
+}: Pick<CardProps, 'title' | 'description' | 'headerActions' | 'headerClassName'> & {
+  variant: CardVariant
+}) {
+  if (!title && !description && !headerActions) return null
   return (
-    <div className={`w-full overflow-hidden rounded-sm bg-surface ${elevated && 'shadow-card'} ${className}`} onClick={onClick}>
-      {(title || description || headerActions) && (
-        <header className={`flex items-center justify-between gap-4 border-b border-border p-1.5 ${headerClassName}`}>
-          {(title || description) && (
-            <div className="min-w-0 flex-1">
-              {title && <h2 className="m-0 text-[11px] font-medium leading-snug ">{title}</h2>}
-              {description && <p className="m-0 text-xs leading-normal text-text-muted">{description}</p>}
-            </div>
-          )}
-          {headerActions && <div className="flex shrink-0 items-center gap-2">{headerActions}</div>}
-        </header>
+    <header
+      className={cn(
+        'flex items-center justify-between gap-4',
+        variant === 'flat' ? ' px-3 py-2 bg-secondary text-secondary-foreground!' : 'mb-2',
+        headerClassName
       )}
-      <section className={`text-sm leading-relaxed text-text/90 w-full p-2 ${bodyClassName}`}>{children}</section>
-      {footer && <footer className="flex items-center justify-end gap-2 border-t border-border p-2">{footer}</footer>}
-    </div>
+    >
+      {(title || description) && (
+        <div className="min-w-0 flex-1">
+          {title && (
+            <Title
+              className={cn(
+                'm-0 truncate font-bold leading-snug',
+                variant === 'flat'
+                  ? 'text-[12px] '
+                  : 'text-[12px] text-secondary-foreground'
+              )}
+            >
+              {title}
+            </Title>
+          )}
+          {description && (
+            <p className="m-0 mt-0.5 truncate text-[11px] leading-tight text-text-muted">
+              {description}
+            </p>
+          )}
+        </div>
+      )}
+      {headerActions && <div className="flex shrink-0 items-center gap-1.5">{headerActions}</div>}
+    </header>
   )
 }
 
-export type { CardProps }
+function CardFooter({ footer, footerClassName }: Pick<CardProps, 'footer' | 'footerClassName'>) {
+  if (!footer) return null
+  return (
+    <footer
+      className={cn(
+        'flex items-center justify-end gap-2 bg-surface-secondary p-2.5',
+        footerClassName
+      )}
+    >
+      {footer}
+    </footer>
+  )
+}
+
+export function Card({
+  title,
+  description,
+  headerActions,
+  headerClassName,
+  footer,
+  footerClassName,
+  children,
+  className,
+  bodyClassName,
+  onClick,
+  elevated = true,
+  variant = 'flat',
+}: CardProps) {
+  const isInteractive = !!onClick
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (!isInteractive) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      onClick!()
+    }
+  }
+
+  const interactiveProps = isInteractive
+    ? {
+        role: 'button' as const,
+        tabIndex: 0,
+        onClick,
+        onKeyDown: handleKeyDown,
+        className: cn(
+          'cursor-pointer transition-colors',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-1'
+        ),
+      }
+    : {}
+
+  const content = (
+    <div
+      {...(variant === 'flat' ? interactiveProps : {})}
+      className={cn(
+        'w-full overflow-hidden rounded-sm bg-surface',
+        variant === 'flat' && elevated && 'shadow-card',
+        variant === 'flat' && interactiveProps.className,
+        variant === 'flat' && className
+      )}
+    >
+      <CardHeader
+        title={title}
+        description={description}
+        headerActions={headerActions}
+        headerClassName={headerClassName}
+        variant={variant}
+      />
+      <section className={cn('text-sm leading-relaxed text-text p-3', bodyClassName ?? 'p-3')}>
+        {children}
+      </section>
+      {variant === 'flat' && <CardFooter footer={footer} footerClassName={footerClassName} />}
+    </div>
+  )
+
+  if (variant === 'flat') return content
+
+  // 'framed': the whole frame (header + content pane) is one click/focus
+  // target — no dead zone between header and body.
+  return (
+    <div
+      {...interactiveProps}
+      className={cn(
+        'rounded-sm bg-secondary p-1.5',
+        elevated && 'shadow-card',
+        interactiveProps.className,
+        className
+      )}
+    >
+      <CardHeader
+        title={title}
+        description={description}
+        headerActions={headerActions}
+        headerClassName={headerClassName}
+        variant={variant}
+      />
+      <div className="overflow-hidden rounded-sm bg-surface">
+        <section className={cn('text-sm leading-relaxed text-text', bodyClassName ?? 'p-3')}>
+          {children}
+        </section>
+        <CardFooter footer={footer} footerClassName={footerClassName} />
+      </div>
+    </div>
+  )
+}

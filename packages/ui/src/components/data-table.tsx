@@ -1,16 +1,13 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { ChevronsUpDown, Columns3 } from 'lucide-react'
-import { Pagination } from './pagination'
-import { FloatingSelectionToolbar } from './floating-selection-toolbar'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { Layers, ChevronRight, ChevronDown, ArrowDownNarrowWideIcon, ArrowUpDownIcon, ArrowUpNarrowWide } from 'lucide-react'
 import { Checkbox } from './checkbox'
+import { DropdownMenu, DropdownMenuItem } from './dropdown-menu'
 import { useTableStore } from '../core/stores/use-table-store'
 import { cn } from '../utils/cn'
-import { DropdownMenu, DropdownMenuCheckItem } from './dropdown-menu'
-import { IconButton } from './icon-button'
-import { Button } from './button'
 
+// ── existing types unchanged ──────────────────────────────────────
 export interface DataTableColumn<T> {
-  id?: string // مُعرف فريد للعمود (مهم إذا كنت ستستخدم خاصية إخفاء الأعمدة)
+  id?: string // مُعرف فريد للعمود (مهم إذا كنت ستستخدم خاصية إخفاء الأعمدة أو الفرز)
   header: string
   accessor?: keyof T
   render?: (item: T) => React.ReactNode
@@ -19,38 +16,77 @@ export interface DataTableColumn<T> {
   cellClassName?: string
   pinned?: 'start' | 'end'
   width?: number | string
+
+  // ---- Sorting ----
+  sortable?: boolean
+  // إن لم يتم تمريرها، سيتم الفرز على أساس accessor مباشرة
+  sortAccessor?: (item: T) => string | number | Date | null | undefined
+}
+export type SortDirection = 'asc' | 'desc'
+export interface SortState { columnId: string; direction: SortDirection }
+
+export interface DataTableGroupConfig<T> {
+  accessor: keyof T | ((item: T) => string)
+  renderGroupHeader?: (groupKey: string, items: T[]) => React.ReactNode
+  collapsible?: boolean
+  defaultCollapsed?: boolean
+  groupHeaderClassName?: string
+}
+
+// ── NEW: selectable grouping option ───────────────────────────────
+export interface DataTableGroupingOption<T> {
+  /** Stable id for this option. Falls back to accessor/label if omitted
+   *  — same pattern as getColumnId, so most callers never need to set it. */
+  id?: string
+  /** Human-readable label shown in the dropdown and in the trigger button. */
+  label: string
+  accessor: keyof T | ((item: T) => string)
+  renderGroupHeader?: (groupKey: string, items: T[]) => React.ReactNode
+  collapsible?: boolean
+  defaultCollapsed?: boolean
+  groupHeaderClassName?: string
+}
+
+export interface SelectionToolbarContext {
+  selectedIds: string[]
+  clearSelection: () => void
+  count: number
 }
 
 export interface DataTableProps<T> {
-  // ---- Header Props ----
   title?: React.ReactNode
   description?: React.ReactNode
-  tableActions?: React.ReactNode // أزرار الإجراءات العلوية للجدول
-  persistedKey?: string // إذا تم تمريره، سيتم تفعيل زر إخفاء/إظهار الأعمدة وحفظها
+  tableActions?: React.ReactNode
+  persistedKey?: string
 
-  // ---- Table Props ----
   data: T[]
   columns: DataTableColumn<T>[]
   getRowId: (item: T) => string
-  actions?: (item: T) => React.ReactNode
-  actionsHeader?: string
-  pinActions?: boolean
-  striped?: boolean // تفعيل تلوين الصفوف بالتبادل
+  striped?: boolean
 
-  // ---- Selection ----
   selectable?: boolean
   selectedIds?: string[]
   onSelectionChange?: (ids: string[]) => void
-  toolbarActions?: (selectedIds: string[], clearSelection: () => void) => React.ReactNode
-  toolbarItemLabel?: string
+  selectionToolbar?: (ctx: SelectionToolbarContext) => React.ReactNode
 
-  // ---- Pagination ----
-  currentPage?: number
-  totalPages?: number
-  totalItems?: number
-  perPage?: number
-  onPageChange?: (page: number) => void
+  sortState?: SortState | null
+  defaultSortState?: SortState | null
+  onSortChange?: (sort: SortState | null) => void
 
+  /** Fixed, single grouping config — unchanged legacy behavior. Ignored
+   *  if `groupingOptions` is provided. */
+  grouping?: DataTableGroupConfig<T>
+
+  /** NEW: a list of grouping methods the admin can pick between via a
+   *  compact dropdown in the table header. Pass this instead of
+   *  `grouping` to let the admin choose "no grouping" or any option. */
+  groupingOptions?: DataTableGroupingOption<T>[]
+  /** Controlled selected grouping id. `null` = no grouping. */
+  groupBy?: string | null
+  defaultGroupBy?: string | null
+  onGroupByChange?: (id: string | null) => void
+
+  pagination?: React.ReactNode
   loading?: boolean
   skeletonRows?: number
   emptyMessage?: string
@@ -60,9 +96,24 @@ export interface DataTableProps<T> {
   onRowClick?: (item: T) => void
 }
 
-// دالة مساعدة للحصول على مُعرف العمود
 function getColumnId<T>(col: DataTableColumn<T>, index: number): string {
   return col.id || (typeof col.accessor === 'string' ? col.accessor : col.header) || `col-${index}`
+}
+
+function getGroupOptionId<T>(option: DataTableGroupingOption<T>, index: number): string {
+  return option.id || (typeof option.accessor === 'string' ? option.accessor : option.label) || `group-option-${index}`
+}
+
+function getGroupKey<T>(item: T, accessor: DataTableGroupConfig<T>['accessor']): string {
+  const value = typeof accessor === 'function' ? accessor(item) : (item[accessor] as unknown)
+  return value === null || value === undefined ? '' : String(value)
+}
+
+function SortIcon({ direction }: { direction: SortDirection | null }) {
+  const baseStyle = 'text-secondary-foreground'
+  if (direction === 'asc') return <ArrowDownNarrowWideIcon className={cn(baseStyle, 'w-3 h-3')} />
+  if (direction === 'desc') return <ArrowUpNarrowWide className={cn(baseStyle, 'w-3 h-3')} />
+  return <ArrowUpDownIcon className={cn(baseStyle, 'w-2.5 h-2.5')} />
 }
 
 export function DataTable<T>({
@@ -73,20 +124,20 @@ export function DataTable<T>({
   data,
   columns,
   getRowId,
-  actions,
-  actionsHeader = '',
-  pinActions = false,
   striped = false,
   selectable = false,
   selectedIds,
   onSelectionChange,
-  toolbarActions,
-  toolbarItemLabel,
-  currentPage,
-  totalPages,
-  totalItems,
-  perPage,
-  onPageChange,
+  selectionToolbar,
+  sortState: controlledSortState,
+  defaultSortState = null,
+  onSortChange,
+  grouping: fixedGrouping,
+  groupingOptions,
+  groupBy: controlledGroupBy,
+  defaultGroupBy = null,
+  onGroupByChange,
+  pagination,
   loading = false,
   skeletonRows = 6,
   emptyMessage = 'لا توجد بيانات للعرض.',
@@ -95,30 +146,55 @@ export function DataTable<T>({
   rowClassName,
   onRowClick,
 }: DataTableProps<T>) {
-  // ---- Store & Column Visibility -----------------------------------------
-  const { hiddenColumns: allHiddenColumns, toggleColumn } = useTableStore()
+  const { hiddenColumns: allHiddenColumns } = useTableStore()
   const hiddenColumns = persistedKey ? (allHiddenColumns[persistedKey] || []) : []
 
-  // الأعمدة المرئية فقط هي التي سيتم رسمها
-  const visibleColumns = useMemo(() => {
-    return columns.filter((col, i) => !hiddenColumns.includes(getColumnId(col, i)))
-  }, [columns, hiddenColumns])
+  const visibleColumns = useMemo(
+    () => columns.filter((col, i) => !hiddenColumns.includes(getColumnId(col, i))),
+    [columns, hiddenColumns],
+  )
 
-  // ---- Selection State ---------------------------------------------------
+  // ── NEW: selectable grouping state ────────────────────────────
+  const hasGroupingOptions = !!groupingOptions && groupingOptions.length > 0
+  const [internalGroupBy, setInternalGroupBy] = useState<string | null>(defaultGroupBy)
+  const groupBy = controlledGroupBy !== undefined ? controlledGroupBy : internalGroupBy
+
+  const setGroupBy = (id: string | null) => {
+    onGroupByChange?.(id)
+    if (controlledGroupBy === undefined) setInternalGroupBy(id)
+  }
+
+  const activeGroupOption = useMemo(() => {
+    if (!hasGroupingOptions || groupBy === null) return undefined
+    return groupingOptions!.find((opt, i) => getGroupOptionId(opt, i) === groupBy)
+  }, [groupingOptions, hasGroupingOptions, groupBy])
+
+  // Resolves to whichever grouping is actually active this render:
+  // the picked option (if groupingOptions is used) or the legacy fixed
+  // `grouping` prop (if not) — the rest of the component below doesn't
+  // need to know which mode produced it.
+  const grouping: DataTableGroupConfig<T> | undefined = hasGroupingOptions ? activeGroupOption : fixedGrouping
+
+  // Collapsed/expanded state is per grouping-key, so switching grouping
+  // method with stale toggles would show meaningless expand states —
+  // reset on every method change.
+  const [toggledGroups, setToggledGroups] = useState<Set<string>>(new Set())
+  useEffect(() => {
+    setToggledGroups(new Set())
+  }, [groupBy])
+
+  // ── Selection (unchanged) ─────────────────────────────────────
   const [internalSelected, setInternalSelected] = useState<Set<string>>(new Set())
   const selected = selectedIds ? new Set(selectedIds) : internalSelected
-
   const setSelected = (next: Set<string>) => {
     onSelectionChange?.(Array.from(next))
     if (!selectedIds) setInternalSelected(next)
   }
   const clearSelection = () => setSelected(new Set())
-
   const currentPageIds = useMemo(() => data.map(getRowId), [data, getRowId])
   const selectedOnPageCount = currentPageIds.filter((id) => selected.has(id)).length
   const allOnPageSelected = data.length > 0 && selectedOnPageCount === data.length
   const someOnPageSelected = selectedOnPageCount > 0 && !allOnPageSelected
-
   const toggleSelectAll = () => {
     const next = new Set(selected)
     if (allOnPageSelected) currentPageIds.forEach((id) => next.delete(id))
@@ -132,15 +208,70 @@ export function DataTable<T>({
     setSelected(next)
   }
 
-  // ---- Column Layout & Pinning -------------------------------------------
-  const showPagination = currentPage !== undefined && totalPages !== undefined && totalItems !== undefined && perPage !== undefined && onPageChange !== undefined
+  // ── Sorting (unchanged) ────────────────────────────────────────
+  const [internalSortState, setInternalSortState] = useState<SortState | null>(defaultSortState)
+  const sortState = controlledSortState !== undefined ? controlledSortState : internalSortState
+  const updateSort = (updater: (prev: SortState | null) => SortState | null) => {
+    const next = updater(sortState)
+    onSortChange?.(next)
+    if (controlledSortState === undefined) setInternalSortState(next)
+  }
+  const handleSortClick = (col: DataTableColumn<T>, index: number) => {
+    if (!col.sortable) return
+    const id = getColumnId(col, index)
+    updateSort((prev) => {
+      if (!prev || prev.columnId !== id) return { columnId: id, direction: 'asc' }
+      if (prev.direction === 'asc') return { columnId: id, direction: 'desc' }
+      return null
+    })
+  }
+  const sortedData = useMemo(() => {
+    if (!sortState) return data
+    const colIndex = visibleColumns.findIndex((c, i) => getColumnId(c, i) === sortState.columnId)
+    if (colIndex === -1) return data
+    const col = visibleColumns[colIndex]
+    const getValue = col.sortAccessor ?? ((item: T) => (col.accessor ? (item[col.accessor] as any) : undefined))
+    return [...data].sort((a, b) => {
+      const va = getValue(a)
+      const vb = getValue(b)
+      if (va == null && vb == null) return 0
+      if (va == null) return sortState.direction === 'asc' ? -1 : 1
+      if (vb == null) return sortState.direction === 'asc' ? 1 : -1
+      if (va < vb) return sortState.direction === 'asc' ? -1 : 1
+      if (va > vb) return sortState.direction === 'asc' ? 1 : -1
+      return 0
+    })
+  }, [data, sortState, visibleColumns])
 
+  // ── Grouping (unchanged logic, now fed by resolved `grouping` above) ──
+  const groupedData = useMemo(() => {
+    if (!grouping) return null
+    const map = new Map<string, T[]>()
+    sortedData.forEach((item) => {
+      const key = getGroupKey(item, grouping.accessor)
+      if (!map.has(key)) map.set(key, [])
+      map.get(key)!.push(item)
+    })
+    return map
+  }, [sortedData, grouping])
+
+  const isGroupCollapsed = (key: string) => {
+    const flipped = toggledGroups.has(key)
+    return grouping?.defaultCollapsed ? !flipped : flipped
+  }
+  const toggleGroup = (key: string) => {
+    setToggledGroups((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      return next
+    })
+  }
+
+  // ── Column layout/pinning (unchanged) ───────────────────────────
   const checkboxIndex = selectable ? 0 : -1
   const columnStartIndex = selectable ? 1 : 0
-  const colCount = (selectable ? 1 : 0) + visibleColumns.length + (actions ? 1 : 0)
-  const actionsIndex = actions ? colCount - 1 : -1
-
-const hasActions = !!actions;
+  const colCount = (selectable ? 1 : 0) + visibleColumns.length
 
   const pinnedMap = useMemo(() => {
     const map: Record<number, 'start' | 'end'> = {}
@@ -148,23 +279,18 @@ const hasActions = !!actions;
     visibleColumns.forEach((col, i) => {
       if (col.pinned) map[columnStartIndex + i] = col.pinned
     })
-    if (hasActions && pinActions) map[actionsIndex] = 'end'
     return map
-  }, [visibleColumns, selectable, hasActions, pinActions, checkboxIndex, columnStartIndex, actionsIndex])
+  }, [visibleColumns, selectable, checkboxIndex, columnStartIndex])
 
   const hasPinnedColumns = Object.keys(pinnedMap).length > 0
-
-  // ---- Sticky Positioning Offsets ----------------------------------------
   const wrapperRef = useRef<HTMLDivElement>(null)
   const headerCellRefs = useRef<(HTMLTableCellElement | null)[]>([])
   const [pinOffsets, setPinOffsets] = useState<Record<number, number>>({})
 
-useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!hasPinnedColumns) return
-
     const computeOffsets = () => {
       const offsets: Record<number, number> = {}
-
       let runningStart = 0
       for (let i = 0; i < colCount; i++) {
         if (pinnedMap[i] === 'start') {
@@ -172,7 +298,6 @@ useLayoutEffect(() => {
           runningStart += headerCellRefs.current[i]?.offsetWidth ?? 0
         }
       }
-
       let runningEnd = 0
       for (let i = colCount - 1; i >= 0; i--) {
         if (pinnedMap[i] === 'end') {
@@ -180,29 +305,20 @@ useLayoutEffect(() => {
           runningEnd += headerCellRefs.current[i]?.offsetWidth ?? 0
         }
       }
-
-      // التحديث الآمن: لا تقم بتحديث الـ State إلا إذا اختلفت الأرقام فعلياً
       setPinOffsets((prev) => {
-        const prevKeys = Object.keys(prev);
-        const newKeys = Object.keys(offsets);
-        
-        if (prevKeys.length !== newKeys.length) return offsets;
-        
+        const prevKeys = Object.keys(prev)
+        const newKeys = Object.keys(offsets)
+        if (prevKeys.length !== newKeys.length) return offsets
         for (const key of newKeys) {
-          if (prev[Number(key)] !== offsets[Number(key)]) {
-            return offsets; // القيمة تغيرت، قم بتحديث الحالة
-          }
+          if (prev[Number(key)] !== offsets[Number(key)]) return offsets
         }
-        
-        return prev; // لم يتغير شيء، لا تقم بعمل Re-render
+        return prev
       })
     }
-
     computeOffsets()
     const ro = new ResizeObserver(computeOffsets)
     if (wrapperRef.current) ro.observe(wrapperRef.current)
     window.addEventListener('resize', computeOffsets)
-    
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', computeOffsets)
@@ -212,126 +328,130 @@ useLayoutEffect(() => {
   const pinnedStyle = (index: number): React.CSSProperties | undefined => {
     const side = pinnedMap[index]
     if (!side) return undefined
-    return {
-      position: 'sticky',
-      [side === 'start' ? 'insetInlineStart' : 'insetInlineEnd']: pinOffsets[index] ?? 0,
-      zIndex: 1,
-    }
+    return { position: 'sticky', [side === 'start' ? 'insetInlineStart' : 'insetInlineEnd']: pinOffsets[index] ?? 0, zIndex: 1 }
+  }
+
+  const renderRow = (item: T, rowIndex: number) => {
+    const id = getRowId(item)
+    const isSelected = selected.has(id)
+    const rowBg = isSelected ? 'bg-primary/10' : striped && rowIndex % 2 !== 0 ? 'bg-surface-secondary' : 'bg-surface'
+
+    return (
+      <tr
+        key={id}
+        className={cn('transition-colors hover:bg-surface-secondary', onRowClick && 'cursor-pointer', rowBg, rowClassName?.(item))}
+        onClick={() => onRowClick?.(item)}
+      >
+        {selectable && (
+          <td style={pinnedStyle(checkboxIndex)} className={cn('px-2.5 py-2', rowBg)}>
+            <Checkbox checked={isSelected} onChange={() => toggleRow(id)} />
+          </td>
+        )}
+        {visibleColumns.map((col, i) => {
+          const index = columnStartIndex + i
+          return (
+            <td key={index} style={pinnedStyle(index)} className={cn('whitespace-nowrap px-2 py-2', pinnedMap[index] && rowBg, col.cellClassName)}>
+              {col.render ? col.render(item) : col.accessor ? (item[col.accessor] as React.ReactNode) : null}
+            </td>
+          )
+        })}
+      </tr>
+    )
   }
 
   return (
-    <div className={cn('flex flex-col rounded-lg overflow-hidden bg-surface', className)}>
-      
-      {/* ---- Header Section ---- */}
-      {(title || description || tableActions || persistedKey) && (
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 p-2">
-          <div className="flex flex-col min-w-0">
-            {title && <h3 className="text-[13px] font-bold text-text truncate">{title}</h3>}
-            {description && <p className="text-[11px] text-text-muted truncate">{description}</p>}
+    <div className={cn('flex flex-col overflow-hidden rounded-sm bg-surface p-2 shadow-card', className)}>
+      {(title || description || tableActions || persistedKey || hasGroupingOptions) && (
+        <div className="mb-2 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+          <div className="flex min-w-0 flex-col">
+            {title && <h3 className="truncate text-[13px] font-bold text-text">{title}</h3>}
+            {description && <p className="truncate text-[11px] text-text-muted">{description}</p>}
           </div>
-          
-          <div className="flex items-center gap-2 shrink-0">
-            {tableActions}
-            
-            {/* زر التحكم في الأعمدة */}
-            {persistedKey && (
+
+          <div className="flex shrink-0 items-center gap-2">
+            {/* ── NEW: grouping method selector ──────────────────
+                A single compact dropdown, not a row of toggle buttons —
+                stays out of the way at any number of options, and its
+                own label already communicates the current state, so no
+                separate "grouped by: X" indicator is needed elsewhere. */}
+            {hasGroupingOptions && (
               <DropdownMenu
-              menuClassName='w-35!'
-                
-                align="start"
+                align="end"
                 trigger={
-                  // <IconButton icon={<Columns3 />} variant="ghost" size="sm" title="إعدادات الأعمدة" />
-                  <>
-                    <Button
-                      variant='secondary'
-                      tint
-                      leftIcon={<ChevronsUpDown className='text-[8px]!' />}
-                    >الاعمدة</Button>
-                  </>
+                  <div
+                    // type="button"
+                    className={cn(
+                      'flex w-fit items-center gap-1.5 rounded-sm px-2.5 py-1.5 text-[11px] font-medium transition-colors',
+                      activeGroupOption ? 'bg-primary-subtle text-primary-subtle-foreground' : 'bg-neutral-100 text-text-muted hover:bg-neutral-200 hover:text-text',
+                    )}
+                  >
+                    <Layers className="h-3.5 w-3.5" />
+                    {activeGroupOption ? `تجميع حسب: ${activeGroupOption.label}` : 'تجميع حسب'}
+                    <ChevronDown className="h-3 w-3 opacity-60" />
+                  </div>
                 }
               >
-                <div className="px-2 py-1.5 text-[10px] font-bold text-text-muted uppercase tracking-wider">
-                  إظهار الأعمدة
-                </div>
-                <div className="max-h-48 overflow-y-auto flex flex-col gap-0.5">
-                  {columns.map((col, i) => {
-                    const colId = getColumnId(col, i)
-                    const isVisible = !hiddenColumns.includes(colId)
-                    return (
-                      <DropdownMenuCheckItem
-                        key={colId}
-                        checked={isVisible}
-                        onCheckedChange={() => toggleColumn(persistedKey, colId)}
-                        className={
-                          cn(
-                            isVisible && 'bg-accent-tint! text-text!',
-                            'hover:bg-secondary-tint/80 text-[11px]!'
-                          )
-                        }
-                        iconClassName={`${isVisible && 'text-text'}`}
-                      >
-                        {col.header}
-                      </DropdownMenuCheckItem>
-                    )
-                  })}
-                </div>
+                <DropdownMenuItem selected={groupBy === null} onSelect={() => setGroupBy(null)}>
+                  بدون تجميع
+                </DropdownMenuItem>
+                {groupingOptions!.map((option, i) => {
+                  const id = getGroupOptionId(option, i)
+                  return (
+                    <DropdownMenuItem key={id} selected={groupBy === id} onSelect={() => setGroupBy(id)}>
+                      {option.label}
+                    </DropdownMenuItem>
+                  )
+                })}
               </DropdownMenu>
             )}
+
+            {tableActions}
           </div>
         </div>
       )}
 
-      {/* ---- Table Section ---- */}
       <div ref={wrapperRef} className="overflow-x-auto">
         <table dir={dir} className="w-full">
           <thead>
-            <tr className="">
+            <tr>
               {selectable && (
-                <th
-                  ref={(el) => { headerCellRefs.current[checkboxIndex] = el }}
-                  style={pinnedStyle(checkboxIndex)}
-                  className="w-10 px-2.5 py-2 bg-surface"
-                >
+                <th ref={(el) => { headerCellRefs.current[checkboxIndex] = el }} style={pinnedStyle(checkboxIndex)} className="w-10 bg-surface px-2.5 py-2">
                   <Checkbox checked={allOnPageSelected} indeterminate={someOnPageSelected} onChange={toggleSelectAll} />
                 </th>
               )}
-
               {visibleColumns.map((col, i) => {
                 const index = columnStartIndex + i
+                const id = getColumnId(col, i)
+                const isSorted = sortState?.columnId === id
                 return (
                   <th
                     key={index}
                     ref={(el) => { headerCellRefs.current[index] = el }}
                     style={{ width: col.width, ...pinnedStyle(index) }}
-                    className={cn(
-                      'text-start px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-text whitespace-nowrap bg-[#e1e0d6]',
-                      col.headerClassName,
-                    )}
+                    aria-sort={isSorted ? (sortState!.direction === 'asc' ? 'ascending' : 'descending') : undefined}
+                    className={cn('whitespace-nowrap bg-secondary px-2.5 py-2 text-start text-[12px] font-medium uppercase tracking-wider text-secondary-foreground/70', col.headerClassName)}
                   >
-                    {col.header}
+                    {col.sortable ? (
+                      <button type="button" onClick={() => handleSortClick(col, i)} className="inline-flex items-center gap-1 transition-colors hover:text-secondary-foreground">
+                        <span>{col.header}</span>
+                        <SortIcon direction={isSorted ? sortState!.direction : null} />
+                      </button>
+                    ) : (
+                      col.header
+                    )}
                   </th>
                 )
               })}
-
-              {actions && (
-                <th
-                  ref={(el) => { headerCellRefs.current[actionsIndex] = el }}
-                  style={pinnedStyle(actionsIndex)}
-                  className="text-start px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-text whitespace-nowrap bg-[#e1e0d6]"
-                >
-                  {actionsHeader}
-                </th>
-              )}
             </tr>
           </thead>
 
           <tbody>
             {loading ? (
               Array.from({ length: skeletonRows }).map((_, index) => (
-                <tr key={`skeleton-${index}`} className="border-b border-border/50 last:border-0">
+                <tr key={`skeleton-${index}`}>
                   {Array.from({ length: colCount }).map((__, cellIndex) => (
-                    <td key={cellIndex} className="px-2 py-3 bg-white">
-                      <div className="h-4 rounded bg-secondary/20 animate-pulse" />
+                    <td key={cellIndex} className="bg-surface px-2 py-3">
+                      <div className="h-4 animate-pulse rounded bg-neutral-100" />
                     </td>
                   ))}
                 </tr>
@@ -342,74 +462,40 @@ useLayoutEffect(() => {
                   {emptyMessage}
                 </td>
               </tr>
-            ) : (
-              data.map((item, rowIndex) => {
-                const id = getRowId(item)
-                const isSelected = selected.has(id)
-                // منطق الـ Striped Rows
-                const rowBg = isSelected ? 'bg-primary/5' : (striped && rowIndex % 2 !== 0 ? 'bg-background/40' : 'bg-surface')
-
-                return (
+            ) : grouping && groupedData ? (
+              Array.from(groupedData.entries()).flatMap(([key, items], groupIndex) => {
+                const collapsed = grouping.collapsible !== false && isGroupCollapsed(key)
+                const rows = [
                   <tr
-                    key={id}
-                    className={cn(
-                      'border-b border-border/50 last:border-0 transition-colors hover:bg-surface-raised',
-                      onRowClick && 'cursor-pointer',
-                      rowBg,
-                      rowClassName?.(item),
-                    )}
-                    onClick={() => onRowClick?.(item)}
+                    key={`group-${key}`}
+                    className={cn('bg-neutral-100', grouping.collapsible !== false && 'cursor-pointer select-none', grouping.groupHeaderClassName)}
+                    onClick={() => grouping.collapsible !== false && toggleGroup(key)}
                   >
-                    {selectable && (
-                      <td style={pinnedStyle(checkboxIndex)} className={cn('px-2.5 py-2', rowBg)}>
-                        <Checkbox checked={isSelected} onChange={() => toggleRow(id)} />
-                      </td>
-                    )}
-
-                    {visibleColumns.map((col, i) => {
-                      const index = columnStartIndex + i
-                      return (
-                        <td
-                          key={index}
-                          style={pinnedStyle(index)}
-                          className={cn('px-2 py-2 whitespace-nowrap', pinnedMap[index] && rowBg, col.cellClassName)}
-                        >
-                          {col.render ? col.render(item) : col.accessor ? (item[col.accessor] as React.ReactNode) : null}
-                        </td>
-                      )
-                    })}
-
-                    {actions && (
-                      <td style={pinnedStyle(actionsIndex)} className={cn('px-2 py-2', pinnedMap[actionsIndex] && rowBg)}>
-                        <div className="flex items-center gap-1 justify-end">{actions(item)}</div>
-                      </td>
-                    )}
-                  </tr>
-                )
+                    <td colSpan={colCount || 1} className="px-2.5 py-2 text-[12px] font-semibold text-text">
+                      <div className="flex items-center gap-1.5">
+                        {grouping.collapsible !== false && (
+                          <span className={cn('inline-block transition-transform', !collapsed && 'rotate-90')}>
+                            <ChevronRight className="h-3.5 w-3.5 text-text-muted" />
+                          </span>
+                        )}
+                        <div>{grouping.renderGroupHeader ? grouping.renderGroupHeader(key, items) : `${key || '—'} (${items.length})`}</div>
+                      </div>
+                    </td>
+                  </tr>,
+                ]
+                if (!collapsed) items.forEach((item, i) => rows.push(renderRow(item, groupIndex + i)))
+                return rows
               })
+            ) : (
+              sortedData.map((item, rowIndex) => renderRow(item, rowIndex))
             )}
           </tbody>
         </table>
 
-        {/* ---- Pagination Section ---- */}
-        {showPagination && data.length > 0 && !loading && (
-          <div className="px-2 py-2 border-t border-border/80 bg-surface">
-            <Pagination
-              currentPage={currentPage!}
-              totalPages={totalPages!}
-              totalItems={totalItems!}
-              perPage={perPage!}
-              onPageChange={onPageChange!}
-            />
-          </div>
-        )}
+        {pagination && data.length > 0 && !loading && <div className="mt-2 bg-surface">{pagination}</div>}
       </div>
 
-      {selectable && (
-        <FloatingSelectionToolbar count={selected.size} onClear={clearSelection} itemLabel={toolbarItemLabel}>
-          {toolbarActions?.(Array.from(selected), clearSelection)}
-        </FloatingSelectionToolbar>
-      )}
+      {selectable && selectionToolbar?.({ selectedIds: Array.from(selected), clearSelection, count: selected.size })}
     </div>
   )
 }

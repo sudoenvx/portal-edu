@@ -1,28 +1,16 @@
-import type { SystemSettings } from "@/modules/settings/types/settings.types"
-import { useQuery } from "@tanstack/react-query"
-
-const fetchSettings = async (): Promise<SystemSettings> => {
-  await new Promise((resolve) => setTimeout(resolve, 600))
-  return {
-    businessName: 'Portal Edu (SaaS)',
-    supportEmail: 'support@portaledu.com',
-    supportPhone: '+20 100 000 0000',
-    timezone: 'Africa/Cairo',
-    defaultPricePerStudent: 15,
-    billingCycleDays: 30,
-    gracePeriodDays: 5,
-    autoSuspendUnpaid: true,
-    notifyOnNewTeacher: true,
-    notifyOnPaymentOverdue: true,
-    weeklySystemReport: false,
-    requireTwoFactorAdmin: true,
-    sessionTimeoutMinutes: 120,
-  }
-}
+import { useGetQuery } from '@/core/hooks/use_query_actions'
+import type { SystemSettings } from '../types/settings.types'
 
 export function useGetSettings() {
-  return useQuery({
-    queryKey: ['system-settings'],
-    queryFn: fetchSettings,
+  return useGetQuery<SystemSettings>({
+    key: ['settings'],
+    url: '/settings',
+  })
+}
+
+export function useGetSettingsGroup(group: string) {
+  return useGetQuery<{ group: string; settings: Record<string, unknown> }>({
+    key: ['settings', group],
+    url: `/settings/group/${group}`,
   })
 }

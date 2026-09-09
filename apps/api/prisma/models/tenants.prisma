@@ -5,12 +5,16 @@
 model Teacher {
   id                     Int      @id @default(autoincrement())
   fullName               String   @map("full_name") @db.VarChar(100)
-  email                  String   @unique @db.VarChar(255)
+  username               String   @unique @db.VarChar(50)
+  email                  String?  @unique @db.VarChar(255)
   password               String   @db.VarChar(255)
   phoneNumber            String?  @unique @map("phone_number") @db.VarChar(20)
   subjectSpecialization  String?  @map("subject_specialization") @db.VarChar(100)
   accountStatus          String?  @map("account_status") @db.VarChar(20) // active, suspended_payment, inactive...
   profilePictureUrl      String?  @map("profile_picture_url") @db.VarChar(255)
+  onboardingCompletedAt  DateTime? @map("onboarding_completed_at")
+  onboardingPolicyKey    String?  @map("onboarding_policy_key") @db.VarChar(100)
+  onboardingPolicyVersion Int?    @map("onboarding_policy_version")
   createdAt              DateTime @default(now()) @map("created_at")
 
   // Reverse relations — every table scoped by teacher_id points back here.
@@ -24,6 +28,7 @@ model Teacher {
   attendance       Attendance[]
   lessons          Lesson[]
   questionBank     QuestionBank[]
+  subjects         TeacherSubject[]
 //   quizzes          Quiz[]
   studentInvoices  StudentInvoice[]
   studentPayments  StudentPayment[]
@@ -37,7 +42,8 @@ model TeacherAssistant {
   teacherId   Int      @map("teacher_id")
   teacher     Teacher  @relation(fields: [teacherId], references: [id])
   fullName    String   @map("full_name") @db.VarChar(100)
-  email       String   @unique @db.VarChar(255)
+  username    String   @unique @db.VarChar(50)
+  email       String?  @unique @db.VarChar(255)
   password    String   @db.VarChar(255)
   phoneNumber String?  @map("phone_number") @db.VarChar(20)
   createdAt   DateTime @default(now()) @map("created_at")
@@ -53,7 +59,7 @@ model TeacherAssistant {
 // The catalog of every valid permission key in the system.
 model Permission {
   id            Int    @id @default(autoincrement())
-  permissionKey String @unique @map("permission_key") @db.VarChar(50) // e.g. 'finance_view', 'attendance_write'
+  key String @unique @map("permission_key") @db.VarChar(50) // e.g. 'finance_view', 'attendance_write'
   label         String? @db.VarChar(100) // e.g. "Manage Finance"
 
   assistants AssistantPermission[]

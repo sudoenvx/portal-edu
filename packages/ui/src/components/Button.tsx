@@ -1,86 +1,139 @@
 // components/ui/Button.tsx
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from 'cn'
 import { Loader2 } from 'lucide-react'
 import { type ButtonHTMLAttributes, forwardRef, type ReactNode } from 'react'
 
-type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'ghost' | 'danger' | 'neutral'
-type ButtonSize = 'xs' | 'sm' | 'md' | 'lg'
+// type ButtonColor = 'primary' | 'secondary' | 'accent' | 'danger' | 'neutral' | 'success' | 'warning' | 'info'
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: ButtonVariant
-  size?: ButtonSize
-  loading?: boolean
-  outline?: boolean
-  leftIcon?: ReactNode
-  rightIcon?: ReactNode
+/**
+ * Design model:
+ * - `color`  → semantic intent (primary / secondary / accent / danger / neutral)
+ * - `style`  → visual weight (solid / tint / outline / ghost)
+ * Every (color × style) pair is defined exactly once in compoundVariants below.
+ * This replaces the old variant/outline/tint boolean soup, which allowed
+ * impossible states (outline + tint together) and let the three matrices
+ * drift out of sync with each other.
+ */
+const buttonVariants = cva(
+  [
+    'inline-flex items-center gap-1.5 w-fit rounded-sm select-none',
+    'font-[inherit] font-medium',
+    'transition-colors duration-200',
+    'cursor-pointer disabled:cursor-not-allowed disabled:opacity-45',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1'
+  ],
+  {
+    variants: {
+      color: {
+        primary: '',
+        secondary: '',
+        accent: '',
+        danger: '',
+        neutral: '',
+        info: '',
+        success: '',
+        warning: ''
+      },
+      style: {
+        solid: '',
+        tint: '',
+        outline: '',
+        ghost: '',
+        info: '',
+        success: '',
+        warning: ''
+      },
+      size: {
+        xs: 'px-2 text-[10px] h-5.5 font-normal',
+        sm: 'px-3 text-[11px] h-6.5',
+        md: 'px-4 text-[12px] h-7.5',
+        lg: 'px-5 text-[14px] h-9'
+      },
+      uppercase: {
+        true: 'uppercase',
+        false: ''
+      }
+    },
+    compoundVariants: [
+      // --- solid ---
+      { color: 'primary', style: 'solid', class: 'bg-primary text-primary-foreground hover:bg-primary-hover focus-visible:ring-primary/50' },
+      { color: 'secondary', style: 'solid', class: 'bg-secondary text-secondary-foreground hover:bg-secondary-hover focus-visible:ring-secondary/50' },
+      { color: 'accent', style: 'solid', class: 'bg-accent text-accent-foreground hover:bg-accent-hover focus-visible:ring-accent/50' },
+      { color: 'danger', style: 'solid', class: 'bg-danger text-danger-foreground hover:bg-danger-hover focus-visible:ring-danger/50' },
+      { color: 'neutral', style: 'solid', class: 'bg-neutral-100 text-text  hover:bg-neutral-300/60 focus-visible:ring-border-strong/50' },
 
-  tint?: boolean
-}
+      // --- tint (soft bg, never escalates to solid on hover) ---
+      { color: 'primary', style: 'tint', class: 'bg-primary-subtle text-primary-subtle-text hover:bg-primary-subtle/80 focus-visible:ring-primary/40' },
+      { color: 'secondary', style: 'tint', class: 'bg-neutral-100 text-secondary-subtle-text hover:bg-neutral-200 focus-visible:ring-secondary/40' },
+      { color: 'accent', style: 'tint', class: 'bg-accent-subtle text-accent-subtle-text hover:bg-accent-subtle/80 focus-visible:ring-accent/40' },
+      { color: 'danger', style: 'tint', class: 'bg-danger-subtle text-danger-subtle-text hover:bg-danger-subtle/80 focus-visible:ring-danger/40' },
+      { color: 'neutral', style: 'tint', class: 'bg-neutral-subtle text-neutral-subtle-text hover:bg-neutral-subtle/80 focus-visible:ring-border-strong/40' },
 
-// Solid variant classes
-const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-primary text-primary-text hover:bg-primary-dark hover:border-primary-dark',
-  secondary:
-    'bg-secondary text-secondary-text  hover:bg-secondary-dark hover:border-secondary-dark',
-  accent: 'bg-accent text-accent-text hover:bg-accent-dark hover:border-accent-dark',
-  ghost: 'bg-transparent text-text hover:bg-[#d9d9d9] hover:text-text',
-  danger: 'bg-danger text-danger-text hover:bg-danger-hover hover:border-danger-hover',
-  neutral: 'bg-surface text-text hover:bg-surface/90 hover:text-text'
-}
+      // --- outline ---
+      { color: 'primary', style: 'outline', class: 'bg-transparent text-primary border border-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-primary/50' },
+      { color: 'secondary', style: 'outline', class: 'bg-transparent text-secondary border border-secondary hover:bg-secondary hover:text-secondary-foreground focus-visible:ring-secondary/50' },
+      { color: 'accent', style: 'outline', class: 'bg-transparent text-accent border border-accent hover:bg-accent hover:text-accent-foreground focus-visible:ring-accent/50' },
+      { color: 'danger', style: 'outline', class: 'bg-transparent text-danger border border-danger hover:bg-danger hover:text-danger-foreground focus-visible:ring-danger/50' },
+      { color: 'neutral', style: 'outline', class: 'bg-transparent text-text border border-border-strong hover:bg-surface-raised focus-visible:ring-border-strong/50' },
 
-const tintVariantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-primary-tint text-primary-tint-text hover:bg-primary-tint/80 font-medium',
-  secondary:
-    'bg-secondary/20 text-secondary-tint-text hover:bg-secondary/30',
-  accent: 'bg-creamy-muted text-text hover:bg-accent hover:text-accent-text',
-  ghost:
-    'bg-transparent text-text  hover:bg-[#E7E5DF] hover:text-text',
-  danger: 'bg-danger-tint text-danger-tint-text hover:bg-danger hover:text-danger-text',
-  neutral:
-    'bg-transparent text-text border border-border-strong hover:bg-[#edf0f2] hover:text-text'
-}
+      // --- ghost (no bg/border at rest; color only shapes text + hover) ---
+      { color: 'primary', style: 'ghost', class: 'bg-transparent text-primary hover:bg-primary-subtle focus-visible:ring-primary/40' },
+      { color: 'secondary', style: 'ghost', class: 'bg-transparent text-secondary hover:bg-neutral-100 focus-visible:ring-secondary/40' },
+      { color: 'accent', style: 'ghost', class: 'bg-transparent text-accent hover:bg-accent-subtle focus-visible:ring-accent/40' },
+      { color: 'danger', style: 'ghost', class: 'bg-transparent text-danger hover:bg-danger-subtle focus-visible:ring-danger/40' },
+      { color: 'neutral', style: 'ghost', class: 'bg-transparent text-text hover:bg-surface-raised focus-visible:ring-border-strong/40' },
 
-// Outline variant classes — transparent bg, colored border + text
-const outlineVariantClasses: Record<ButtonVariant, string> = {
-  primary:
-    'bg-transparent text-primary border border-primary hover:bg-primary hover:text-primary-text',
-  secondary:
-    'bg-transparent text-secondary border border-secondary hover:bg-secondary hover:text-secondary-text',
-  accent: 'bg-transparent text-accent border border-accent hover:bg-accent hover:text-accent-text',
-  ghost:
-    'bg-transparent text-text border border-border hover:bg-[#E7E5DF] hover:text-text',
-  danger:
-    'bg-transparent text-danger hover:bg-danger hover:text-danger-text',
-  neutral:
-    'bg-transparent hover:bg-blue-ice text-text border border-border-strong hover:bg-surface-raised hover:text-text'
-}
 
-const sizeClasses: Record<ButtonSize, string> = {
-  xs: 'px-2 text-[10px] h-5.5 font-normal',
-  sm: 'px-3 text-[11px] h-6.5',
-  md: 'px-3 text-[12px] h-7.5',
-  lg: 'px-4 text-[14px] h-9'
-}
+      { color: 'success', style: 'solid', class: 'bg-success text-success-foreground hover:bg-success-hover focus-visible:ring-success/50' },
+{ color: 'success', style: 'tint', class: 'bg-success-subtle text-success-subtle-foreground hover:bg-success-subtle/80 focus-visible:ring-success/40' },
+{ color: 'success', style: 'outline', class: 'bg-transparent text-success border border-success hover:bg-success hover:text-success-foreground focus-visible:ring-success/50' },
+{ color: 'success', style: 'ghost', class: 'bg-transparent text-success hover:bg-success-subtle focus-visible:ring-success/40' },
 
-const spinnerSizeClasses: Record<ButtonSize, string> = {
+{ color: 'warning', style: 'solid', class: 'bg-warning text-warning-foreground hover:bg-warning-hover focus-visible:ring-warning/50' },
+{ color: 'warning', style: 'tint', class: 'bg-warning-subtle text-warning-subtle-foreground hover:bg-warning-subtle/80 focus-visible:ring-warning/40' },
+{ color: 'warning', style: 'outline', class: 'bg-transparent text-warning border border-warning hover:bg-warning hover:text-warning-foreground focus-visible:ring-warning/50' },
+{ color: 'warning', style: 'ghost', class: 'bg-transparent text-warning hover:bg-warning-subtle focus-visible:ring-warning/40' },
+
+{ color: 'info', style: 'solid', class: 'bg-info text-info-foreground hover:bg-info-hover focus-visible:ring-info/50' },
+{ color: 'info', style: 'tint', class: 'bg-info-subtle text-info-subtle-foreground hover:bg-info-subtle/80 focus-visible:ring-info/40' },
+{ color: 'info', style: 'outline', class: 'bg-transparent text-info border border-info hover:bg-info hover:text-info-foreground focus-visible:ring-info/50' },
+{ color: 'info', style: 'ghost', class: 'bg-transparent text-info hover:bg-info-subtle focus-visible:ring-info/40' },
+    ],
+    defaultVariants: {
+      color: 'primary',
+      style: 'solid',
+      size: 'sm',
+      uppercase: true
+    }
+  }
+)
+
+const spinnerSizeClasses = {
   xs: 'w-2.5 h-2.5',
   sm: 'w-3 h-3',
   md: 'w-3.5 h-3.5',
   lg: 'w-4 h-4'
-}
+} as const
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants> & {
+    loading?: boolean
+    leftIcon?: ReactNode
+    rightIcon?: ReactNode
+  }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = 'primary',
+      color,
+      style,
       size = 'sm',
+      uppercase,
       loading = false,
-      outline = false,
       disabled = false,
       leftIcon,
       rightIcon,
-      tint,
       className,
       children,
       ...props
@@ -88,11 +141,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const isDisabled = disabled || loading
-    const resolvedVariant = outline
-      ? outlineVariantClasses[variant]
-      : tint
-        ? tintVariantClasses[variant]
-        : variantClasses[variant]
 
     return (
       <button
@@ -100,33 +148,23 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type="button"
         disabled={isDisabled}
         aria-busy={loading}
-        className={[
-          'inline-flex items-center gap-1.5 w-fit rounded-sm select-none',
-          'focus-visible:outline-black focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:rounded-none',
-          'font-[inherit] font-medium uppercase',
-          'transition-colors duration-200',
-          'cursor-pointer',
-          'disabled:opacity-45 disabled:cursor-not-allowed',
-          resolvedVariant,
-          sizeClasses[size],
-          className
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        className={cn(buttonVariants({ color, style, size, uppercase }), className)}
         {...props}
       >
         {loading ? (
-          <Loader2 className={`animate-spin ${spinnerSizeClasses[size]}`} />
+          <Loader2 className={cn('animate-spin', spinnerSizeClasses[size ?? 'sm'])} aria-hidden="true" />
         ) : leftIcon ? (
-          <span className="shrink-0 inline-flex items-center [&>svg]:w-[1.2em] [&>svg]:h-[1.2em]">
+          <span className="shrink-0 inline-flex items-center [&>svg]:w-[1.1em] [&>svg]:h-[1.1em]" aria-hidden="true">
             {leftIcon}
           </span>
         ) : null}
 
+        {/* Text stays in the DOM (just dimmed) while loading, so the accessible
+            name is never dropped — screen readers still announce the label. */}
         {children && <span className={loading ? 'opacity-70' : undefined}>{children}</span>}
 
         {!loading && rightIcon && (
-          <span className="shrink-0 inline-flex items-center [&>svg]:w-[1.2em] [&>svg]:h-[1.2em]">
+          <span className="shrink-0 inline-flex items-center [&>svg]:w-[1.1em] [&>svg]:h-[1.1em]" aria-hidden="true">
             {rightIcon}
           </span>
         )}
